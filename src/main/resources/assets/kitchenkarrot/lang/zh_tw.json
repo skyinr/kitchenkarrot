@@ -70,7 +70,7 @@
     "item.kitchenkarrot.small_monster_lasagna": "小份怪物千層麵",
     "item.kitchenkarrot.fishermens_delight": "漁夫樂事",
     "item.kitchenkarrot.sweet_berry_milk": "甜莓早餐奶",
-    "item.kitchenkarrot.cream_of_mushroom_soup": "蘑菇濃湯",
+    "item.kitchenkarrot.phantom_stew": "幽靈奶酪",
     "item.kitchenkarrot.dandelion_coke": "蒲公英可樂",
     "item.kitchenkarrot.coral_coke": "珊瑚可樂",
     "item.kitchenkarrot.dragon_breath_coke": "龍息可樂",
@@ -102,6 +102,15 @@
     "item.kitchenkarrot.bacon_wrapped_potato": "煎培根馬鈴薯卷",
     "item.kitchenkarrot.sweet_roll": "甜甜卷",
     "item.kitchenkarrot.carrot_and_carrot": "群英薈萃",
+    "item.kitchenkarrot.cheese_wheel": "起司輪",
+    "item.kitchenkarrot.cheese_slice": "小塊起司",
+    "item.kitchenkarrot.enchanted_cheese": "附魔起司",
+    "item.kitchenkarrot.stone_shore_quiche": "石岸鹹派",
+    "item.kitchenkarrot.crimson_fungi_spring_roll": "緋紅蕈菇春捲",
+    "item.kitchenkarrot.mixed_nuts_mooncake": "果仁月餅",
+    "item.kitchenkarrot.birch_sap_donut": "樺樹汁甜甜圈",
+    "item.kitchenkarrot.bikini_bottom_sub": "比奇堡潛艇三明治",
+    "item.kitchenkarrot.cider": "蘋果酒",
 
     "block.kitchenkarrot.sunflower_oil": "瓜子油",
     "block.kitchenkarrot.chorus_oil": "歌萊油",
@@ -130,10 +139,11 @@
     "info.kitchenkarrot.can_be_dished": "§7可以裝在盤子上",
     "info.kitchenkarrot.popacorn": "剩餘%s口",
     "info.kitchenkarrot.water": "消耗水：%smB",
-    "info.kitchenkarrot.time": "釀造時常：%s秒",
-    "info.kitchenkarrot.gem_carrot": "有小幾率在收穫普通胡蘿蔔時獲得。",
-    "info.kitchenkarrot.fine_salt": "大部分情況下可以從屠夫村民購買。（可配置）",
-    "info.kitchenkarrot.pillager_pie": "有小幾率窳民結構中或者擊敗掠奪者時獲得。",
+    "info.kitchenkarrot.time": "釀造時長：%s秒",
+    "jei.info.kitchenkarrot.gem_carrot": "有小幾率在收穫普通胡蘿蔔時獲得。",
+    "jei.info.kitchenkarrot.fine_salt": "大部分情況下可以從屠夫村民購買。（可配置）",
+    "jei.info.kitchenkarrot.pillager_pie": "有小幾率窳民結構中或者擊敗掠奪者時獲得。",
+    "jei.info.kitchenkarrot.water": "對空氣壓縮機使用水桶來快速獲取。",
 
     "kitchenkarrot.unknown": "不知名鷄尾酒",
     "kitchenkarrot.unknown.tooltip": "§7新奇的研發。效果不明",
@@ -239,5 +249,6 @@
     "potion.potency.7": "VII",
     "potion.potency.8": "VIII",
     "potion.potency.9": "IX",
-    "potion.potency.10": "X"
+    "potion.potency.10": "X",
+    "item.kitchenkarrot.cream_of_mushroom_soup": "蘑菇濃湯"
 }

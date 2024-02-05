@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "kitchenkarrot",
+  "ingredients": [
+    {
+      "item": "kitchenkarrot:plate_pieces"
+    },
+    {
+      "item": "kitchenkarrot:plate_pieces"
+    },
+    {
+      "item": "kitchenkarrot:plate_pieces"
+    },
+    {
+      "item": "kitchenkarrot:plate_pieces"
+    }
+  ],
+  "result": {
+    "item": "kitchenkarrot:plate_item"
+  }
+}

@@ -21,7 +21,8 @@
                 "item" : "minecraft:sweet_berries"
             }
         ],
-        "craftingtime":6000
+        "craftingtime":2000,
+        "water_consumption": 250
     },
     "result":{
         "item":"kitchenkarrot:glow_berry_lager"

@@ -68,9 +68,10 @@ public class JeiPlugin implements IModPlugin {
         registration.addRecipes(COCKTAIL, getRecipe(RecipeTypes.COCKTAIL.get()));
         registration.addRecipes(BREWING_BARREL, getRecipe(RecipeTypes.BREWING_BARREL.get()));
         registration.addRecipes(PLATE, getRecipe(RecipeTypes.PLATE.get()));
-        registration.addIngredientInfo(new ItemStack(ModItems.GEM_CARROT.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.kitchenkarrot.gem_carrot"));
-        registration.addIngredientInfo(new ItemStack(ModBlockItems.FINE_SALT.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.kitchenkarrot.fine_salt"));
-        registration.addIngredientInfo(new ItemStack(ModItems.PILLAGER_PIE.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.kitchenkarrot.pillager_pie"));
+        registration.addIngredientInfo(new ItemStack(ModItems.GEM_CARROT.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.info.kitchenkarrot.gem_carrot"));
+        registration.addIngredientInfo(new ItemStack(ModBlockItems.FINE_SALT.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.info.kitchenkarrot.fine_salt"));
+        registration.addIngredientInfo(new ItemStack(ModItems.PILLAGER_PIE.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.info.kitchenkarrot.pillager_pie"));
+        registration.addIngredientInfo(new ItemStack(ModItems.WATER.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.info.kitchenkarrot.water"));
     }
 
     @Override

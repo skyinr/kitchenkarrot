@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "kitchenkarrot",
+  "key": {
+    "b": {
+      "item": "minecraft:brick"
+    },
+    "n": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "nbn"
+  ],
+  "result": {
+    "count": 2,
+    "item": "kitchenkarrot:plate_item"
+  },
+  "show_notification": true
+}

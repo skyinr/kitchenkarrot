@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "kitchenkarrot",
+  "ingredients": [
+    {
+      "item": "minecraft:wheat"
+    },
+    {
+      "tag": "forge:nuts/acorn"
+    },
+    {
+      "item": "kitchenkarrot:birch_sap"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "item": "kitchenkarrot:mixed_nuts_mooncake"
+  }
+}

@@ -68,6 +68,9 @@ public class ModTabs {
             event.accept(ModItems.KELP_WITH_SUNFLOWER_SEED);
             event.accept(ModItems.FRIED_PUMPKIN_CAKE);
             event.accept(ModItems.SEED_PIE);
+            event.accept(ModItems.CHEESE_WHEEL);
+            event.accept(ModItems.CHEESE_SLICE);
+            event.accept(ModItems.ENCHANTED_CHEESE);
             event.accept(ModItems.RAW_BEEF_IN_DRIPLEAF);
             event.accept(ModItems.BEEF_IN_DRIPLEAF);
             event.accept(ModItems.SMALL_BEEF_IN_DRIPLEAF);
@@ -88,9 +91,10 @@ public class ModTabs {
             event.accept(ModItems.SWEET_BERRY_MILK);
             event.accept(ModItems.BACON_WRAPPED_POTATO);
             event.accept(ModItems.CRISPY_BREAD_WITH_KELP);
+            event.accept(ModItems.STONE_SHORE_QUICHE);
             event.accept(ModItems.WOODLAND_TATER_PUREE);
             event.accept(ModItems.FISHERMENS_DELIGHT);
-            event.accept(ModItems.CREAM_OF_MUSHROOM_SOUP);
+            event.accept(ModItems.PHANTOM_STEW);
 
             event.accept(ModItems.LUSH_SALAD);
             event.accept(ModItems.FRESH_SALAD);
@@ -132,6 +136,11 @@ public class ModTabs {
             event.accept(ModItems.EGG_TART);
             event.accept(ModItems.SWEET_BERRY_TART);
             event.accept(ModItems.CARROT_TART);
+            event.accept(ModItems.CRIMSON_FUNGI_SPRING_ROLL);
+            event.accept(ModItems.MIXED_NUTS_MOONCAKE);
+            event.accept(ModItems.BIRCH_SAP_DONUT);
+            event.accept(ModItems.BUCHE_DE_NOEL);
+            event.accept(ModItems.BIKINI_BOTTOM_SUB);
 
             event.accept(ModItems.CANNED_MUTTON_PUMPKIN);
             event.accept(ModItems.CANNED_PORK_BEETROOT);

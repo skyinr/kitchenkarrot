@@ -1,0 +1,72 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cheese_slice": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "kitchenkarrot:cheese_slice"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_poppy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:poppy"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_salt": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:salt"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "kitchenkarrot:stone_shore_quiche"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_turtle_egg": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:turtle_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_turtle_egg",
+      "has_cheese_slice",
+      "has_poppy",
+      "has_salt",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "kitchenkarrot:stone_shore_quiche"
+    ]
+  },
+  "sends_telemetry_event": false
+}

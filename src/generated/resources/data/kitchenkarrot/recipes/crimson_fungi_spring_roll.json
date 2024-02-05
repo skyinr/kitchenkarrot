@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "kitchenkarrot",
+  "ingredients": [
+    {
+      "item": "minecraft:wheat"
+    },
+    {
+      "item": "minecraft:crimson_fungus"
+    },
+    {
+      "item": "minecraft:crimson_fungus"
+    },
+    {
+      "item": "kitchenkarrot:carrot_spices"
+    },
+    {
+      "tag": "kitchenkarrot:meat"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "kitchenkarrot:crimson_fungi_spring_roll"
+  }
+}

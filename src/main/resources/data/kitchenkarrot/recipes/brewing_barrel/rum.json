@@ -21,7 +21,8 @@
                 "tag" : "forge:crops/wheat"
             }
         ],
-        "craftingtime":6000
+        "craftingtime":6000,
+        "water_consumption": 500
     },
     "result":{
         "item":"kitchenkarrot:rum"

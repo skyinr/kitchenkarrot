@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "kitchenkarrot",
+  "ingredients": [
+    {
+      "item": "minecraft:wheat"
+    },
+    {
+      "item": "kitchenkarrot:birch_sap"
+    },
+    {
+      "tag": "forge:cooking_oil"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "item": "kitchenkarrot:birch_sap_donut"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "kitchenkarrot",
+  "key": {
+    "#": {
+      "item": "kitchenkarrot:cheese_slice"
+    },
+    "-": {
+      "item": "minecraft:gold_nugget"
+    }
+  },
+  "pattern": [
+    "---",
+    "-#-",
+    "---"
+  ],
+  "result": {
+    "item": "kitchenkarrot:enchanted_cheese"
+  },
+  "show_notification": true
+}

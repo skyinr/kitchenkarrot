@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "kitchenkarrot",
+  "key": {
+    "#": {
+      "item": "minecraft:iron_sword"
+    },
+    "n": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    " #",
+    "n "
+  ],
+  "result": {
+    "item": "kitchenkarrot:knife"
+  },
+  "show_notification": true
+}

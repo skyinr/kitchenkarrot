@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "kitchenkarrot",
+  "ingredients": [
+    {
+      "tag": "forge:bread"
+    },
+    {
+      "item": "kitchenkarrot:sashimi"
+    },
+    {
+      "item": "kitchenkarrot:pickled_sea_pickles"
+    },
+    {
+      "item": "kitchenkarrot:cheese_slice"
+    },
+    {
+      "item": "kitchenkarrot:carrot_spices"
+    },
+    {
+      "item": "minecraft:ink_sac"
+    }
+  ],
+  "result": {
+    "item": "kitchenkarrot:bikini_bottom_sub"
+  }
+}

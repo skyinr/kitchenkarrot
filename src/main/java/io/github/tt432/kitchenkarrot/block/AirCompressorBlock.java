@@ -61,15 +61,16 @@ public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockE
                     if (pPlayer.getItemInHand(pHand).getCount() == 1) {
                         pPlayer.setItemInHand(pHand, new ItemStack(Items.BUCKET));
                     } else {
+                        // Eject the bucket if it stacks more than 1
                         pPlayer.getItemInHand(pHand).shrink(1);
-                        pLevel.addFreshEntity(new ItemEntity(pLevel, pPos.getX(), pPos.getY(), pPos.getZ(),
+                        pLevel.addFreshEntity(new ItemEntity(pLevel, pPos.getX() + 0.5, pPos.getY() + 1, pPos.getZ() + 0.5,
                                 new ItemStack(Items.BUCKET),
                                 random.nextFloat() * 2 - 1,
                                 random.nextFloat(),
                                 random.nextFloat() * 2 - 1));
                     }
                 }
-                pLevel.addFreshEntity(new ItemEntity(pLevel, pPos.getX(), pPos.getY() + 0.8, pPos.getZ(),
+                pLevel.addFreshEntity(new ItemEntity(pLevel, pPos.getX() + 0.5, pPos.getY() + 1, pPos.getZ() + 0.5,
                         new ItemStack(ModItems.WATER.get(), 8),
                         random.nextFloat() * 0.4 - 0.2,
                         random.nextFloat() * 0.5,

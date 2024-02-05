@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "kitchenkarrot:item/mixed_nuts_mooncake"
+  }
+}

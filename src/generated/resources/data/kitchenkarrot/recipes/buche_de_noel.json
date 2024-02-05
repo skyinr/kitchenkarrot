@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "kitchenkarrot",
+  "ingredients": [
+    {
+      "item": "minecraft:wheat"
+    },
+    {
+      "tag": "forge:eggs"
+    },
+    {
+      "item": "minecraft:sweet_berries"
+    },
+    {
+      "item": "minecraft:cocoa_beans"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "tag": "forge:ice_cubes"
+    }
+  ],
+  "result": {
+    "item": "kitchenkarrot:buche_de_noel"
+  }
+}

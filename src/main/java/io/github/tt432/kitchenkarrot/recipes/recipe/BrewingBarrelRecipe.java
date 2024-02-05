@@ -30,6 +30,9 @@ public class BrewingBarrelRecipe extends BaseRecipe<BrewingBarrelRecipe> {
         @Expose
         @SerializedName("craftingtime")
         int craftingTime;
+        @Expose
+        @SerializedName("water_consumption")
+        int water_consumption;
     }
 
     public NonNullList<Ingredient> getIngredient() {
@@ -38,6 +41,9 @@ public class BrewingBarrelRecipe extends BaseRecipe<BrewingBarrelRecipe> {
 
     public int getCraftingTime() {
         return content.craftingTime;
+    }
+    public int getWaterConsumption() {
+        return content.water_consumption;
     }
 
     @Override

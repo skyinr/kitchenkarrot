@@ -5,12 +5,15 @@ import io.github.tt432.kitchenkarrot.blockentity.BrewingBarrelBlockEntity;
 import io.github.tt432.kitchenkarrot.gui.base.KKGui;
 import io.github.tt432.kitchenkarrot.gui.widget.ProgressWidget;
 import io.github.tt432.kitchenkarrot.menu.BrewingBarrelMenu;
+import io.github.tt432.kitchenkarrot.recipes.recipe.BrewingBarrelRecipe;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.IFluidTank;
+
+import java.util.Optional;
 
 /**
  * @author DustW
@@ -42,7 +45,8 @@ public class BrewingBarrelGui extends KKGui<BrewingBarrelMenu> {
                             if (be.isStarted()) {
                                 return Component.literal(be.getProgress() * 100 / be.getMaxProgress() + "%");
                             } else {
-                                if (tank.getFluidAmount() < be.FLUID_CONSUMPTION) {
+                                Optional<BrewingBarrelRecipe> recipe = be.findRecipe();
+                                if (recipe.isPresent() && be.hasEnoughWater(recipe.get())) {
                                     return Component.translatable("brewing_barrel.error.not_enough_liquid");
                                 }
                                 else if (!be.isRecipeSame()) {

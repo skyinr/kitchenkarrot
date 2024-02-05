@@ -13,7 +13,6 @@ import net.minecraft.world.item.crafting.Ingredient;
  * @author DustW
  **/
 public enum JsonUtils {
-    /** 最 佳 单 例 */
     INSTANCE;
     public final Gson normal;
     public final Gson pretty;

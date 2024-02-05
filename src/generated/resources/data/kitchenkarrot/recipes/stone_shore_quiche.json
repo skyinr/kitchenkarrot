@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "kitchenkarrot",
+  "ingredients": [
+    {
+      "item": "minecraft:wheat"
+    },
+    {
+      "item": "minecraft:wheat"
+    },
+    {
+      "item": "minecraft:turtle_egg"
+    },
+    {
+      "item": "kitchenkarrot:cheese_slice"
+    },
+    {
+      "item": "minecraft:poppy"
+    },
+    {
+      "item": "kitchenkarrot:carrot_spices"
+    },
+    {
+      "tag": "forge:salt"
+    }
+  ],
+  "result": {
+    "item": "kitchenkarrot:stone_shore_quiche"
+  }
+}

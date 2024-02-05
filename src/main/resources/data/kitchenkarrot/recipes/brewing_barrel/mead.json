@@ -3,13 +3,13 @@
     "content":{
         "recipe":[
             {
-                "item" : "minecraft:honeycomb"
+                "item" : "minecraft:honey_bottle"
             },
             {
-                "item" : "minecraft:honeycomb"
+                "item" : "minecraft:honey_bottle"
             },
             {
-                "item" : "minecraft:honeycomb"
+                "item" : "minecraft:honey_bottle"
             },
             {
                 "item" : "kitchenkarrot:water"
@@ -21,7 +21,8 @@
                 "item" : "kitchenkarrot:water"
             }
         ],
-        "craftingtime":6000
+        "craftingtime":6000,
+        "water_consumption": 500
     },
     "result":{
         "item":"kitchenkarrot:mead"

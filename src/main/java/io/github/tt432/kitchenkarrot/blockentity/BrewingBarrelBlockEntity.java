@@ -16,9 +16,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
@@ -31,6 +33,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author DustW
@@ -71,7 +74,8 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
         super.tick();
 
         if (!level.isClientSide) {
-            if (hasRecipe() && hasEnoughWater()){
+            Optional<BrewingBarrelRecipe> recipe = findRecipe();
+            if (recipe.isPresent() && hasEnoughWater(recipe.get())){
                 if (isStarted()) {
                     if (isRecipeSame() && progress.plus(1,getMaxProgress()) == getMaxProgress()){
                         finishBrewing();
@@ -83,10 +87,10 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
         }
     }
 
-    private boolean hasRecipe(){
+    public Optional<BrewingBarrelRecipe> findRecipe(){
         var inputList = ItemHandlerUtils.toList(input);
         return level.getRecipeManager().getAllRecipesFor(RecipeTypes.BREWING_BARREL.get())
-                .stream().anyMatch(r -> r.matches(inputList));
+                .stream().filter(r -> r.matches(inputList)).findFirst();
     }
 
     private void finishBrewing(){
@@ -97,9 +101,21 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
             result.insertItem(0, getRecipe().getResultItem(RegistryAccess.EMPTY), false);
 //            result.insertItem(0, getRecipe().getResultItem(), false);
             for (int i = 0; i < input.getSlots(); i++) {
+                Item item = input.getStackInSlot(i).getItem();
+                if (item.hasCraftingRemainingItem()) {
+                    Direction direction = getBlockState().getValue(BrewingBarrelBlock.FACING).getOpposite();
+                    level.addFreshEntity((new ItemEntity(level,
+                            getBlockPos().getX() + 0.5 + direction.getStepX() * 0.5,
+                            getBlockPos().getY() + 0.5,
+                            getBlockPos().getZ() + 0.5 + direction.getStepZ() * 0.5,
+                            new ItemStack(item.getCraftingRemainingItem()),
+                            direction.getStepX() * 0.2,
+                            0,
+                            direction.getStepZ() * 0.2)));
+                }
                 input.extractItem(i, 1, false);
             }
-            tank.get().drain(500, IFluidHandler.FluidAction.EXECUTE);
+            tank.get().drain(getRecipe().getWaterConsumption(), IFluidHandler.FluidAction.EXECUTE);
             endProgress();
         }
     }
@@ -108,8 +124,8 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
         return result.getStackInSlot(0).isEmpty();
     }
 
-    public boolean hasEnoughWater() {
-        return tank.get().getFluidAmount() >= FLUID_CONSUMPTION;
+    public boolean hasEnoughWater(BrewingBarrelRecipe recipe) {
+        return tank.get().getFluidAmount() >= recipe.getWaterConsumption();
     }
 
     public boolean isRecipeSame() {

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "kitchenkarrot",
+  "ingredients": [
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "tag": "forge:milk"
+    },
+    {
+      "item": "kitchenkarrot:carrot_spices"
+    },
+    {
+      "item": "minecraft:bone"
+    },
+    {
+      "item": "minecraft:phantom_membrane"
+    },
+    {
+      "item": "minecraft:phantom_membrane"
+    }
+  ],
+  "result": {
+    "item": "kitchenkarrot:phantom_stew"
+  }
+}
