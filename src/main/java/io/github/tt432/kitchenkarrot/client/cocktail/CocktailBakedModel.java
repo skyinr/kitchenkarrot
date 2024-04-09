@@ -54,7 +54,7 @@ public class CocktailBakedModel implements BakedModel {
 
     @Override
     public TextureAtlasSprite getParticleIcon() {
-        return null;
+        return CocktailTextureManager.INSTANCE.getSprite(CocktailItem.UNKNOWN_COCKTAIL);
     }
 
     @Override
