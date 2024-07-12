@@ -33,8 +33,7 @@ jobs:
           gradle-version: 8.6
 
       - name: Test Server
-        run: |
-          gradle runGameTestServer
+        run: gradle --build-cache --info --stacktrace runGameTestServer
 
       - name: Execute Gradle build
         run: gradle --build-cache --info --stacktrace assemble
