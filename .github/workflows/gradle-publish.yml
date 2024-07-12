@@ -35,16 +35,14 @@ jobs:
       - name: Test Server
         run: gradle --build-cache --info --stacktrace runGameTestServer
 
-      - name: Execute Gradle build
-        run: gradle --build-cache --info --stacktrace assemble
-
       - name: Update Version
         uses: googleapis/release-please-action@v4
         with:
           release-type: simple
           include-component-in-tag: true
-          skip-github-release: true
-          skip-github-pull-request: true
+
+      - name: Execute Gradle build
+        run: gradle --build-cache --info --stacktrace assemble
 
       - name: Upload Release
         if: ${{ steps.release.outputs.release_created }}
