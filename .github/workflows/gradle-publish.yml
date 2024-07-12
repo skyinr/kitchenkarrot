@@ -1,65 +1,54 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
-# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
+name: Upload Mod Release
 
-name: Build MOD DEMO
+on:
+  push:
+    branches:
+      - master
+      - "[0-9][.]+[0-9]+[.]?[0-9]?"
 
-on: [ push, pull_request ]
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
 
     steps:
+      - name: Checkout mod repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 32
 
-      - uses: actions/checkout@v4
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
+          cache: gradle
 
-      #      - name: Run DataGen
-      #        run: gradle runData -q
-      #
-      #      - name: Push
-      #        if: always()
-      #        run: |
-      #          git config --global user.name DataGenCI
-      #          git add .
-      #          git reset --mixed settings.xml
-      #          git reset --mixed toolchains.xml
-      #          git commit -m "datagen" -a
-      #          git push
-
-      #      - name: Cache
-      #        uses: actions/cache@v3
-      #        with:
-      #          path: build/**/*
-      #          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-      #          restore-keys: |
-      #            ${{ runner.os }}-gradle-
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: 7.3
+          gradle-version: 8.6
 
-      - name: Setup Permissions
-        run: chmod +x gradlew
+      - name: Test Server
+        run: |
+          gradle runGameTestServer
 
       - name: Execute Gradle build
-        run: ./gradlew build -PCIBuildVersion=.${{ github.run_number }}
+        run: gradle --build-cache --info --stacktrace assemble
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Update Version
+        uses: googleapis/release-please-action@v4
         with:
-          name: Kitchenkarrot-${{ github.sha }}
-          path: build/libs/*.jar
+          release-type: simple
+          include-component-in-tag: true
+          skip-github-release: true
+          skip-github-pull-request: true
+
+      - name: Upload Release
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ steps.release.outputs.tag_name }} ./build/libs/*.jar
