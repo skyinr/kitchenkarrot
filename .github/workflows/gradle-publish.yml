@@ -38,9 +38,7 @@ jobs:
       - name: Update Version
         uses: googleapis/release-please-action@v4
         with:
-          release-type: simple
           target-branch: ${{ github.ref_name }}
-          include-component-in-tag: true
 
       - name: Execute Gradle build
         run: gradle --build-cache --info --stacktrace assemble
