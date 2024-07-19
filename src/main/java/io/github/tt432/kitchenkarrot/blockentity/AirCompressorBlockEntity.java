@@ -23,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
@@ -183,7 +184,7 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
 
     protected void charge() {
         input2.extractItem(0, 1, false);
-        energy.set(120);
+        energy.set(MAX_ENERGY);
         setChanged();
     }
 
