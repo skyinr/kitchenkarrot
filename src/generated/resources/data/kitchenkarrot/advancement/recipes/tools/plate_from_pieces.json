@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_plate_pieces": {
+    "has_kitchenkarrot:plate_pieces": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "kitchenkarrot:plate_pieces"
-            ]
+            "items": "kitchenkarrot:plate_pieces"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_plate_pieces",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_kitchenkarrot:plate_pieces"
     ]
   ],
   "rewards": {
     "recipes": [
       "kitchenkarrot:plate_from_pieces"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

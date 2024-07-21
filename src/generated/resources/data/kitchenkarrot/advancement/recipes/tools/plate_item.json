@@ -1,25 +1,21 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cheese_slice": {
+    "has_brick": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "kitchenkarrot:cheese_slice"
-            ]
+            "items": "minecraft:brick"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_gold_nugget": {
+    "has_iron_nugget": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:gold_nugget"
-            ]
+            "items": "minecraft:iron_nugget"
           }
         ]
       },
@@ -27,22 +23,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "kitchenkarrot:enchanted_cheese"
+        "recipe": "kitchenkarrot:plate_item"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_cheese_slice",
-      "has_gold_nugget",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_brick",
+      "has_iron_nugget"
     ]
   ],
   "rewards": {
     "recipes": [
-      "kitchenkarrot:enchanted_cheese"
+      "kitchenkarrot:plate_item"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

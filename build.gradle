@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '1.0.0'
+    id 'net.neoforged.moddev' version '1.0.11'
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -88,12 +88,8 @@ neoForge {
     }
 
     mods {
-        // define mod <-> source bindings
-        // these are used to tell the game which sources are for which mod
-        // mostly optional in a single mod project
-        // but multi mod projects should define one per mod
-        "${mod_id}" {
-            sourceSet(sourceSets.main)
+        kitchenkarrot {
+            sourceSet sourceSets.main
         }
     }
 }
@@ -154,6 +150,20 @@ tasks.withType(ProcessResources).configureEach {
         expand replaceProperties
     }
 }
+
+task mergeResources(type: Copy) {
+    def generated = files("src/generated/resources")
+    def resources = files("src/main/resources")
+
+    from generated
+    exclude(str -> {
+        def file = file("src/main/resources/" + str.relativePath)
+        return file.isFile() && !resources.contains(file)
+    })
+    into "$buildDir/resources/main"
+}
+
+compileJava.dependsOn mergeResources
 
 processResources.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE)
 

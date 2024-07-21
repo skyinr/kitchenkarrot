@@ -1,35 +1,31 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_TagKey[minecraft:item / forge:ice_cubes]": {
+    "has_kitchenkarrot:carrot_spices": {
       "conditions": {
         "items": [
           {
-            "tag": "forge:ice_cubes"
+            "items": "kitchenkarrot:carrot_spices"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_cocoa_beans": {
+    "has_minecraft:crimson_fungus": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:cocoa_beans"
-            ]
+            "items": "minecraft:crimson_fungus"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_sweet_berries": {
+    "has_minecraft:wheat": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:sweet_berries"
-            ]
+            "items": "minecraft:wheat"
           }
         ]
       },
@@ -37,23 +33,22 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "kitchenkarrot:buche_de_noel"
+        "recipe": "kitchenkarrot:crimson_fungi_spring_roll"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_sweet_berries",
-      "has_cocoa_beans",
-      "has_TagKey[minecraft:item / forge:ice_cubes]",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_minecraft:wheat",
+      "has_minecraft:crimson_fungus",
+      "has_kitchenkarrot:carrot_spices"
     ]
   ],
   "rewards": {
     "recipes": [
-      "kitchenkarrot:buche_de_noel"
+      "kitchenkarrot:crimson_fungi_spring_roll"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

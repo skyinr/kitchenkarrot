@@ -7,19 +7,23 @@
       "item": "minecraft:wheat"
     },
     {
-      "item": "kitchenkarrot:birch_sap"
+      "tag": "forge:eggs"
     },
     {
-      "tag": "forge:cooking_oil"
+      "item": "minecraft:sweet_berries"
+    },
+    {
+      "item": "minecraft:cocoa_beans"
     },
     {
       "item": "minecraft:sugar"
     },
     {
-      "item": "minecraft:sugar"
+      "tag": "forge:ice_cubes"
     }
   ],
   "result": {
-    "item": "kitchenkarrot:birch_sap_donut"
+    "count": 1,
+    "id": "kitchenkarrot:buche_de_noel"
   }
 }

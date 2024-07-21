@@ -16,7 +16,7 @@
     "---"
   ],
   "result": {
-    "item": "kitchenkarrot:enchanted_cheese"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "kitchenkarrot:enchanted_cheese"
+  }
 }

@@ -3,19 +3,18 @@
   "category": "equipment",
   "group": "kitchenkarrot",
   "key": {
-    "#": {
-      "item": "minecraft:iron_sword"
+    "b": {
+      "item": "minecraft:brick"
     },
     "n": {
       "item": "minecraft:iron_nugget"
     }
   },
   "pattern": [
-    " #",
-    "n "
+    "nbn"
   ],
   "result": {
-    "item": "kitchenkarrot:knife"
-  },
-  "show_notification": true
+    "count": 2,
+    "id": "kitchenkarrot:plate_item"
+  }
 }
