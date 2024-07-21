@@ -61,55 +61,29 @@ public class ProgressWidget extends TooltipWidget {
     }
 
     @Override
-    public void render(GuiGraphics p_282421_, int p_93658_, int p_93659_, float p_93660_) {
-        if (!visible) {
+    protected void renderWidget(GuiGraphics p_282139_, int p_268034_, int p_268009_, float p_268085_) {
+        if (!visible){
             return;
         }
 
-        var current = currentGetter.get();
-        var max = maxGetter.get();
+        int current = currentGetter.get();
+        int max = maxGetter.get();
 
         RenderSystem.setShaderTexture(0, texture);
-        var p = current * 1. / max;
+        double p = current * 1. / max;
 
         if (vertical) {
-            var trueHeight = (int) (height * p);
-            var trueY = getY() + height - trueHeight;
-            var trueTexY = texY + height - trueHeight;
-            p_282421_.blit(texture, getX(), trueY, texX, trueTexY, width, trueHeight);
+            int trueHeight = (int) (height * p);
+            int trueY = getY() + height - trueHeight;
+            int trueTexY = texY + height - trueHeight;
+            p_282139_.blit(texture, getX(), trueY, texX, trueTexY, width, trueHeight);
         } else {
-            var trueWidth = width - (int) (this.width * p);
-            p_282421_.blit(texture, getX(), getY(), texX, texY, trueWidth, this.height);
+            int trueWidth = width - (int) (this.width * p);
+            p_282139_.blit(texture, getX(), getY(), texX, texY, trueWidth, this.height);
         }
 
-        super.render(p_282421_, p_93658_, p_93659_, p_93660_);
+        super.renderWidget(p_282139_, p_268034_, p_268009_, p_268085_);
     }
-
-//    @Override
-//    public void render(PoseStack poseStack, int pMouseX, int pMouseY, float pPartialTick) {
-//        if (!visible) {
-//            return;
-//        }
-//
-//        var current = currentGetter.get();
-//        var max = maxGetter.get();
-//
-//        RenderSystem.setShaderTexture(0, texture);
-//        var p = current * 1. / max;
-//
-//        if (vertical) {
-//            var trueHeight = (int) (height * p);
-//            var trueY = y + height - trueHeight;
-//            var trueTexY = texY + height - trueHeight;
-//            screen.blit(poseStack, x, trueY, texX, trueTexY, width, trueHeight);
-//        }
-//        else {
-//            var trueWidth = width - (int) (this.width * p);
-//            screen.blit(poseStack, x, y, texX, texY, trueWidth, this.height);
-//        }
-//
-//        super.render(poseStack, pMouseX, pMouseY, pPartialTick);
-//    }
 
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {

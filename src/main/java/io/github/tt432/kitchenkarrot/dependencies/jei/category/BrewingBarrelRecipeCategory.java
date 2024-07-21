@@ -26,7 +26,7 @@ import java.util.List;
  **/
 public class BrewingBarrelRecipeCategory extends BaseRecipeCategory<BrewingBarrelRecipe> {
     public static final ResourceLocation BACKGROUND =
-            new ResourceLocation(Kitchenkarrot.MOD_ID, "textures/gui/jei.png");
+            ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "textures/gui/jei.png");
 
     public BrewingBarrelRecipeCategory(IGuiHelper helper) {
         super(JeiPlugin.BREWING_BARREL,

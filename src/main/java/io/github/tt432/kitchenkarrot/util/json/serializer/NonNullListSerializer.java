@@ -17,7 +17,7 @@ public class NonNullListSerializer implements JsonSerializer<NonNullList<Ingredi
         var result = NonNullList.withSize(list.size(), Ingredient.EMPTY);
 
         for (int i = 0; i < list.size(); i++) {
-            result.set(i, Ingredient.fromJson(list.get(i)));
+            result.set(i, Ingredient.CODEC.decode(context.deserialize(list.get(i), typeOfT)).getOrThrow().getFirst());
         }
 
         return result;
@@ -28,7 +28,7 @@ public class NonNullListSerializer implements JsonSerializer<NonNullList<Ingredi
         var list = new JsonArray();
 
         for (Ingredient ingredient : src) {
-            list.add(ingredient.toJson());
+            list.add(context.serialize(ingredient));
         }
 
         return list;

@@ -1,50 +1,30 @@
 package io.github.tt432.kitchenkarrot.networking.packet;
 
-import io.github.tt432.kitchenkarrot.block.BrewingBarrelBlock;
+import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.level.block.Block;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Supplier;
+public record C2SUpdateBarrelPacket(BlockPos pos, boolean value) implements CustomPacketPayload {
+    public static final StreamCodec<ByteBuf, C2SUpdateBarrelPacket> STREAM_CODEC = StreamCodec.composite(
+            BlockPos.STREAM_CODEC, C2SUpdateBarrelPacket::pos,
+            ByteBufCodecs.BOOL, C2SUpdateBarrelPacket::value,
+            C2SUpdateBarrelPacket::new
+    );
 
-public class C2SUpdateBarrelPacket {
+    public static final Type<C2SUpdateBarrelPacket> TYPE = new Type<>(ResourceLocation
+            .fromNamespaceAndPath(Kitchenkarrot.MOD_ID,
+                    "update_barrel_packet"
+            ));
 
-    private BlockPos pos;
-    private boolean value;
 
-    public C2SUpdateBarrelPacket(BlockPos pos, boolean value) {
-        this.pos = pos;
-        this.value = value;
-    }
-
-    public C2SUpdateBarrelPacket(FriendlyByteBuf buf) {
-        this.pos = buf.readBlockPos();
-        this.value = buf.readBoolean();
-    }
-
-    public void write(FriendlyByteBuf buf) {
-        buf.writeBlockPos(pos);
-        buf.writeBoolean(value);
-    }
-
-    public void handle(Supplier<NetworkEvent.Context> supplier) {
-        var context = supplier.get();
-        context.enqueueWork(() -> {
-            var player = context.getSender();
-            if (player == null) {
-                return;
-            }
-
-            var level = player.level();
-//            var level = player.getLevel();
-
-            if (level.isLoaded(pos)) {
-                var state = level.getBlockState(pos);
-                if (state.getBlock() instanceof BrewingBarrelBlock) {
-                    level.setBlock(pos, state.setValue(BrewingBarrelBlock.OPEN, value), Block.UPDATE_ALL);
-                }
-            }
-        });
+    @Override
+    @NotNull
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 }

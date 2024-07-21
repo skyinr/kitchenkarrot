@@ -6,13 +6,13 @@ import io.github.tt432.kitchenkarrot.blockentity.sync.StringSyncData;
 import io.github.tt432.kitchenkarrot.blockentity.sync.SyncDataManager;
 import io.github.tt432.kitchenkarrot.capability.KKItemStackHandler;
 import io.github.tt432.kitchenkarrot.menu.AirCompressorMenu;
-import io.github.tt432.kitchenkarrot.recipes.recipe.AirCompressorRecipe;
 import io.github.tt432.kitchenkarrot.recipes.RecipeManager;
+import io.github.tt432.kitchenkarrot.recipes.recipe.AirCompressorRecipe;
 import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import io.github.tt432.kitchenkarrot.util.ItemHandlerUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -21,12 +21,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityToken;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -85,7 +82,7 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
     private IntSyncData maxProgress;
     private IntSyncData energy;
     private StringSyncData recipeId;
-    private AirCompressorRecipe recipe;
+    private RecipeHolder<AirCompressorRecipe> recipe;
     private BoolSyncData started;
 
     @Override
@@ -116,26 +113,28 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
                     stop();
                 }
             } else {
-                AirCompressorRecipe recipePredicate = getRecipeFromItems();
-                if (hasEnergy() && recipePredicate != null && isSlotAvailable(recipePredicate)) {
+                RecipeHolder<AirCompressorRecipe> recipePredicate = getRecipeFromItems();
+                if (hasEnergy() && recipePredicate != null && isSlotAvailable(recipePredicate.value())) {
                     start(recipePredicate);
                 }
             }
         }
     }
 
-    public AirCompressorRecipe getRecipe() {
+    public RecipeHolder<AirCompressorRecipe> getRecipe() {
         return recipe == null && !this.recipeId.isEmpty() ?
-                recipe = (AirCompressorRecipe) level.getRecipeManager()
-                        .byKey(new ResourceLocation(recipeId.get())).get() : recipe;
+                (recipe = (RecipeHolder<AirCompressorRecipe>) level.getRecipeManager()
+                        .byKey(ResourceLocation
+                                .parse(recipeId.get()))
+                        .get()) : recipe;
     }
 
     /* Predicate the recipe from given items before the recipe is set.*/
-    private AirCompressorRecipe getRecipeFromItems() {
+    private RecipeHolder<AirCompressorRecipe> getRecipeFromItems() {
         List<ItemStack> items = ItemHandlerUtils.toList(input1);
         ItemStack container = items.remove(4);
         return RecipeManager.getAirCompressorRecipe(level).stream()
-                .filter(r -> r.matches(items) && r.testContainer(container)).findFirst().orElse(null);
+                .filter(r -> r.value().matches(items) && r.value().testContainer(container)).findFirst().orElse(null);
     }
 
     private boolean isSlotAvailable(AirCompressorRecipe recipe) {
@@ -151,7 +150,7 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
             input1.extractItem(i, 1, false);
         }
         energy.reduce(10, 0);
-        output.insertItem(0, getRecipe().getResultItem(RegistryAccess.EMPTY), false);
+        output.insertItem(0, getRecipe().value().getResultItem(RegistryAccess.EMPTY), false);
 //        output.insertItem(0, getRecipe().getResultItem(), false);
         stop();
     }
@@ -160,23 +159,23 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
         var recipe = getRecipe();
         List<ItemStack> items = ItemHandlerUtils.toList(input1);
         ItemStack container = items.remove(4);
-        return recipe != null && recipe.matches(items) && recipe.testContainer(container);
+        return recipe != null && recipe.value().matches(items) && recipe.value().testContainer(container);
     }
 
     private boolean isStarted() {
         return started.get();
     }
 
-    protected void start(AirCompressorRecipe pRecipe) {
+    protected void start(RecipeHolder<AirCompressorRecipe> pRecipe) {
         setRecipe(pRecipe);
-        maxProgress.set(recipe.getCraftingTime());
+        maxProgress.set(((AirCompressorRecipe) recipe.value()).getCraftingTime());
         started.set(true);
     }
 
-    protected void setRecipe(AirCompressorRecipe recipe) {
+    protected void setRecipe(RecipeHolder<AirCompressorRecipe> recipe) {
         this.recipe = recipe;
         if (recipe != null) {
-            this.recipeId.set(recipe.getId().toString());
+            this.recipeId.set(recipe.value().getId().toString());
         } else {
             this.recipeId.set("");
         }
@@ -217,17 +216,6 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
         return ItemHandlerUtils.toList(input1, input2, output);
     }
 
-    @NotNull
-    @Override
-    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        return side == null ? LazyOptional.empty() : ForgeCapabilities.ITEM_HANDLER
-                .orEmpty(cap, LazyOptional.of(() -> switch (side) {
-                    case DOWN -> output;
-                    case UP -> input1;
-                    case NORTH, SOUTH, WEST, EAST -> input2;
-                }));
-    }
-
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pInventory, Player pPlayer) {
@@ -255,26 +243,27 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        super.saveAdditional(pTag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
 
-        var input1 = getInput1().serializeNBT();
-        var input2 = getInput2().serializeNBT();
-        var output = getOutput().serializeNBT();
+        var input1 = getInput1().serializeNBT(registries);
+        var input2 = getInput2().serializeNBT(registries);
+        var output = getOutput().serializeNBT(registries);
 
-        pTag.put("input1", input1);
-        pTag.put("input2", input2);
-        pTag.put("output", output);
+        tag.put("input1", input1);
+        tag.put("input2", input2);
+        tag.put("output", output);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
 
-        if (!isSyncTag(pTag)) {
-            input1.deserializeNBT(pTag.getCompound("input1"));
-            input2.deserializeNBT(pTag.getCompound("input2"));
-            output.deserializeNBT(pTag.getCompound("output"));
+        if (!isSyncTag(tag)) {
+            input1.deserializeNBT(registries, tag.getCompound("input1"));
+            input2.deserializeNBT(registries, tag.getCompound("input2"));
+            output.deserializeNBT(registries, tag.getCompound("output"));
         }
     }
+
 }

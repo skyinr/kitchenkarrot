@@ -16,7 +16,7 @@ import net.minecraft.world.entity.player.Inventory;
 public class AirCompressorGui extends KKGui<AirCompressorMenu> {
 
     private static final ResourceLocation GUI =
-            new ResourceLocation(Kitchenkarrot.MOD_ID, "textures/gui/air_compressor.png");
+            ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "textures/gui/air_compressor.png");
 
     AirCompressorBlockEntity be;
 

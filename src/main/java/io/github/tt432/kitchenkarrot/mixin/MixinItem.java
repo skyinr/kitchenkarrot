@@ -1,21 +1,16 @@
 package io.github.tt432.kitchenkarrot.mixin;
 
 import io.github.tt432.kitchenkarrot.block.PlateHolderMap;
-import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.List;
 
 /**

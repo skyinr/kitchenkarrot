@@ -1,13 +1,13 @@
 package io.github.tt432.kitchenkarrot.blockentity.sync;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.common.util.NonNullSupplier;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * @author DustW
  **/
-public abstract class SyncData<V> implements NonNullSupplier<V> {
+public abstract class SyncData<V> {
     private V value;
     private boolean changed;
     private final String name;
@@ -19,11 +19,12 @@ public abstract class SyncData<V> implements NonNullSupplier<V> {
         this.needSave = needSave;
     }
 
-    protected abstract CompoundTag toTag();
-    protected abstract V fromTag(CompoundTag tag);
+    protected abstract CompoundTag toTag(HolderLookup.Provider provider);
 
-    @Override
-    public @NotNull V get() {
+    protected abstract V fromTag(HolderLookup.Provider provider, CompoundTag tag);
+
+    @NotNull
+    public V get() {
         return value;
     }
 
@@ -32,16 +33,16 @@ public abstract class SyncData<V> implements NonNullSupplier<V> {
         onChanged();
     }
 
-    public void save(CompoundTag tag, boolean force) {
+    public void save(HolderLookup.Provider provider, CompoundTag tag, boolean force) {
         if (changed || force) {
-            tag.put(name, toTag());
+            tag.put(name, toTag(provider));
             changed = false;
         }
     }
 
-    public void load(CompoundTag tag) {
+    public void load(HolderLookup.Provider provider, CompoundTag tag) {
         if (tag.contains(name)) {
-            value = fromTag(tag.getCompound(name));
+            value = fromTag(provider, tag.getCompound(name));
         }
     }
 

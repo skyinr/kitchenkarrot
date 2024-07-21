@@ -21,10 +21,10 @@ public abstract class KKGui<T extends AbstractContainerMenu> extends AbstractCon
     }
 
     @Override
-    public void render(GuiGraphics p_283479_, int p_283661_, int p_281248_, float p_281886_) {
-        this.renderBackground(p_283479_);
-        super.render(p_283479_, p_283661_, p_281248_, p_281886_);
-        this.renderTooltip(p_283479_, p_283661_, p_281248_);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
 //    @Override

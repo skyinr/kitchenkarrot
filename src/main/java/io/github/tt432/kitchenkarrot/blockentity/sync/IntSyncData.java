@@ -1,5 +1,6 @@
 package io.github.tt432.kitchenkarrot.blockentity.sync;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 
 /**
@@ -13,14 +14,14 @@ public class IntSyncData extends SyncData<Integer> {
     }
 
     @Override
-    protected CompoundTag toTag() {
+    protected CompoundTag toTag(HolderLookup.Provider provider) {
         var result = new CompoundTag();
         result.putInt(VALUE_KEY, get());
         return result;
     }
 
     @Override
-    protected Integer fromTag(CompoundTag tag) {
+    protected Integer fromTag(HolderLookup.Provider provider, CompoundTag tag) {
         return tag.getInt(VALUE_KEY);
     }
 

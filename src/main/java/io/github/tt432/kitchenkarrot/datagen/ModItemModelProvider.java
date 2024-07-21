@@ -9,18 +9,21 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredItem;
+import org.jetbrains.annotations.NotNull;
 
 public class ModItemModelProvider extends ItemModelProvider {
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, Kitchenkarrot.MOD_ID, existingFileHelper);
     }
-    private static final ImmutableSet<RegistryObject<Item>> IGNORES = ImmutableSet.of(
+
+    private static final ImmutableSet<DeferredHolder<Item, Item>> IGNORES = ImmutableSet.of(
             ModItems.KNIFE,
             ModItems.COCKTAIL
     );
@@ -41,15 +44,18 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         }
     }
-    private ItemModelBuilder tool(RegistryObject<Item> item) {
-        ResourceLocation rl = ForgeRegistries.ITEMS.getKey(item.get());
+
+    @NotNull
+    private ItemModelBuilder tool(@NotNull DeferredItem<Item> item) {
+        ResourceLocation rl = item.getId();
         return getBuilder(rl.toString())
                 .parent(new ModelFile.UncheckedModelFile("item/handheld"))
-                .texture("layer0", new ResourceLocation(Kitchenkarrot.MOD_ID, "item/" + rl.getPath()));
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "item/" + rl.getPath()));
     }
-    private ItemModelBuilder genBlockItemModel(RegistryObject<Block> block) {
+
+    private ItemModelBuilder genBlockItemModel(DeferredBlock<Block> block) {
         return withExistingParent(block.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(Kitchenkarrot.MOD_ID,ITEM_FOLDER + "/" + block.getId().getPath()));
+                ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, ITEM_FOLDER + "/" + block.getId().getPath()));
     }
 }

@@ -16,7 +16,7 @@ public class BrewingBarrelMenu extends KKBeMenu<BrewingBarrelBlockEntity> {
     }
 
     void addSlots() {
-        var handler = blockEntity.input;
+        var handler = blockEntity.getInput();
         addSlot(handler, 0, 48, 25);
         addSlot(handler, 1, 68, 25);
         addSlot(handler, 2, 88, 25);

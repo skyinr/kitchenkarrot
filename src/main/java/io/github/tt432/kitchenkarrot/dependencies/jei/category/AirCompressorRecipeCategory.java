@@ -31,7 +31,7 @@ public class AirCompressorRecipeCategory extends BaseRecipeCategory<AirCompresso
     protected final IDrawable power;
     protected final ITickTimer timer;
     protected static final ResourceLocation BACKGROUND =
-            new ResourceLocation(Kitchenkarrot.MOD_ID, "textures/gui/jei.png");
+            ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "textures/gui/jei.png");
 
     public AirCompressorRecipeCategory(IGuiHelper helper) {
         super(JeiPlugin.AIR_COMPRESSOR,

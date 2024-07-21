@@ -5,27 +5,28 @@ import io.github.tt432.kitchenkarrot.dependencies.jei.category.*;
 import io.github.tt432.kitchenkarrot.gui.AirCompressorGui;
 import io.github.tt432.kitchenkarrot.gui.BrewingBarrelGui;
 import io.github.tt432.kitchenkarrot.item.ModBlockItems;
-import io.github.tt432.kitchenkarrot.recipes.recipe.PlateRecipe;
-import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.menu.AirCompressorMenu;
 import io.github.tt432.kitchenkarrot.menu.BrewingBarrelMenu;
 import io.github.tt432.kitchenkarrot.menu.ShakerMenu;
-import io.github.tt432.kitchenkarrot.registries.ModMenuTypes;
 import io.github.tt432.kitchenkarrot.recipes.recipe.AirCompressorRecipe;
 import io.github.tt432.kitchenkarrot.recipes.recipe.BrewingBarrelRecipe;
 import io.github.tt432.kitchenkarrot.recipes.recipe.CocktailRecipe;
+import io.github.tt432.kitchenkarrot.recipes.recipe.PlateRecipe;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
+import io.github.tt432.kitchenkarrot.registries.ModMenuTypes;
 import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeInput;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -35,23 +36,31 @@ import java.util.List;
 @mezz.jei.api.JeiPlugin
 public class JeiPlugin implements IModPlugin {
     public static final RecipeType<AirCompressorRecipe> AIR_COMPRESSOR =
-            new RecipeType<>(new ResourceLocation(Kitchenkarrot.MOD_ID, "air_compressor"),
+            new RecipeType<>(ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "air_compressor"),
                     AirCompressorRecipe.class);
 
     public static final RecipeType<CocktailRecipe> COCKTAIL =
-            new RecipeType<>(new ResourceLocation(Kitchenkarrot.MOD_ID, "cocktail"),
+            new RecipeType<>(ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "cocktail"),
                     CocktailRecipe.class);
 
     public static final RecipeType<BrewingBarrelRecipe> BREWING_BARREL =
-            new RecipeType<>(new ResourceLocation(Kitchenkarrot.MOD_ID, "brewing_barrel"),
+            new RecipeType<>(ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "brewing_barrel"),
                     BrewingBarrelRecipe.class);
 
     public static final RecipeType<PlateRecipe> PLATE =
-            new RecipeType<>(new ResourceLocation(Kitchenkarrot.MOD_ID, "plate"),
+            new RecipeType<>(ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "plate"),
                     PlateRecipe.class);
 
-    protected <C extends Container, T extends Recipe<C>> List<T> getRecipe(net.minecraft.world.item.crafting.RecipeType<T> recipeType) {
-        return Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(recipeType);
+    protected <C extends RecipeInput, T extends Recipe<C>> List<T> getRecipe(net.minecraft.world.item.crafting.RecipeType<T> recipeType) {
+        //TODO not use Stream
+        if (Minecraft.getInstance().level != null) {
+            return Minecraft.getInstance().level.getRecipeManager()
+                    .getAllRecipesFor(recipeType)
+                    .stream()
+                    .map(RecipeHolder::value)
+                    .toList();
+        }
+        return null;
     }
 
     @Override
@@ -103,9 +112,10 @@ public class JeiPlugin implements IModPlugin {
         registration.registerSubtypeInterpreter(ModItems.COCKTAIL.get(), CocktailSubtypeInterpreter.INSTANCE);
     }
 
-    public static final ResourceLocation UID = new ResourceLocation(Kitchenkarrot.MOD_ID, "jei_plugin");
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "jei_plugin");
 
     @Override
+    @NotNull
     public ResourceLocation getPluginUid() {
         return UID;
     }

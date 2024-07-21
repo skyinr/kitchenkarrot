@@ -1,5 +1,6 @@
 package io.github.tt432.kitchenkarrot.blockentity.sync;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 
 /**
@@ -11,14 +12,14 @@ public class BoolSyncData extends SyncData<Boolean> {
     }
 
     @Override
-    protected CompoundTag toTag() {
+    protected CompoundTag toTag(HolderLookup.Provider provider) {
         var result = new CompoundTag();
         result.putBoolean("value", get());
         return result;
     }
 
     @Override
-    protected Boolean fromTag(CompoundTag tag) {
+    protected Boolean fromTag(HolderLookup.Provider provider, CompoundTag tag) {
         return tag.getBoolean("value");
     }
 }

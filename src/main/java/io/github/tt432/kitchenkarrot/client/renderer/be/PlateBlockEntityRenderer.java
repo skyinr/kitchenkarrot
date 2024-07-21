@@ -2,13 +2,10 @@ package io.github.tt432.kitchenkarrot.client.renderer.be;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
-import io.github.tt432.kitchenkarrot.block.CoasterBlock;
 import io.github.tt432.kitchenkarrot.block.PlateBlock;
 import io.github.tt432.kitchenkarrot.blockentity.PlateBlockEntity;
 import io.github.tt432.kitchenkarrot.client.plate.PlateModelRegistry;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -18,9 +15,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.RenderTypeHelper;
-import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.client.RenderTypeHelper;
+import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.joml.Quaternionf;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -40,43 +38,35 @@ public class PlateBlockEntityRenderer implements BlockEntityRenderer<PlateBlockE
         this.modelRenderer = context.getBlockRenderDispatcher().getModelRenderer();
     }
 
-
     //TODO 重写渲染系统
     @Override
     @ParametersAreNonnullByDefault
-    public void render(PlateBlockEntity pBlockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        pBlockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-            ItemStack stack = handler.getStackInSlot(0);
-            //BakedModel model = PlateModelRegistry.get(new ResourceLocation(stack.getItem().getRegistryName() + "_" + stack.getCount()));
-            //ResourceLocation modelLocation = PlateModelRegistry.MODEL_MAP.get(new ResourceLocation(stack.getItem().getRegistryName() + "_" + stack.getCount()));
-            BakedModel model = this.modelManager.getModel(to(stack.isEmpty() ? PlateModelRegistry.DEFAULT_NAME : new ResourceLocation(Kitchenkarrot.MOD_ID, stack.getItem() + "_" + stack.getCount())));
+    public void render(PlateBlockEntity plateBlockEntity, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, int packedOverlay) {
+        if (plateBlockEntity.getLevel() != null) {
+            IItemHandler capability = plateBlockEntity.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, plateBlockEntity.getBlockPos(), null);
+            if (capability != null) {
+                ItemStack stack = capability.getStackInSlot(0);
+                BakedModel model = this.modelManager.getModel(to(stack.isEmpty() ?
+                        PlateModelRegistry.DEFAULT_NAME :
+                        ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, stack.getItem() + "_" + stack.getCount())));
 
-            poseStack.pushPose();
-            BlockState state = pBlockEntity.getBlockState();
-            poseStack.translate(.5, .5, .5);
-            poseStack.mulPose(new Quaternionf().rotateY(-(state.getValue(PlateBlock.DEGREE) - 180) * (float) Math.PI / 180));
-//            poseStack.mulPose(new Quaternionf().rotateY(
-//                    switch (state.getValue(CoasterBlock.FACING)) {
-//                        case EAST -> 90 * (float) Math.PI / 4;
-//                        case WEST -> -90 * (float) Math.PI / 4;
-//                        case SOUTH -> 180 * (float) Math.PI / 2;
-//                        default -> -180 * (float) Math.PI / 4;
-//                    }
-//            ));
-
-            poseStack.translate(-.5, -.5, -.5);
-            //ModModelRegistry.render(model, bufferSource, pBlockEntity, poseStack, packedLight, packedOverlay);
-            model.getRenderTypes(pBlockEntity.getBlockState(), RandomSource.create(), ModelData.EMPTY).forEach(renderType ->
+                poseStack.popPose();
+                BlockState state = plateBlockEntity.getBlockState();
+                poseStack.translate(0.5, 0.5, 0.5);
+                poseStack.mulPose(new Quaternionf().rotateY(-(state.getValue(PlateBlock.DEGREE) - 180) * (float) Math.PI / 180));
+                poseStack.translate(-0.5, -0.5, -0.5);
+                model.getRenderTypes(plateBlockEntity.getBlockState(), RandomSource.create(), ModelData.EMPTY).forEach(renderType -> {
                     this.modelRenderer.renderModel(
                             poseStack.last(),
-                            bufferSource.getBuffer(RenderTypeHelper.getEntityRenderType(renderType, false)),
-                            pBlockEntity.getBlockState(),
+                            multiBufferSource.getBuffer(RenderTypeHelper.getEntityRenderType(renderType, false)),
+                            plateBlockEntity.getBlockState(),
                             model, 1.0F, 1.0F, 1.0F,
-                            packedLight, packedOverlay, ModelData.EMPTY, renderType)
-            );
-//            this.modelRenderer.renderModel(poseStack.last(), bufferSource.getBuffer(ItemBlockRenderTypes.getRenderType(pBlockEntity.getBlockState(), false)), pBlockEntity.getBlockState(), model, 1.0F, 1.0F, 1.0F, packedLight, packedOverlay, ModelData.EMPTY, RenderType.cutout());
-            poseStack.popPose();
-        });
+                            packedLight, packedOverlay, ModelData.EMPTY, renderType
+                    );
+                });
+                poseStack.popPose();
+            }
+        }
     }
 
 }

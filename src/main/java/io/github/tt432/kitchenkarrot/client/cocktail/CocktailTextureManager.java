@@ -11,7 +11,9 @@ public class CocktailTextureManager extends TextureAtlasHolder {
     public static final CocktailTextureManager INSTANCE = new CocktailTextureManager(Minecraft.getInstance().getTextureManager());
 
     private CocktailTextureManager(TextureManager p_262057_) {
-        super(p_262057_, new ResourceLocation(Kitchenkarrot.MOD_ID, "textures/atlas/cocktail.png"), new ResourceLocation(Kitchenkarrot.MOD_ID, "cocktail"));
+        super(p_262057_,
+                ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "textures/atlas/cocktail.png"),
+                ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "cocktail"));
     }
 
     @Override

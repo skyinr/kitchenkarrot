@@ -15,14 +15,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  **/
 @Mixin(MobEffectInstance.class)
 public class MixinMobEffectInstance {
-    @Shadow @Final private MobEffect effect;
+    @Shadow
+    @Final
+    private MobEffect effect;
 
-    @Shadow private int amplifier;
+    @Shadow
+    private int amplifier;
 
-    @Shadow private int duration;
+    @Shadow
+    private int duration;
 
     @Inject(method = "update", at = @At("HEAD"), cancellable = true)
-    private void mixinUpdate(MobEffectInstance pOther, CallbackInfoReturnable<Boolean> cir) {
+    private void KK$update(MobEffectInstance pOther, CallbackInfoReturnable<Boolean> cir) {
         if (this.effect == ModEffects.TIPSY.get()) {
             amplifier += 1;
             duration = pOther.getDuration();

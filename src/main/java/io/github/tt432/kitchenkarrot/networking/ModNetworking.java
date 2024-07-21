@@ -1,32 +1,20 @@
 package io.github.tt432.kitchenkarrot.networking;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.networking.handler.UpdateBarrelHandler;
 import io.github.tt432.kitchenkarrot.networking.packet.C2SUpdateBarrelPacket;
-import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
+@EventBusSubscriber(modid = Kitchenkarrot.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModNetworking {
-    private static int ID = 0;
-    private static int nextId() {
-        return ID++;
-    }
+    @SubscribeEvent
+    public static void registerNetworking(RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar(Kitchenkarrot.VERSION);
 
-    private final SimpleChannel channel;
+        registrar.playToServer(C2SUpdateBarrelPacket.TYPE, C2SUpdateBarrelPacket.STREAM_CODEC, UpdateBarrelHandler.getInstance());
 
-    public ModNetworking() {
-        channel = NetworkRegistry.newSimpleChannel(
-                new ResourceLocation(Kitchenkarrot.MOD_ID, "channel"),
-                () -> Kitchenkarrot.VERSION,
-                Kitchenkarrot.VERSION::equals,
-                Kitchenkarrot.VERSION::equals
-        );
-
-        channel.registerMessage(nextId(), C2SUpdateBarrelPacket.class, C2SUpdateBarrelPacket::write, C2SUpdateBarrelPacket::new, C2SUpdateBarrelPacket::handle);
-    }
-
-    public void sendUpdateBarrel(BlockPos pos, boolean value) {
-        channel.sendToServer(new C2SUpdateBarrelPacket(pos, value));
     }
 }

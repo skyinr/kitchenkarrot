@@ -3,14 +3,14 @@ package io.github.tt432.kitchenkarrot.block;
 import io.github.tt432.kitchenkarrot.blockentity.BaseBlockEntity;
 import io.github.tt432.kitchenkarrot.blockentity.MenuBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * @author DustW
@@ -22,17 +22,17 @@ public abstract class GuiEntityBlock<T extends BaseBlockEntity> extends ModBaseE
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (pLevel.isClientSide) {
-            return InteractionResult.SUCCESS;
-        } else {
-            var be = pLevel.getBlockEntity(pPos);
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (level.isClientSide) {
+            return ItemInteractionResult.SUCCESS;
+        }else {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
 
-            if (be instanceof MenuBlockEntity kk) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer, kk, be.getBlockPos());
+            if (blockEntity instanceof MenuBlockEntity kk){
+                player.openMenu(kk);
                 kk.forceOnce();
             }
-            return InteractionResult.CONSUME;
+            return ItemInteractionResult.CONSUME;
         }
     }
 }

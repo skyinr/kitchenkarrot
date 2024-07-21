@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelManager;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -70,7 +71,7 @@ public class CocktailBakedModel implements BakedModel {
                     model = modelManager.getModel(to(cocktail));
                 } else {
                     Kitchenkarrot.LOGGER.warn("Miss cocktail texture for {}", p_173466_.getItem());
-                    model = modelManager.getModel(CocktailItem.UNKNOWN_COCKTAIL);
+                    model = modelManager.getModel(ModelResourceLocation.standalone(CocktailItem.UNKNOWN_COCKTAIL));
                 }
                 return model;
             }

@@ -1,7 +1,7 @@
 package io.github.tt432.kitchenkarrot.capability;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 /**
  * @author DustW

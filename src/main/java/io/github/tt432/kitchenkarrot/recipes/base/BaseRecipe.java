@@ -1,67 +1,45 @@
 package io.github.tt432.kitchenkarrot.recipes.base;
 
-import com.google.gson.annotations.Expose;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
 import java.util.List;
 
 /**
  * @author DustW
  **/
-public abstract class BaseRecipe<SELF extends BaseRecipe<SELF>> implements Recipe<Container> {
-    @Expose(deserialize = false, serialize = false)
-    ResourceLocation id;
-    @Expose
-    public String type;
+public abstract class BaseRecipe implements Recipe<RecipeWrapper> {
 
     public abstract boolean matches(List<ItemStack> inputs);
 
+    public abstract String getId();
+
     @Override
-    public boolean matches(Container pContainer, Level pLevel) {
+    public boolean matches(RecipeWrapper recipeWrapper, Level level) {
         return false;
     }
 
     @Override
-    public ItemStack assemble(Container p_44001_, RegistryAccess p_267165_) {
-        return getResultItem(p_267165_);
+    public ItemStack assemble(RecipeWrapper recipeWrapper, HolderLookup.Provider provider) {
+        return getResultItem(provider);
     }
 
-//    @Override
-//    public ItemStack assemble(Container pContainer) {
-//        return getResultItem();
-//    }
 
     @Override
     public boolean canCraftInDimensions(int pWidth, int pHeight) {
         return true;
     }
 
-    public SELF setID(ResourceLocation id) {
-        this.id = id;
-        return self();
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return id;
-    }
-
-    private SELF self() {
-        return (SELF) this;
-    }
-
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return getId().hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof BaseRecipe recipe && recipe.id.equals(id);
+        return obj instanceof BaseRecipe recipe && recipe.getId().equals(getId());
     }
 }

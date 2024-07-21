@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.client.plate;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.components.KKDataComponents;
 import io.github.tt432.kitchenkarrot.registries.ModBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -10,6 +11,7 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author DustW
@@ -62,13 +65,14 @@ public class PlateBakedModel implements BakedModel {
             @Nullable
             @Override
             public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel p_173467_, @Nullable LivingEntity p_173468_, int p_173469_) {
-                var tag = stack.getTag();
+                DataComponentMap components = stack.getComponents();
 
-                if (tag != null && tag.contains("plate_type") && !tag.getString("plate_type").equals("minecraft:air") && tag.contains("plate_amount")) {
-                    var plateType = new ResourceLocation(Kitchenkarrot.MOD_ID, new ResourceLocation(tag.getString("plate_type")).getPath());
-                    var location = new ResourceLocation(
-                            plateType + "_" + tag.getInt("plate_amount")
-                    );
+                if (components.has(KKDataComponents.PLATE_TYPE.get()) &&
+                        Objects.requireNonNull(components.get(KKDataComponents.PLATE_TYPE.get())).contentEquals("minecraft:air") &&
+                        components.has(KKDataComponents.PLATE_AMOUNT.get())) {
+                    ResourceLocation plateType = ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID,
+                            ResourceLocation.parse(Objects.requireNonNull(components.get(KKDataComponents.PLATE_TYPE.get()))).getPath());
+                    ResourceLocation location = ResourceLocation.parse(plateType + "_" + components.get(KKDataComponents.PLATE_AMOUNT.get()));
 
                     BakedModel model1 = Minecraft.getInstance().getModelManager().getModel(PlateModelRegistry.to(location));
                     return model1;

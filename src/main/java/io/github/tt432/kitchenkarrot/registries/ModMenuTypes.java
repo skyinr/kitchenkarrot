@@ -4,29 +4,29 @@ import io.github.tt432.kitchenkarrot.Kitchenkarrot;
 import io.github.tt432.kitchenkarrot.menu.AirCompressorMenu;
 import io.github.tt432.kitchenkarrot.menu.BrewingBarrelMenu;
 import io.github.tt432.kitchenkarrot.menu.ShakerMenu;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
  * @author DustW
  **/
 public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENUS =
-            DeferredRegister.create(ForgeRegistries.MENU_TYPES, Kitchenkarrot.MOD_ID);
+            DeferredRegister.create(Registries.MENU, Kitchenkarrot.MOD_ID);
 
-    public static final RegistryObject<MenuType<AirCompressorMenu>> AIR_COMPRESSOR =
+    public static final DeferredHolder<MenuType<?>, MenuType<AirCompressorMenu>> AIR_COMPRESSOR =
             MENUS.register("air_compressor", () -> from(AirCompressorMenu::new));
 
-    public static final RegistryObject<MenuType<BrewingBarrelMenu>> BREWING_BARREL =
+    public static final DeferredHolder<MenuType<?>, MenuType<BrewingBarrelMenu>> BREWING_BARREL =
             MENUS.register("brewing_barrel", () -> from(BrewingBarrelMenu::new));
-    public static final RegistryObject<MenuType<ShakerMenu>> SHAKER =
+    public static final DeferredHolder<MenuType<?>, MenuType<ShakerMenu>> SHAKER =
             MENUS.register("shaker", () -> new MenuType<>(ShakerMenu::new, FeatureFlags.VANILLA_SET));
 //    public static final RegistryObject<MenuType<ShakerMenu>> SHAKER =
 //            MENUS.register("shaker", () -> new MenuType<>(ShakerMenu::new));
@@ -36,7 +36,7 @@ public class ModMenuTypes {
     }
 
     private static <M extends AbstractContainerMenu, T extends BlockEntity> MenuType<M> from(KKBeMenuCreator<M, T> creator) {
-        return IForgeMenuType.create((id, inv, data) ->
+        return IMenuTypeExtension.create((id, inv, data) ->
                 creator.create(id, inv, (T) inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 }

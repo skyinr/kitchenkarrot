@@ -2,8 +2,8 @@ package io.github.tt432.kitchenkarrot.dependencies.jei.category;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
 import io.github.tt432.kitchenkarrot.dependencies.jei.JeiPlugin;
-import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.recipes.recipe.CocktailRecipe;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -18,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
  **/
 public class CocktailRecipeCategory extends BaseRecipeCategory<CocktailRecipe> {
     protected static final ResourceLocation BACKGROUND =
-            new ResourceLocation(Kitchenkarrot.MOD_ID, "textures/gui/jei.png");
+            ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "textures/gui/jei.png");
 
     public CocktailRecipeCategory(IGuiHelper helper) {
         super(JeiPlugin.COCKTAIL,
@@ -28,7 +28,7 @@ public class CocktailRecipeCategory extends BaseRecipeCategory<CocktailRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, CocktailRecipe recipe, IFocusGroup focuses) {
-        var ingredients = recipe.getContent().getRecipe();
+        var ingredients = recipe.getContent().recipe();
 
         builder.addSlot(RecipeIngredientRole.INPUT, 44, 15).addIngredients(ingredients.get(0));
         builder.addSlot(RecipeIngredientRole.INPUT, 66, 15).addIngredients(ingredients.get(1));

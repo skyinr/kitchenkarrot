@@ -19,10 +19,10 @@ public class ModItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag tooltipFlag) {
-        super.appendHoverText(stack, level, tooltip, tooltipFlag);
-        if (PlateHolderMap.canPutOnPlate(stack.getItem())) {
-            tooltip.add(Component.translatable("info.kitchenkarrot.can_be_dished"));
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+        if (PlateHolderMap.canPutOnPlate(stack.getItem())){
+            tooltipComponents.add(Component.translatable("info.kitchenkarrot.can_be_dished"));
         }
     }
 }

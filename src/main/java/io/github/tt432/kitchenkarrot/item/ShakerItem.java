@@ -1,12 +1,10 @@
 package io.github.tt432.kitchenkarrot.item;
 
-import io.github.tt432.kitchenkarrot.capability.ShakerCapabilityProvider;
+import io.github.tt432.kitchenkarrot.components.KKDataComponents;
 import io.github.tt432.kitchenkarrot.menu.ShakerMenu;
 import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
 import io.github.tt432.kitchenkarrot.util.SoundUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.SimpleMenuProvider;
@@ -17,13 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 import static io.github.tt432.kitchenkarrot.registries.ModItems.cocktailProperties;
 
@@ -42,8 +34,7 @@ public class ShakerItem extends Item {
         if (pUsedHand == InteractionHand.MAIN_HAND) {
             if (pPlayer.isShiftKeyDown()) {
                 if (!pLevel.isClientSide) {
-                    NetworkHooks.openScreen((ServerPlayer) pPlayer, new SimpleMenuProvider(
-                            (id, inv, player) -> new ShakerMenu(id, inv), stack.getDisplayName()));
+                    pPlayer.openMenu(new SimpleMenuProvider((id, inv, player) -> new ShakerMenu(id, inv), stack.getDisplayName()));
                 } else {
                     pPlayer.playSound(ModSoundEvents.SHAKER_OPEN.get(), 0.5F,
                             pLevel.random.nextFloat() * 0.1F + 0.9F);
@@ -90,58 +81,28 @@ public class ShakerItem extends Item {
     }
 
     @Override
-    public int getUseDuration(ItemStack pStack) {
-        return getRecipeTime(pStack);
+    public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
+        return getRecipeTime(stack);
     }
 
     public static void setFinish(ItemStack stack, boolean finish) {
-        stack.getOrCreateTag().putBoolean("finish", finish);
+        stack.set(KKDataComponents.FINISH, finish);
     }
 
     public static boolean getFinish(ItemStack stack) {
-        return stack.getOrCreateTag().getBoolean("finish");
+        return stack.getComponents().getOrDefault(KKDataComponents.FINISH.get(), false);
     }
 
     public static void setRecipeTime(ItemStack stack, int time) {
-        stack.getOrCreateTag().putInt("time", time);
+        stack.set(KKDataComponents.RECIPE_TIME, time);
     }
 
     public static int getRecipeTime(ItemStack stack) {
-        var tag = stack.getOrCreateTag();
-        return tag.contains("time") ? tag.getInt("time") : 0;
+        return stack.getComponents().getOrDefault(KKDataComponents.RECIPE_TIME.get(), 0);
     }
 
     @Override
     public UseAnim getUseAnimation(ItemStack pStack) {
         return UseAnim.DRINK;
-    }
-
-    @Nullable
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-        return new ShakerCapabilityProvider();
-    }
-
-    @Nullable
-    @Override
-    public CompoundTag getShareTag(ItemStack stack) {
-        var result = Objects.requireNonNullElse(super.getShareTag(stack), new CompoundTag());
-        stack.getCapability(ForgeCapabilities.ITEM_HANDLER)
-                .ifPresent(h -> result.put("items", ((ItemStackHandler) h).serializeNBT()));
-        result.putBoolean("finish", getFinish(stack));
-        result.putInt("time", getRecipeTime(stack));
-        return result;
-    }
-
-    @Override
-    public void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
-        super.readShareTag(stack, nbt);
-
-        if (nbt != null) {
-            stack.getCapability(ForgeCapabilities.ITEM_HANDLER)
-                    .ifPresent(h -> ((ItemStackHandler) h).deserializeNBT(nbt.getCompound("items")));
-            setFinish(stack, nbt.getBoolean("finish"));
-            setRecipeTime(stack, nbt.getInt("time"));
-        }
     }
 }

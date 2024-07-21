@@ -8,23 +8,23 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static io.github.tt432.kitchenkarrot.Kitchenkarrot.MOD_ID;
 
-@Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModTabs {
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
-    public static final RegistryObject<CreativeModeTab> MAIN_TAB = TABS.register("main", () -> CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB = TABS.register("main", () -> CreativeModeTab.builder()
             .icon(() -> new ItemStack(ModItems.CARROT_SPICES.get()))
             .title(Component.translatable("itemGroup.kitchenkarrot.main"))
             .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
             .build());
-    public static final RegistryObject<CreativeModeTab> COCKTAIL_TAB = TABS.register("cocktail", () -> CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> COCKTAIL_TAB = TABS.register("cocktail", () -> CreativeModeTab.builder()
             .icon(() -> new ItemStack(ModItems.SHAKER.get()))
             .title(Component.translatable("itemGroup.kitchenkarrot.cocktail"))
             .withTabsBefore(MAIN_TAB.getId())
@@ -40,7 +40,7 @@ public class ModTabs {
             event.accept(ModItems.VODKA_BASE);
             for (String cocktail : CocktailList.INSTANCE.cocktails) {
                 ItemStack itemStack = new ItemStack(ModItems.COCKTAIL.get());
-                CocktailItem.setCocktail(itemStack, new ResourceLocation(cocktail));
+                CocktailItem.setCocktail(itemStack, ResourceLocation.parse(cocktail));
                 event.accept(itemStack);
             }
         }

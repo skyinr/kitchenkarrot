@@ -1,32 +1,58 @@
 package io.github.tt432.kitchenkarrot.recipes.recipe;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.tt432.kitchenkarrot.recipes.base.BaseRecipe;
 import io.github.tt432.kitchenkarrot.registries.RecipeSerializers;
 import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.common.util.RecipeMatcher;
+import net.neoforged.neoforge.common.util.RecipeMatcher;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 /**
  * @author DustW
  **/
-public class AirCompressorRecipe extends BaseRecipe<AirCompressorRecipe> {
-    @Expose
-    NonNullList<Ingredient> ingredient = NonNullList.withSize(4, Ingredient.EMPTY);
-    @Expose
-    @SerializedName("craftingtime")
+public class AirCompressorRecipe extends BaseRecipe {
+    public static final MapCodec<AirCompressorRecipe> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
+            Ingredient.LIST_CODEC_NONEMPTY.fieldOf("ingredient")
+                    .orElse(NonNullList.withSize(4, Ingredient.EMPTY))
+                    .forGetter(AirCompressorRecipe::getIngredient),
+            Codec.INT.fieldOf("craftingtime").forGetter(AirCompressorRecipe::getCraftingTime),
+            Ingredient.CODEC.fieldOf("container").forGetter(AirCompressorRecipe::getContainer),
+            ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
+    ).apply(builder, AirCompressorRecipe::new));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, AirCompressorRecipe> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.fromCodec(Ingredient.LIST_CODEC_NONEMPTY
+                    .orElse(NonNullList.withSize(4, Ingredient.EMPTY))),
+            recipe -> recipe.ingredient,
+            ByteBufCodecs.INT, recipe -> recipe.craftingTime,
+            Ingredient.CONTENTS_STREAM_CODEC, recipe -> recipe.container,
+            ItemStack.STREAM_CODEC, recipe -> recipe.result,
+            AirCompressorRecipe::new
+    );
+
+    public AirCompressorRecipe(List<Ingredient> ingredient, int craftingTime, Ingredient container, ItemStack result) {
+        this.ingredient = ingredient;
+        this.craftingTime = craftingTime;
+        this.container = container;
+        this.result = result;
+    }
+
+    List<Ingredient> ingredient;
     int craftingTime;
-    @Expose
     Ingredient container;
-    @Expose
     ItemStack result;
 
     @Override
@@ -34,7 +60,12 @@ public class AirCompressorRecipe extends BaseRecipe<AirCompressorRecipe> {
         return RecipeMatcher.findMatches(inputs, ingredient) != null;
     }
 
-    public NonNullList<Ingredient> getIngredient() {
+    @Override
+    public String getId() {
+        return result.getDescriptionId();
+    }
+
+    public List<Ingredient> getIngredient() {
         return ingredient;
     }
 
@@ -46,26 +77,25 @@ public class AirCompressorRecipe extends BaseRecipe<AirCompressorRecipe> {
         return container;
     }
 
+
     @Override
-    public ItemStack getResultItem(RegistryAccess p_267052_) {
+    @NotNull
+    public ItemStack getResultItem(@NotNull HolderLookup.Provider provider) {
         return result.copy();
     }
-
-//    @Override
-//    public ItemStack getResultItem() {
-//        return result.copy();
-//    }
 
     public int getCraftingTime() {
         return craftingTime;
     }
 
     @Override
+    @NotNull
     public RecipeSerializer<?> getSerializer() {
         return RecipeSerializers.AIR_COMPRESSOR.get();
     }
 
     @Override
+    @NotNull
     public RecipeType<?> getType() {
         return RecipeTypes.AIR_COMPRESSOR.get();
     }

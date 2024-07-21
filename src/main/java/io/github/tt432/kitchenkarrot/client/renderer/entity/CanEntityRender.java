@@ -20,16 +20,16 @@ public class CanEntityRender extends EntityRenderer<CanEntity> {
     }
 
     @Override
-    public void render(CanEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight) {
-        super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
-        pMatrixStack.pushPose();
-        pMatrixStack.translate(0, -1.2, 0);
-        this.canEntityModel.renderToBuffer(pMatrixStack, pBuffer.getBuffer(RenderType.entityCutout(getTextureLocation(pEntity))), pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        pMatrixStack.popPose();
+    public void render(CanEntity p_entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        super.render(p_entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+        poseStack.pushPose();
+        poseStack.translate(0, -1.2, 0);
+        this.canEntityModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityCutout(getTextureLocation(p_entity))), packedLight, OverlayTexture.NO_OVERLAY, 1);
+        poseStack.popPose();
     }
 
     @Override
     public ResourceLocation getTextureLocation(CanEntity pEntity) {
-        return new ResourceLocation(Kitchenkarrot.MOD_ID, "textures/entity/can.png");
+        return ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "textures/entity/can.png");
     }
 }

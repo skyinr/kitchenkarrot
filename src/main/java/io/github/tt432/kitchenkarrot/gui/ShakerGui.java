@@ -13,6 +13,6 @@ import net.minecraft.world.entity.player.Inventory;
 public class ShakerGui extends KKGui<ShakerMenu> {
     public ShakerGui(ShakerMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle,
-                new ResourceLocation(Kitchenkarrot.MOD_ID, "textures/gui/shaker.png"));
+                ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "textures/gui/shaker.png"));
     }
 }

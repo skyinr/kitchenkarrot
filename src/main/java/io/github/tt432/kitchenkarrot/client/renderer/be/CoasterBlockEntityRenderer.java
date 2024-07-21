@@ -8,11 +8,12 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.joml.Quaternionf;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -25,39 +26,29 @@ public class CoasterBlockEntityRenderer implements BlockEntityRenderer<CoasterBl
     @Override
     @ParametersAreNonnullByDefault
     public void render(CoasterBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-            poseStack.pushPose();
-            poseStack.translate(0.5, 4 / 16., 0.5);
-            poseStack.scale(1.7f, 1.7f, 1.7f);
-            BlockState state = blockEntity.getBlockState();
-            poseStack.mulPose(new Quaternionf().rotateY(
-                    switch (state.getValue(CoasterBlock.FACING)) {
-                        case EAST -> 90 * (float) Math.PI / 4;
-                        case WEST -> -90 * (float) Math.PI / 4;
-                        case SOUTH -> 180 * (float) Math.PI / 2;
-                        default -> -180 * (float) Math.PI / 4;
-                    }
-            ));
-//            poseStack.mulPose(Vector3f.YP.rotationDegrees(
-//                switch (state.getValue(CoasterBlock.FACING)) {
-//                    case EAST -> 90;
-//                    case WEST -> -90;
-//                    case SOUTH -> 180;
-//                    default -> 0;
-//                }
-//            ));
-
-            ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-            ItemStack item = handler.getStackInSlot(0);
-            itemRenderer.renderStatic(item, ItemDisplayContext.GROUND,
-                    LightTexture.FULL_BRIGHT, packedOverlay,
-                    poseStack, bufferSource, Minecraft.getInstance().level, ForgeRegistries.ITEMS.getKey(item.getItem()).hashCode());
-//            itemRenderer.renderStatic(item, ItemTransforms.TransformType.GROUND,
-//                    LightTexture.FULL_BRIGHT, packedOverlay,
-//                    poseStack, bufferSource, ForgeRegistries.ITEMS.getKey(item.getItem()).hashCode());
-
-            poseStack.popPose();
-        });
+        if (blockEntity.getLevel() != null) {
+            IItemHandler capability = blockEntity.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, blockEntity.getBlockPos(), null);
+            if (capability != null) {
+                poseStack.pushPose();
+                poseStack.translate(0.5F, (float) 4 / 16, 0.5);
+                poseStack.scale(1.7F, 1.7F, 1.7F);
+                BlockState state = blockEntity.getBlockState();
+                poseStack.mulPose(new Quaternionf().rotateY(
+                        switch (state.getValue(CoasterBlock.FACING)) {
+                            case EAST -> 90 * (float) Math.PI / 4;
+                            case WEST -> -90 * (float) Math.PI / 4;
+                            case SOUTH -> 180 * (float) Math.PI / 2;
+                            default -> -180 * (float) Math.PI / 4;
+                        }
+                ));
+                ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+                ItemStack itemStack = capability.getStackInSlot(0);
+                itemRenderer.renderStatic(itemStack, ItemDisplayContext.GROUND,
+                        LightTexture.FULL_BRIGHT, packedOverlay,
+                        poseStack, bufferSource, Minecraft.getInstance().level, BuiltInRegistries.ITEM.getKey(itemStack.getItem()).hashCode());
+                poseStack.popPose();
+            }
+        }
     }
 
 }

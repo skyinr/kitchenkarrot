@@ -1,15 +1,15 @@
 package io.github.tt432.kitchenkarrot.client.renderer.be;
 
 import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 /**
  * @author DustW
  **/
-@Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class BlockEntityRegistry {
     @SubscribeEvent
     public static void onEvent(EntityRenderersEvent.RegisterRenderers event) {

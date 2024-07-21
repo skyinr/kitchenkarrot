@@ -11,11 +11,11 @@ import java.lang.reflect.Type;
 public class IngredientSerializer implements JsonSerializer<Ingredient>, JsonDeserializer<Ingredient> {
     @Override
     public Ingredient deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return Ingredient.fromJson(json);
+        return Ingredient.CONTENTS_STREAM_CODEC.decode(context.deserialize(json, typeOfT));
     }
 
     @Override
     public JsonElement serialize(Ingredient src, Type typeOfSrc, JsonSerializationContext context) {
-        return src.toJson();
+        return context.serialize(src, typeOfSrc);
     }
 }

@@ -7,34 +7,18 @@ import io.github.tt432.kitchenkarrot.client.cocktail.CocktailTextureManager;
 import io.github.tt432.kitchenkarrot.client.plate.PlateBakedModel;
 import io.github.tt432.kitchenkarrot.client.plate.PlateModelRegistry;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 
 /**
  * @author DustW
  **/
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT, modid = Kitchenkarrot.MOD_ID)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT, modid = Kitchenkarrot.MOD_ID)
 public class ModModelRegistry {
-//    public static void render(BakedModel bakedModel, MultiBufferSource bufferSource, BlockEntity blockEntity,
-//                              PoseStack poseStack, int packedLight, int packedOverlay) {
-//        bakedModel.getRenderTypes(blockEntity.getBlockState(), RandomSource.create(), ModelData.EMPTY).forEach(renderType -> {
-//                    VertexConsumer buffer = bufferSource.getBuffer(RenderTypeHelper
-//                            .getEntityRenderType(renderType, false));
-//                    Minecraft.getInstance().getBlockRenderer().getModelRenderer()
-//                            .renderModel(poseStack.last(), buffer, blockEntity.getBlockState(),
-//                                    bakedModel, 1, 1, 1, packedLight, packedOverlay, ModelData.EMPTY, renderType);
-//                }
-//        );
-////        VertexConsumer buffer = bufferSource.getBuffer(ItemBlockRenderTypes.getRenderType(blockEntity.getBlockState(), false));
-//
-//
-////        Minecraft.getInstance().getBlockRenderer().getModelRenderer()
-////                .renderModel(poseStack.last(), buffer, blockEntity.getBlockState(),
-////                        bakedModel, 1, 1, 1, packedLight, packedOverlay);
-//    }
 
     @SubscribeEvent
     public static void registerModelUnBake(ModelEvent.RegisterAdditional e) {
@@ -49,34 +33,12 @@ public class ModModelRegistry {
 
     @SubscribeEvent
     public static void onModelBake(ModelEvent.ModifyBakingResult evt) {
-        //CocktailModelRegistry.bakeModel(evt);
-        //PlateModelRegistry.bakeModel(evt);
-        evt.getModels().put(new ModelResourceLocation(
-                Kitchenkarrot.MOD_ID,
-                "cocktail",
-                "inventory"
-        ), new CocktailBakedModel());
+        evt.getModels().put(ModelResourceLocation.inventory(
+                        ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "cocktail"))
+                , new CocktailBakedModel());
 
-        evt.getModels().put(new ModelResourceLocation(
-                Kitchenkarrot.MOD_ID,
-                "plate",
-                "inventory"
-        ), new PlateBakedModel());
+        evt.getModels().put(ModelResourceLocation.inventory(
+                        ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "plate"))
+                , new PlateBakedModel());
     }
-//    @SubscribeEvent
-//    public static void onModelBake(ModelBakeEvent evt) {
-//        //CocktailModelRegistry.bakeModel(evt);
-//        //PlateModelRegistry.bakeModel(evt);
-//        evt.getModelRegistry().put(new ModelResourceLocation(
-//                Kitchenkarrot.MOD_ID,
-//                "cocktail",
-//                "inventory"
-//        ), new CocktailBakedModel());
-//
-//        evt.getModelRegistry().put(new ModelResourceLocation(
-//                Kitchenkarrot.MOD_ID,
-//                "plate",
-//                "inventory"
-//        ), new PlateBakedModel());
-//    }
 }

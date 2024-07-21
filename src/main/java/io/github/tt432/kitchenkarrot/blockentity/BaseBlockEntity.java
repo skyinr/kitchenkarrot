@@ -2,9 +2,8 @@ package io.github.tt432.kitchenkarrot.blockentity;
 
 import io.github.tt432.kitchenkarrot.blockentity.sync.SyncDataManager;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +12,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -46,20 +44,21 @@ public abstract class BaseBlockEntity extends BlockEntity {
         return tag.contains(SYNC_KEY);
     }
 
-    @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
-        syncDataManager.load(pTag, isSyncTag(pTag));
 
-        if (!isSyncTag(pTag)) {
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        syncDataManager.load(registries, tag, isSyncTag(tag));
+
+        if (!isSyncTag(tag)) {
             forceOnce();
         }
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        super.saveAdditional(pTag);
-        syncDataManager.save(pTag, false, true);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        syncDataManager.save(registries, tag, false, true);
     }
 
     boolean forceOnce;
@@ -69,11 +68,11 @@ public abstract class BaseBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag result = new CompoundTag();
         result.putBoolean(SYNC_KEY, true);
         //sync every tick by:skyinr
-        syncDataManager.save(result, true, true);
+        syncDataManager.save(registries, result, true, true);
 
         return result;
     }
