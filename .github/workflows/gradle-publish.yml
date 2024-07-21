@@ -42,7 +42,7 @@ jobs:
         run: gradle --build-cache --info --stacktrace assemble
 
       - name: Upload Release
-        if: ${{ steps.release.outputs.release_created }}
+        if: ${{ steps.release.outputs.releases_created }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh release upload ${{ steps.release.outputs.tag_name }} ./build/libs/*.jar
