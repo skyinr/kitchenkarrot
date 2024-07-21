@@ -29,7 +29,7 @@ import java.util.List;
  **/
 public class CocktailRecipe extends BaseRecipe {
     public static final MapCodec<CocktailRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
-            ResourceLocation.CODEC.fieldOf("recipeId").forGetter(recipe -> recipe.recipeId),
+            ResourceLocation.CODEC.fieldOf("cocktail_id").forGetter(recipe -> recipe.recipeId),
             Codec.STRING.fieldOf("author").forGetter(recipe -> recipe.author),
             Content.CODEC.fieldOf("content").forGetter(recipe -> recipe.content)
     ).apply(builder, CocktailRecipe::new));
