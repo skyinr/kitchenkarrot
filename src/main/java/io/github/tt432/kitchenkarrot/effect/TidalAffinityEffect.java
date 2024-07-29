@@ -10,7 +10,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-//TODO IMPLEMENT THIS
+// TODO IMPLEMENT THIS
 public class TidalAffinityEffect extends MobEffect {
 
     public static final Holder<Attribute> ATTRIBUTE = Attributes.ATTACK_SPEED;
@@ -22,13 +22,19 @@ public class TidalAffinityEffect extends MobEffect {
     @Override
     public boolean applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
         AttributeInstance attributeinstance = pLivingEntity.getAttribute(ATTRIBUTE);
-        AttributeModifier attributemodifier = new AttributeModifier(ResourceLocation.withDefaultNamespace("effect.tidal"),
-                2D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        AttributeModifier attributemodifier =
+                new AttributeModifier(
+                        ResourceLocation.withDefaultNamespace("effect.tidal"),
+                        2D,
+                        AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         if (pLivingEntity.isInWaterOrRain()) {
             attributeinstance.removeModifier(attributemodifier);
             attributeinstance.addTransientModifier(attributemodifier);
-//            attributeinstance.addPermanentModifier(new AttributeModifier(attributemodifier.getId(),
-//                    this.getDescriptionId() + " " + pAmplifier, this.getAttributeModifierValue(pAmplifier, attributemodifier), attributemodifier.getOperation()));
+            //            attributeinstance.addPermanentModifier(new
+            // AttributeModifier(attributemodifier.getId(),
+            //                    this.getDescriptionId() + " " + pAmplifier,
+            // this.getAttributeModifierValue(pAmplifier, attributemodifier),
+            // attributemodifier.getOperation()));
         } else {
             attributeinstance.removeModifier(attributemodifier);
         }

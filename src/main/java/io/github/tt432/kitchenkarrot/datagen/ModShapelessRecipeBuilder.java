@@ -18,11 +18,13 @@ public class ModShapelessRecipeBuilder extends ShapelessRecipeBuilder {
         super(p_250837_, p_251897_, p_252227_);
     }
 
-    public static ModShapelessRecipeBuilder shapeless(RecipeCategory p_250714_, ItemLike p_249659_) {
+    public static ModShapelessRecipeBuilder shapeless(
+            RecipeCategory p_250714_, ItemLike p_249659_) {
         return new ModShapelessRecipeBuilder(p_250714_, p_249659_, 1);
     }
 
-    public static ModShapelessRecipeBuilder shapeless(RecipeCategory p_252339_, ItemLike p_250836_, int p_249928_) {
+    public static ModShapelessRecipeBuilder shapeless(
+            RecipeCategory p_252339_, ItemLike p_250836_, int p_249928_) {
         return new ModShapelessRecipeBuilder(p_252339_, p_250836_, p_249928_);
     }
 
@@ -59,8 +61,7 @@ public class ModShapelessRecipeBuilder extends ShapelessRecipeBuilder {
     }
 
     public ModShapelessRecipeBuilder unlockedBy(Item item) {
-        return unlockedBy("has_" + item,
-                InventoryChangeTrigger.TriggerInstance.hasItems(item));
+        return unlockedBy("has_" + item, InventoryChangeTrigger.TriggerInstance.hasItems(item));
     }
 
     public ModShapelessRecipeBuilder unlockedBy(DeferredItem<Item> item) {
@@ -68,9 +69,11 @@ public class ModShapelessRecipeBuilder extends ShapelessRecipeBuilder {
     }
 
     public ModShapelessRecipeBuilder unlockedBy(TagKey<Item> tag) {
-        return unlockedBy("has_" + tag, InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(tag)));
+        return unlockedBy(
+                "has_" + tag,
+                InventoryChangeTrigger.TriggerInstance.hasItems(
+                        ItemPredicate.Builder.item().of(tag)));
     }
-
 
     public ModShapelessRecipeBuilder group(@Nullable String p_126195_) {
         return (ModShapelessRecipeBuilder) super.group(p_126195_);

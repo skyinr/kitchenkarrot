@@ -1,6 +1,9 @@
 package io.github.tt432.kitchenkarrot.block;
 
+import static io.github.tt432.kitchenkarrot.block.PlateHolderMap.plateHolder;
+
 import com.mojang.serialization.MapCodec;
+
 import io.github.tt432.kitchenkarrot.blockentity.PlateBlockEntity;
 import io.github.tt432.kitchenkarrot.components.KKDataComponents;
 import io.github.tt432.kitchenkarrot.recipes.recipe.PlateRecipe;
@@ -10,6 +13,7 @@ import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
 import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import io.github.tt432.kitchenkarrot.util.ItemHandlerUtils;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -43,21 +47,20 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static io.github.tt432.kitchenkarrot.block.PlateHolderMap.plateHolder;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * @author DustW
  **/
-
 @SuppressWarnings("deprecation")
 @ParametersAreNonnullByDefault
 public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
@@ -85,10 +88,10 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
     }
 
     @Override
-    public @NotNull VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+    public @NotNull VoxelShape getShape(
+            BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return SHAPE;
     }
-
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
@@ -96,10 +99,18 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected ItemInteractionResult useItemOn(
+            ItemStack itemStack,
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            InteractionHand hand,
+            BlockHitResult hitResult) {
         AtomicBoolean success = new AtomicBoolean(false);
 
-        IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, hitResult.getDirection());
+        IItemHandler handler =
+                level.getCapability(Capabilities.ItemHandler.BLOCK, pos, hitResult.getDirection());
         BlockEntity blockEntity = level.getBlockEntity(pos);
 
         if (handler != null && blockEntity != null) {
@@ -110,13 +121,23 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
                     ItemStack stack = new ItemStack(this);
                     blockEntity.saveToItem(stack, level.registryAccess());
                     setPlate(stack, dishItem);
-                    if (stack.getComponents().has(KKDataComponents.PLATE_TYPE.get()) && !dishItem.is(Items.AIR)) {
-                        String inputName = dishItem.getDisplayName().getString().replace("[", "").replace("]", "");
-                        stack.getItem().appendHoverText(stack,
-                                Item.TooltipContext.EMPTY,
-                                Collections.singletonList((Component.translatable("info.kitchenkarrot.dished", inputName))
-                                        .setStyle(Style.EMPTY.withItalic(false))),
-                                TooltipFlag.NORMAL);
+                    if (stack.getComponents().has(KKDataComponents.PLATE_TYPE.get())
+                            && !dishItem.is(Items.AIR)) {
+                        String inputName =
+                                dishItem.getDisplayName()
+                                        .getString()
+                                        .replace("[", "")
+                                        .replace("]", "");
+                        stack.getItem()
+                                .appendHoverText(
+                                        stack,
+                                        Item.TooltipContext.EMPTY,
+                                        Collections.singletonList(
+                                                (Component.translatable(
+                                                                "info.kitchenkarrot.dished",
+                                                                inputName))
+                                                        .setStyle(Style.EMPTY.withItalic(false))),
+                                        TooltipFlag.NORMAL);
                     }
                     player.setItemInHand(hand, stack);
                     level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
@@ -130,7 +151,6 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
             }
         }
 
-
         if (success.get()) {
             return ItemInteractionResult.SUCCESS;
         }
@@ -139,38 +159,56 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
 
     private boolean canHoldItem(IItemHandler handler, ItemStack heldItem) {
         ItemStack dishItem = handler.getStackInSlot(0);
-        return plateHolder.containsKey(heldItem.getItem()) &&
-                (dishItem.isEmpty() || (dishItem.is(heldItem.getItem()) && dishItem.getCount() < plateHolder.get(dishItem.getItem())));
+        return plateHolder.containsKey(heldItem.getItem())
+                && (dishItem.isEmpty()
+                        || (dishItem.is(heldItem.getItem())
+                                && dishItem.getCount() < plateHolder.get(dishItem.getItem())));
     }
 
-    private boolean interactWithDish(ItemStack dishItem, ItemStack heldItem, Level level, Player player, IItemHandler handler, BlockPos pos) {
+    private boolean interactWithDish(
+            ItemStack dishItem,
+            ItemStack heldItem,
+            Level level,
+            Player player,
+            IItemHandler handler,
+            BlockPos pos) {
         AtomicBoolean result = new AtomicBoolean(false);
         if (canHoldItem(handler, heldItem)) {
             result.set(addToPlate(handler, heldItem, player));
             level.playSound(player, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS);
-        } else if (!dishItem.isEmpty() && heldItem.isEmpty() || heldItem.is(ModItemTags.INTERACT_WITH_PLATE)) {
+        } else if (!dishItem.isEmpty() && heldItem.isEmpty()
+                || heldItem.is(ModItemTags.INTERACT_WITH_PLATE)) {
             result.set(removeFromPlate(level, player, handler, dishItem, heldItem));
             level.playSound(player, pos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.BLOCKS);
         }
         return result.get();
     }
 
-    private boolean removeFromPlate(Level level, Player player, IItemHandler handler, ItemStack input, ItemStack heldItem) {
-        Optional<RecipeHolder<PlateRecipe>> recipe = level.getRecipeManager()
-                .getAllRecipesFor(RecipeTypes.PLATE.get())
-                .stream()
-                .filter(r ->
-                        r.value().matches(Collections.singletonList(input)) &&
-                                r.value().canCut(heldItem, input)).findFirst();
+    private boolean removeFromPlate(
+            Level level, Player player, IItemHandler handler, ItemStack input, ItemStack heldItem) {
+        Optional<RecipeHolder<PlateRecipe>> recipe =
+                level.getRecipeManager().getAllRecipesFor(RecipeTypes.PLATE.get()).stream()
+                        .filter(
+                                r ->
+                                        r.value().matches(Collections.singletonList(input))
+                                                && r.value().canCut(heldItem, input))
+                        .findFirst();
 
         AtomicBoolean result = new AtomicBoolean(false);
 
-        recipe.ifPresent(r -> {
-            if (giveRecipeResult(r.value(), handler)) {
-                level.playSound(player, player.getOnPos(), ModSoundEvents.CHOP.get(), player.getSoundSource(), 0.5F, level.random.nextFloat() * 0.4F + 0.8F);
-                result.set(true);
-            }
-        });
+        recipe.ifPresent(
+                r -> {
+                    if (giveRecipeResult(r.value(), handler)) {
+                        level.playSound(
+                                player,
+                                player.getOnPos(),
+                                ModSoundEvents.CHOP.get(),
+                                player.getSoundSource(),
+                                0.5F,
+                                level.random.nextFloat() * 0.4F + 0.8F);
+                        result.set(true);
+                    }
+                });
 
         if (recipe.isEmpty()) {
             ItemHandlerUtils.extractSingle(handler, 0, player);
@@ -198,7 +236,9 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
 
     public static void setPlate(ItemStack self, ItemStack content) {
         self.set(KKDataComponents.PLATE_AMOUNT, content.getCount());
-        self.set(KKDataComponents.PLATE_TYPE, BuiltInRegistries.ITEM.getKey(content.getItem()).toString());
+        self.set(
+                KKDataComponents.PLATE_TYPE,
+                BuiltInRegistries.ITEM.getKey(content.getItem()).toString());
     }
 
     @Override
@@ -207,11 +247,12 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
     }
 
     @Override
-    protected void spawnDestroyParticles(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState) {
-    }
+    protected void spawnDestroyParticles(
+            Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState) {}
 
     @Override
-    public BlockState playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
+    public BlockState playerWillDestroy(
+            Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
         pLevel.playSound(null, pPos, SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1, 1);
         return super.playerWillDestroy(pLevel, pPos, pState, pPlayer);
     }

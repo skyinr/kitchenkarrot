@@ -23,6 +23,7 @@ public class EffectEntry {
     }
 
     public static EffectEntry of(Holder<MobEffect> effect, int time, int level, float probability) {
-        return new EffectEntry(() -> new MobEffectInstance(effect, time * 20, level - 1), probability);
+        return new EffectEntry(
+                () -> new MobEffectInstance(effect, time * 20, level - 1), probability);
     }
 }

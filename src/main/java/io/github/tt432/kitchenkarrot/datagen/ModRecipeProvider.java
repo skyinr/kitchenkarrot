@@ -3,6 +3,7 @@ package io.github.tt432.kitchenkarrot.datagen;
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
 import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
+
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
@@ -25,33 +26,40 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     protected static final String KK = Kitchenkarrot.MOD_ID;
     protected static final String OIL = "has_oil";
     protected static final String SALT = "has_salt";
-    protected static final Criterion<InventoryChangeTrigger.TriggerInstance> HAS_OIL = has(ModItemTags.OIL);
-    protected static final Criterion<InventoryChangeTrigger.TriggerInstance> HAS_SALT = has(ModItemTags.SALT);
+    protected static final Criterion<InventoryChangeTrigger.TriggerInstance> HAS_OIL =
+            has(ModItemTags.OIL);
+    protected static final Criterion<InventoryChangeTrigger.TriggerInstance> HAS_SALT =
+            has(ModItemTags.SALT);
 
-    public ModRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+    public ModRecipeProvider(
+            PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);
     }
 
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.EMPTY_PLATE.get(), 2).group(KK)
-                .define('b', Items.BRICK).define('n', Items.IRON_NUGGET)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.EMPTY_PLATE.get(), 2)
+                .group(KK)
+                .define('b', Items.BRICK)
+                .define('n', Items.IRON_NUGGET)
                 .pattern("nbn")
                 .unlockedBy(getHasName(Items.BRICK), has(Items.BRICK))
                 .unlockedBy(getHasName(Items.IRON_NUGGET), has(Items.IRON_NUGGET))
                 .save(recipeOutput, RL(getSimpleRecipeName(ModItems.EMPTY_PLATE.get())));
-        ModShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ModItems.EMPTY_PLATE.get()).group(KK)
+        ModShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ModItems.EMPTY_PLATE.get())
+                .group(KK)
                 .requires(ModItems.PLATE_PIECES.get(), 4)
                 .unlockedBy(ModItems.PLATE_PIECES)
                 .save(recipeOutput, RL("plate_from_pieces"));
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.KNIFE.get()).group(KK)
-                .define('#', Items.IRON_SWORD).define('n', Items.IRON_NUGGET)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.KNIFE.get())
+                .group(KK)
+                .define('#', Items.IRON_SWORD)
+                .define('n', Items.IRON_NUGGET)
                 .pattern(" #")
                 .pattern("n ")
                 .unlockedBy(getHasName(Items.IRON_SWORD), has(Items.IRON_SWORD))
                 .unlockedBy(getHasName(Items.IRON_NUGGET), has(Items.IRON_NUGGET))
                 .save(recipeOutput, RL(getSimpleRecipeName(ModItems.KNIFE.get())));
-
 
         foodShapeless(ModItems.PHANTOM_STEW)
                 .requires(Items.BOWL)
@@ -83,7 +91,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(Items.WHEAT)
                 .unlockedBy(Items.CRIMSON_FUNGUS)
                 .unlockedBy(ModItems.CARROT_SPICES)
-                .save(recipeOutput, RL(getSimpleRecipeName(ModItems.CRIMSON_FUNGI_SPRING_ROLL.get())));
+                .save(
+                        recipeOutput,
+                        RL(getSimpleRecipeName(ModItems.CRIMSON_FUNGI_SPRING_ROLL.get())));
         foodShapeless(ModItems.BUCHE_DE_NOEL)
                 .requires(Items.WHEAT)
                 .requires(tag("forge", "eggs"))
@@ -128,15 +138,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(ModItems.CARROT_SPICES)
                 .unlockedBy(Items.INK_SAC)
                 .save(recipeOutput, RL(getSimpleRecipeName(ModItems.BIKINI_BOTTOM_SUB.get())));
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.ENCHANTED_CHEESE.get()).group(KK)
-                .define('#', ModItems.CHEESE_SLICE.get()).define('-', Items.GOLD_NUGGET)
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.ENCHANTED_CHEESE.get())
+                .group(KK)
+                .define('#', ModItems.CHEESE_SLICE.get())
+                .define('-', Items.GOLD_NUGGET)
                 .pattern("---")
                 .pattern("-#-")
                 .pattern("---")
-                .unlockedBy(getHasName(ModItems.CHEESE_SLICE.get()), has(ModItems.CHEESE_SLICE.get()))
+                .unlockedBy(
+                        getHasName(ModItems.CHEESE_SLICE.get()), has(ModItems.CHEESE_SLICE.get()))
                 .unlockedBy(getHasName(Items.GOLD_NUGGET), has(Items.GOLD_NUGGET))
                 .save(recipeOutput, RL(getSimpleRecipeName(ModItems.ENCHANTED_CHEESE.get())));
-
     }
 
     protected static ModShapelessRecipeBuilder foodShapeless(DeferredItem<Item> food) {
@@ -144,7 +156,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     }
 
     protected static ModShapelessRecipeBuilder foodShapeless(DeferredItem<Item> food, int count) {
-        return ModShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, food.get(), count).group(KK);
+        return ModShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, food.get(), count)
+                .group(KK);
     }
 
     protected static ResourceLocation RL(String string) {
@@ -155,13 +168,22 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         return ItemTags.create(ResourceLocation.fromNamespaceAndPath(namespace, tag));
     }
 
-//    protected static void createIngotRecipes(Consumer<FinishedRecipe> c, RegistryObject<Item> nugget, RegistryObject<Item> ingot, RegistryObject<Block> block) {
-//        Item n = nugget.get();
-//        Item i = ingot.get();
-//        Block b = block.get();
-//        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, i, 9).requires(b).group(null).unlockedBy(getHasName(b), has(b)).save(c, new ResourceLocation(NebulaChronicles.MODID, getConversionRecipeName(i, b)));
-//        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, b).define('#', i).pattern("###").pattern("###").pattern("###").group(null).unlockedBy(getHasName(i), has(i)).save(c, new ResourceLocation(NebulaChronicles.MODID, getSimpleRecipeName(b)));
-//        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, n, 9).requires(i).group(null).unlockedBy(getHasName(i), has(i)).save(c, new ResourceLocation(NebulaChronicles.MODID, getConversionRecipeName(n, i)));
-//        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, i).define('#', n).pattern("###").pattern("###").pattern("###").group(null).unlockedBy(getHasName(n), has(n)).save(c, new ResourceLocation(NebulaChronicles.MODID, getConversionRecipeName(i, n)));
-//    }
+    //    protected static void createIngotRecipes(Consumer<FinishedRecipe> c, RegistryObject<Item>
+    // nugget, RegistryObject<Item> ingot, RegistryObject<Block> block) {
+    //        Item n = nugget.get();
+    //        Item i = ingot.get();
+    //        Block b = block.get();
+    //        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, i,
+    // 9).requires(b).group(null).unlockedBy(getHasName(b), has(b)).save(c, new
+    // ResourceLocation(NebulaChronicles.MODID, getConversionRecipeName(i, b)));
+    //        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, b).define('#',
+    // i).pattern("###").pattern("###").pattern("###").group(null).unlockedBy(getHasName(i),
+    // has(i)).save(c, new ResourceLocation(NebulaChronicles.MODID, getSimpleRecipeName(b)));
+    //        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, n,
+    // 9).requires(i).group(null).unlockedBy(getHasName(i), has(i)).save(c, new
+    // ResourceLocation(NebulaChronicles.MODID, getConversionRecipeName(n, i)));
+    //        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, i).define('#',
+    // n).pattern("###").pattern("###").pattern("###").group(null).unlockedBy(getHasName(n),
+    // has(n)).save(c, new ResourceLocation(NebulaChronicles.MODID, getConversionRecipeName(i, n)));
+    //    }
 }

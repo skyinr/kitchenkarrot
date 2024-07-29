@@ -18,10 +18,14 @@ public class TooltipWidget extends AbstractWidget {
     boolean needTooltip;
     AbstractContainerScreen<?> screen;
 
-    public TooltipWidget(AbstractContainerScreen<?> screen,
-                         int pX, int pY,
-                         int pWidth, int pHeight,
-                         Supplier<Component> message, boolean needTooltip) {
+    public TooltipWidget(
+            AbstractContainerScreen<?> screen,
+            int pX,
+            int pY,
+            int pWidth,
+            int pHeight,
+            Supplier<Component> message,
+            boolean needTooltip) {
         super(pX, pY, pWidth, pHeight, message.get());
 
         this.screen = screen;
@@ -30,9 +34,11 @@ public class TooltipWidget extends AbstractWidget {
     }
 
     @Override
-    protected void renderWidget(GuiGraphics p_282139_, int p_268034_, int p_268009_, float p_268085_) {
+    protected void renderWidget(
+            GuiGraphics p_282139_, int p_268034_, int p_268009_, float p_268085_) {
         if (isHovered && needTooltip) {
-            p_282139_.renderTooltip(Minecraft.getInstance().font, getMessage(), p_268034_, p_268009_);
+            p_282139_.renderTooltip(
+                    Minecraft.getInstance().font, getMessage(), p_268034_, p_268009_);
         }
     }
 

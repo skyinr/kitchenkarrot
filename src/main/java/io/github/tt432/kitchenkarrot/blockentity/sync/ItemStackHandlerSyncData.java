@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.blockentity.sync;
 
 import io.github.tt432.kitchenkarrot.capability.KKItemStackHandler;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -8,8 +9,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 /**
  * @author DustW
  **/
-public class ItemStackHandlerSyncData extends SyncData<ItemStackHandlerSyncData.SyncDataItemStackHandler> {
-    public ItemStackHandlerSyncData(BlockEntity blockEntity, String name, int size, boolean needSave) {
+public class ItemStackHandlerSyncData
+        extends SyncData<ItemStackHandlerSyncData.SyncDataItemStackHandler> {
+    public ItemStackHandlerSyncData(
+            BlockEntity blockEntity, String name, int size, boolean needSave) {
         super(name, new SyncDataItemStackHandler(blockEntity, size), needSave);
         get().setData(this);
     }

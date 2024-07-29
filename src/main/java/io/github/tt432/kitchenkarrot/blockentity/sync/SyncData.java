@@ -2,6 +2,7 @@ package io.github.tt432.kitchenkarrot.blockentity.sync;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+
 import org.jetbrains.annotations.NotNull;
 
 /**

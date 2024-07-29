@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.menu.base;
 
 import io.github.tt432.kitchenkarrot.menu.slot.KKResultSlot;
+
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -35,30 +36,35 @@ public abstract class KKMenu extends AbstractContainerMenu {
         return inventory.stillValid(pPlayer);
     }
 
-    protected void addDataSlot(Supplier<Supplier<Integer>> getter, Supplier<Consumer<Integer>> setter) {
-        addDataSlot(new DataSlot() {
-            @Override
-            public int get() {
-                return getter.get().get() & 0xffff;
-            }
-            @Override
-            public void set(int value) {
-                int energyStored = getter.get().get() & 0xffff0000;
-                setter.get().accept(energyStored + (value & 0xffff));
-            }
-        });
+    protected void addDataSlot(
+            Supplier<Supplier<Integer>> getter, Supplier<Consumer<Integer>> setter) {
+        addDataSlot(
+                new DataSlot() {
+                    @Override
+                    public int get() {
+                        return getter.get().get() & 0xffff;
+                    }
 
-        addDataSlot(new DataSlot() {
-            @Override
-            public int get() {
-                return (getter.get().get() >> 16) & 0xffff;
-            }
-            @Override
-            public void set(int value) {
-                int energyStored = getter.get().get() & 0x0000ffff;
-                setter.get().accept(energyStored | (value << 16));
-            }
-        });
+                    @Override
+                    public void set(int value) {
+                        int energyStored = getter.get().get() & 0xffff0000;
+                        setter.get().accept(energyStored + (value & 0xffff));
+                    }
+                });
+
+        addDataSlot(
+                new DataSlot() {
+                    @Override
+                    public int get() {
+                        return (getter.get().get() >> 16) & 0xffff;
+                    }
+
+                    @Override
+                    public void set(int value) {
+                        int energyStored = getter.get().get() & 0x0000ffff;
+                        setter.get().accept(energyStored | (value << 16));
+                    }
+                });
     }
 
     @Override
@@ -76,8 +82,7 @@ public abstract class KKMenu extends AbstractContainerMenu {
                 }
             }
 
-        }
-        else {
+        } else {
             for (int i = 0; i < playerSlotSize; i++) {
                 var temp = slots.get(i);
 
@@ -85,7 +90,6 @@ public abstract class KKMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             }
-
         }
 
         return ItemStack.EMPTY;
@@ -100,7 +104,7 @@ public abstract class KKMenu extends AbstractContainerMenu {
     }
 
     protected int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {
-        for (int i = 0 ; i < amount ; i++) {
+        for (int i = 0; i < amount; i++) {
             addSlot(new SlotItemHandler(handler, index, x, y));
             x += dx;
             index++;
@@ -108,8 +112,16 @@ public abstract class KKMenu extends AbstractContainerMenu {
         return index;
     }
 
-    protected int addSlotBox(IItemHandler handler, int index, int x, int y, int horAmount, int dx, int verAmount, int dy) {
-        for (int j = 0 ; j < verAmount ; j++) {
+    protected int addSlotBox(
+            IItemHandler handler,
+            int index,
+            int x,
+            int y,
+            int horAmount,
+            int dx,
+            int verAmount,
+            int dy) {
+        for (int j = 0; j < verAmount; j++) {
             index = addSlotRange(handler, index, x, y, horAmount, dx);
             y += dy;
         }

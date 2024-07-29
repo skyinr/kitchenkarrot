@@ -6,6 +6,7 @@ import io.github.tt432.kitchenkarrot.recipes.recipe.AirCompressorRecipe;
 import io.github.tt432.kitchenkarrot.recipes.recipe.CocktailRecipe;
 import io.github.tt432.kitchenkarrot.registries.RecipeSerializers;
 import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
+
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -21,8 +22,11 @@ import java.util.stream.Collectors;
 public class RecipeManager {
     public static final String MOD_ID = Kitchenkarrot.MOD_ID;
 
-    public static <T extends BaseRecipe> List<RecipeHolder<T>> getRecipe(Level level, RecipeType<T> type, List<ItemStack> itemStacks) {
-        return level.getRecipeManager().getAllRecipesFor(type).stream().filter(s -> s.value().matches(itemStacks)).collect(Collectors.toList());
+    public static <T extends BaseRecipe> List<RecipeHolder<T>> getRecipe(
+            Level level, RecipeType<T> type, List<ItemStack> itemStacks) {
+        return level.getRecipeManager().getAllRecipesFor(type).stream()
+                .filter(s -> s.value().matches(itemStacks))
+                .collect(Collectors.toList());
     }
 
     public static List<RecipeHolder<CocktailRecipe>> getCocktailRecipes(Level level) {

@@ -3,10 +3,12 @@ package io.github.tt432.kitchenkarrot.recipes.recipe;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+
 import io.github.tt432.kitchenkarrot.recipes.base.BaseRecipe;
 import io.github.tt432.kitchenkarrot.registries.RecipeSerializers;
 import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
 import io.netty.buffer.ByteBuf;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -24,16 +26,25 @@ import java.util.List;
  * @author DustW
  **/
 public class BrewingBarrelRecipe extends BaseRecipe {
-    public static final MapCodec<BrewingBarrelRecipe> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
-            ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-            Content.CODEC.fieldOf("content").forGetter(recipe -> recipe.content)
-    ).apply(builder, BrewingBarrelRecipe::new));
+    public static final MapCodec<BrewingBarrelRecipe> CODEC =
+            RecordCodecBuilder.mapCodec(
+                    builder ->
+                            builder.group(
+                                            ItemStack.SINGLE_ITEM_CODEC
+                                                    .fieldOf("result")
+                                                    .forGetter(recipe -> recipe.result),
+                                            Content.CODEC
+                                                    .fieldOf("content")
+                                                    .forGetter(recipe -> recipe.content))
+                                    .apply(builder, BrewingBarrelRecipe::new));
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, BrewingBarrelRecipe> STREAM_CODEC = StreamCodec.composite(
-            ItemStack.STREAM_CODEC, recipe -> recipe.result,
-            Content.STREAM_CODEC, recipe -> recipe.content,
-            BrewingBarrelRecipe::new
-    );
+    public static final StreamCodec<RegistryFriendlyByteBuf, BrewingBarrelRecipe> STREAM_CODEC =
+            StreamCodec.composite(
+                    ItemStack.STREAM_CODEC,
+                    recipe -> recipe.result,
+                    Content.STREAM_CODEC,
+                    recipe -> recipe.content,
+                    BrewingBarrelRecipe::new);
 
     public BrewingBarrelRecipe(ItemStack result, Content content) {
         this.result = result;
@@ -44,22 +55,35 @@ public class BrewingBarrelRecipe extends BaseRecipe {
     Content content;
 
     public record Content(List<Ingredient> recipe, int craftingTime, int water_consumption) {
-        public static final Codec<Content> CODEC = RecordCodecBuilder.create(builder -> builder.group(
-                Ingredient.LIST_CODEC_NONEMPTY.fieldOf("recipe")
-                        .orElse(NonNullList.withSize(6, Ingredient.EMPTY))
-                        .forGetter(Content::recipe),
-                Codec.INT.fieldOf("craftingtime").forGetter(Content::craftingTime),
-                Codec.INT.fieldOf("water_consumption").forGetter(Content::water_consumption)
-        ).apply(builder, Content::new));
+        public static final Codec<Content> CODEC =
+                RecordCodecBuilder.create(
+                        builder ->
+                                builder.group(
+                                                Ingredient.LIST_CODEC_NONEMPTY
+                                                        .fieldOf("recipe")
+                                                        .orElse(
+                                                                NonNullList.withSize(
+                                                                        6, Ingredient.EMPTY))
+                                                        .forGetter(Content::recipe),
+                                                Codec.INT
+                                                        .fieldOf("craftingtime")
+                                                        .forGetter(Content::craftingTime),
+                                                Codec.INT
+                                                        .fieldOf("water_consumption")
+                                                        .forGetter(Content::water_consumption))
+                                        .apply(builder, Content::new));
 
-        public static final StreamCodec<ByteBuf, Content> STREAM_CODEC = StreamCodec.composite(
-                ByteBufCodecs.fromCodec(Ingredient.LIST_CODEC_NONEMPTY.orElse(NonNullList.withSize(6, Ingredient.EMPTY))),
-                Content::recipe,
-                ByteBufCodecs.INT, Content::craftingTime,
-                ByteBufCodecs.INT, Content::water_consumption,
-                Content::new
-        );
-
+        public static final StreamCodec<ByteBuf, Content> STREAM_CODEC =
+                StreamCodec.composite(
+                        ByteBufCodecs.fromCodec(
+                                Ingredient.LIST_CODEC_NONEMPTY.orElse(
+                                        NonNullList.withSize(6, Ingredient.EMPTY))),
+                        Content::recipe,
+                        ByteBufCodecs.INT,
+                        Content::craftingTime,
+                        ByteBufCodecs.INT,
+                        Content::water_consumption,
+                        Content::new);
     }
 
     public List<Ingredient> getIngredient() {

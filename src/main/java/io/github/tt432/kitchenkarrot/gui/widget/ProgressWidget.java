@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.gui.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -19,14 +20,20 @@ public class ProgressWidget extends TooltipWidget {
     Supplier<Integer> maxGetter;
     Supplier<Integer> currentGetter;
 
-    public ProgressWidget(AbstractContainerScreen<?> screen,
-                          ResourceLocation texture,
-                          int x, int y,
-                          int texX, int texY,
-                          int width, int height,
-                          boolean vertical,
-                          Supplier<Component> message, boolean needTooltip,
-                          Supplier<Integer> maxGetter, Supplier<Integer> currentGetter) {
+    public ProgressWidget(
+            AbstractContainerScreen<?> screen,
+            ResourceLocation texture,
+            int x,
+            int y,
+            int texX,
+            int texY,
+            int width,
+            int height,
+            boolean vertical,
+            Supplier<Component> message,
+            boolean needTooltip,
+            Supplier<Integer> maxGetter,
+            Supplier<Integer> currentGetter) {
         super(screen, x, y, width, height, message, needTooltip);
         this.texture = texture;
         this.screen = screen;
@@ -37,32 +44,68 @@ public class ProgressWidget extends TooltipWidget {
         this.texY = texY;
     }
 
-    public ProgressWidget(AbstractContainerScreen<?> screen,
-                          ResourceLocation texture,
-                          int x, int y,
-                          int texX, int texY,
-                          int width, int height,
-                          boolean vertical,
-                          Component message, boolean needTooltip,
-                          Supplier<Integer> maxGetter, Supplier<Integer> currentGetter) {
-        this(screen, texture, x, y, texX, texY, width, height, vertical,
-                () -> message, needTooltip, maxGetter, currentGetter);
+    public ProgressWidget(
+            AbstractContainerScreen<?> screen,
+            ResourceLocation texture,
+            int x,
+            int y,
+            int texX,
+            int texY,
+            int width,
+            int height,
+            boolean vertical,
+            Component message,
+            boolean needTooltip,
+            Supplier<Integer> maxGetter,
+            Supplier<Integer> currentGetter) {
+        this(
+                screen,
+                texture,
+                x,
+                y,
+                texX,
+                texY,
+                width,
+                height,
+                vertical,
+                () -> message,
+                needTooltip,
+                maxGetter,
+                currentGetter);
     }
 
-    public ProgressWidget(AbstractContainerScreen<?> screen,
-                          ResourceLocation texture,
-                          int x, int y,
-                          int texX, int texY,
-                          int width, int height,
-                          boolean vertical,
-                          Supplier<Integer> maxGetter, Supplier<Integer> currentGetter) {
-        this(screen, texture, x, y, texX, texY, width, height, vertical,
-                Component.empty(), false, maxGetter, currentGetter);
+    public ProgressWidget(
+            AbstractContainerScreen<?> screen,
+            ResourceLocation texture,
+            int x,
+            int y,
+            int texX,
+            int texY,
+            int width,
+            int height,
+            boolean vertical,
+            Supplier<Integer> maxGetter,
+            Supplier<Integer> currentGetter) {
+        this(
+                screen,
+                texture,
+                x,
+                y,
+                texX,
+                texY,
+                width,
+                height,
+                vertical,
+                Component.empty(),
+                false,
+                maxGetter,
+                currentGetter);
     }
 
     @Override
-    protected void renderWidget(GuiGraphics p_282139_, int p_268034_, int p_268009_, float p_268085_) {
-        if (!visible){
+    protected void renderWidget(
+            GuiGraphics p_282139_, int p_268034_, int p_268009_, float p_268085_) {
+        if (!visible) {
             return;
         }
 

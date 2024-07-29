@@ -6,11 +6,13 @@ import io.github.tt432.kitchenkarrot.glm.ModGlobalLootModifiers;
 import io.github.tt432.kitchenkarrot.item.ModBlockItems;
 import io.github.tt432.kitchenkarrot.recipes.RecipeManager;
 import io.github.tt432.kitchenkarrot.registries.*;
+
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +21,7 @@ import org.apache.logging.log4j.Logger;
  */
 @Mod(Kitchenkarrot.MOD_ID)
 public class Kitchenkarrot {
-    //Log
+    // Log
     public static final Logger LOGGER = LogManager.getLogger();
 
     public static final String MOD_ID = "kitchenkarrot";
@@ -29,12 +31,13 @@ public class Kitchenkarrot {
 
     private static Kitchenkarrot INSTANCE;
 
-//    private final ModNetworking networking;
+    //    private final ModNetworking networking;
 
     public Kitchenkarrot(IEventBus bus, Dist dist, ModContainer container) {
         INSTANCE = this;
 
-        container.registerConfig(ModConfig.Type.COMMON, ModCommonConfigs.COMMON, "kitchenkarrot-common.toml");
+        container.registerConfig(
+                ModConfig.Type.COMMON, ModCommonConfigs.COMMON, "kitchenkarrot-common.toml");
         ModBlocks.BLOCKS.register(bus);
         ModItems.ITEMS.register(bus);
         ModBlockItems.BLOCK_ITEMS.register(bus);
@@ -49,14 +52,14 @@ public class Kitchenkarrot {
 
         RecipeManager.register(bus);
 
-//        networking = new ModNetworking();
+        //        networking = new ModNetworking();
     }
 
     public static Kitchenkarrot getInstance() {
         return INSTANCE;
     }
 
-//    public ModNetworking getNetworking() {
-//        return networking;
-//    }
+    //    public ModNetworking getNetworking() {
+    //        return networking;
+    //    }
 }

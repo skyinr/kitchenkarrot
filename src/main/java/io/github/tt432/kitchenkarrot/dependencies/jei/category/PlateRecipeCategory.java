@@ -4,11 +4,13 @@ import io.github.tt432.kitchenkarrot.Kitchenkarrot;
 import io.github.tt432.kitchenkarrot.dependencies.jei.JeiPlugin;
 import io.github.tt432.kitchenkarrot.recipes.recipe.PlateRecipe;
 import io.github.tt432.kitchenkarrot.registries.ModItems;
+
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -22,8 +24,10 @@ public class PlateRecipeCategory extends BaseRecipeCategory<PlateRecipe> {
             ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "textures/gui/jei.png");
 
     public PlateRecipeCategory(IGuiHelper helper) {
-        super(JeiPlugin.PLATE,
-                helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModItems.KNIFE.get())),
+        super(
+                JeiPlugin.PLATE,
+                helper.createDrawableIngredient(
+                        VanillaTypes.ITEM_STACK, new ItemStack(ModItems.KNIFE.get())),
                 helper.createDrawable(BACKGROUND, 112, 144, 106, 42));
     }
 

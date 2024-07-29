@@ -1,25 +1,26 @@
 package io.github.tt432.kitchenkarrot.item;
 
-
 import io.github.tt432.kitchenkarrot.registries.ModItems;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
+
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class ModFood extends ModItem {
     protected UseAnim foodType = UseAnim.EAT;
     protected Duration duration = Duration.Normal;
     protected EffectEntry[] effectEntries;
     protected Item returnItem;
-
 
     public ModFood(Properties pProperties) {
         super(pProperties);
@@ -30,8 +31,15 @@ public class ModFood extends ModItem {
         this.effectEntries = effectEntries;
     }
 
-    public ModFood(int nutrition, float saturation, boolean alwaysEat, EffectEntry... effectEntries) {
-        super(FoodUtil.effectFood(ModItems.defaultProperties(), nutrition, saturation, alwaysEat, effectEntries));
+    public ModFood(
+            int nutrition, float saturation, boolean alwaysEat, EffectEntry... effectEntries) {
+        super(
+                FoodUtil.effectFood(
+                        ModItems.defaultProperties(),
+                        nutrition,
+                        saturation,
+                        alwaysEat,
+                        effectEntries));
         this.effectEntries = effectEntries;
     }
 
@@ -40,8 +48,20 @@ public class ModFood extends ModItem {
         this.effectEntries = effectEntries;
     }
 
-    public ModFood(int nutrition, float saturation, int stackSize, boolean alwaysEat, EffectEntry... effectEntries) {
-        super(FoodUtil.effectFood(ModItems.defaultProperties(), nutrition, saturation, alwaysEat, effectEntries).stacksTo(stackSize));
+    public ModFood(
+            int nutrition,
+            float saturation,
+            int stackSize,
+            boolean alwaysEat,
+            EffectEntry... effectEntries) {
+        super(
+                FoodUtil.effectFood(
+                                ModItems.defaultProperties(),
+                                nutrition,
+                                saturation,
+                                alwaysEat,
+                                effectEntries)
+                        .stacksTo(stackSize));
         this.effectEntries = effectEntries;
     }
 
@@ -53,10 +73,15 @@ public class ModFood extends ModItem {
 
     @Override
     @ParametersAreNonnullByDefault
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    public void appendHoverText(
+            ItemStack stack,
+            TooltipContext context,
+            List<Component> tooltipComponents,
+            TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         if (this.effectEntries != null && this.effectEntries.length > 0) {
-            PotionContents.addPotionTooltip(Arrays.stream(effectEntries).map(e -> e.effect.get()).toList(),
+            PotionContents.addPotionTooltip(
+                    Arrays.stream(effectEntries).map(e -> e.effect.get()).toList(),
                     Component::toFlatList,
                     1.0F,
                     1.0F);
@@ -75,7 +100,8 @@ public class ModFood extends ModItem {
     }
 
     @Override
-    public ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level level, LivingEntity livingEntity) {
+    public ItemStack finishUsingItem(
+            @NotNull ItemStack stack, @NotNull Level level, LivingEntity livingEntity) {
         stack = livingEntity.eat(level, stack);
         if (returnItem == null) return stack;
         if (livingEntity instanceof Player player) {
@@ -120,7 +146,13 @@ public class ModFood extends ModItem {
     }
 
     public enum Duration {
-        SunflowerKelp(12), VeryFast(16), Fast(24), Normal(32), Slow(48), VerySlow(64), CurryUdon(96);
+        SunflowerKelp(12),
+        VeryFast(16),
+        Fast(24),
+        Normal(32),
+        Slow(48),
+        VerySlow(64),
+        CurryUdon(96);
         private final int time;
 
         Duration(int duration) {

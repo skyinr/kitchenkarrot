@@ -1,7 +1,10 @@
 package io.github.tt432.kitchenkarrot.registries;
 
+import static io.github.tt432.kitchenkarrot.Kitchenkarrot.MOD_ID;
+
 import io.github.tt432.kitchenkarrot.client.cocktail.CocktailList;
 import io.github.tt432.kitchenkarrot.item.CocktailItem;
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -14,21 +17,30 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import static io.github.tt432.kitchenkarrot.Kitchenkarrot.MOD_ID;
-
 @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModTabs {
-    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB = TABS.register("main", () -> CreativeModeTab.builder()
-            .icon(() -> new ItemStack(ModItems.CARROT_SPICES.get()))
-            .title(Component.translatable("itemGroup.kitchenkarrot.main"))
-            .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-            .build());
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> COCKTAIL_TAB = TABS.register("cocktail", () -> CreativeModeTab.builder()
-            .icon(() -> new ItemStack(ModItems.SHAKER.get()))
-            .title(Component.translatable("itemGroup.kitchenkarrot.cocktail"))
-            .withTabsBefore(MAIN_TAB.getId())
-            .build());
+    public static final DeferredRegister<CreativeModeTab> TABS =
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB =
+            TABS.register(
+                    "main",
+                    () ->
+                            CreativeModeTab.builder()
+                                    .icon(() -> new ItemStack(ModItems.CARROT_SPICES.get()))
+                                    .title(Component.translatable("itemGroup.kitchenkarrot.main"))
+                                    .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                                    .build());
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> COCKTAIL_TAB =
+            TABS.register(
+                    "cocktail",
+                    () ->
+                            CreativeModeTab.builder()
+                                    .icon(() -> new ItemStack(ModItems.SHAKER.get()))
+                                    .title(
+                                            Component.translatable(
+                                                    "itemGroup.kitchenkarrot.cocktail"))
+                                    .withTabsBefore(MAIN_TAB.getId())
+                                    .build());
 
     @SubscribeEvent
     public static void addCreative(BuildCreativeModeTabContentsEvent event) {

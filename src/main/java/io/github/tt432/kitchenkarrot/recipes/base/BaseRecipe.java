@@ -27,7 +27,6 @@ public abstract class BaseRecipe implements Recipe<RecipeWrapper> {
         return getResultItem(provider);
     }
 
-
     @Override
     public boolean canCraftInDimensions(int pWidth, int pHeight) {
         return true;

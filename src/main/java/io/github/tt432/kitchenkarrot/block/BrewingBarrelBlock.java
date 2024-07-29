@@ -1,9 +1,11 @@
 package io.github.tt432.kitchenkarrot.block;
 
 import com.mojang.serialization.MapCodec;
+
 import io.github.tt432.kitchenkarrot.blockentity.BrewingBarrelBlockEntity;
 import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
 import io.github.tt432.kitchenkarrot.registries.ModItems;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -27,6 +29,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -61,10 +64,18 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected ItemInteractionResult useItemOn(
+            ItemStack stack,
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            InteractionHand hand,
+            BlockHitResult hitResult) {
         AtomicBoolean changed = new AtomicBoolean(false);
 
-        IFluidHandler tank = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, hitResult.getDirection());
+        IFluidHandler tank =
+                level.getCapability(Capabilities.FluidHandler.BLOCK, pos, hitResult.getDirection());
         if (tank != null) {
             ItemStack item = player.getItemInHand(hand);
             ItemStack remain = ItemStack.EMPTY;
@@ -80,10 +91,10 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
                         tank.fill(water, IFluidHandler.FluidAction.EXECUTE);
                     }
                 }
-                player.playSound(SoundEvents.BUCKET_EMPTY, 0.5F,
-                        level.random.nextFloat() * 0.1F + 0.9F);
+                player.playSound(
+                        SoundEvents.BUCKET_EMPTY, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
             } else if (item.getItem() == Items.POTION
-//                    && PotionUtils.getAllEffects(item.getTag()).isEmpty()
+            //                    && PotionUtils.getAllEffects(item.getTag()).isEmpty()
             ) {
                 FluidStack water = new FluidStack(Fluids.WATER, 250);
 
@@ -95,8 +106,8 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
                         tank.fill(water, IFluidHandler.FluidAction.EXECUTE);
                     }
                 }
-                player.playSound(SoundEvents.BOTTLE_EMPTY, 0.5F,
-                        level.random.nextFloat() * 0.1F + 0.9F);
+                player.playSound(
+                        SoundEvents.BOTTLE_EMPTY, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
             } else if (item.getItem() == ModItems.WATER.get()) {
                 FluidStack water = new FluidStack(Fluids.WATER, 125);
 
@@ -107,13 +118,15 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
                         tank.fill(water, IFluidHandler.FluidAction.EXECUTE);
                     }
                 }
-                player.playSound(SoundEvents.BUCKET_EMPTY, 0.5F,
-                        level.random.nextFloat() * 0.1F + 0.9F);
+                player.playSound(
+                        SoundEvents.BUCKET_EMPTY, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
             } else {
                 if (!level.isClientSide()) {
                     // Fixme: qyl27: work not correctly when more than one player open it.
                     level.setBlock(pos, state.setValue(OPEN, true), Block.UPDATE_ALL);
-                    this.getBlockEntity().getBlockEntity(level, pos).playSound(SoundEvents.BARREL_OPEN);
+                    this.getBlockEntity()
+                            .getBlockEntity(level, pos)
+                            .playSound(SoundEvents.BARREL_OPEN);
                 }
             }
 
@@ -138,7 +151,11 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
 
     @Override
     @NotNull
-    public VoxelShape getShape(BlockState pState, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext pContext) {
+    public VoxelShape getShape(
+            BlockState pState,
+            @NotNull BlockGetter level,
+            @NotNull BlockPos pos,
+            @NotNull CollisionContext pContext) {
 
         return switch (pState.getValue(FACING)) {
             case EAST, WEST -> SHAPE_X;

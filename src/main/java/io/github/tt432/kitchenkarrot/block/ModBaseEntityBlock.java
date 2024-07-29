@@ -2,6 +2,7 @@ package io.github.tt432.kitchenkarrot.block;
 
 import io.github.tt432.kitchenkarrot.blockentity.BaseBlockEntity;
 import io.github.tt432.kitchenkarrot.blockentity.MenuBlockEntity;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
@@ -12,8 +13,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -47,7 +48,12 @@ public abstract class ModBaseEntityBlock<T extends BaseBlockEntity> extends Base
     }
 
     @Override
-    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
+    public void onRemove(
+            BlockState pState,
+            Level pLevel,
+            BlockPos pPos,
+            BlockState pNewState,
+            boolean pIsMoving) {
         if (!pState.is(pNewState.getBlock())) {
             if (pLevel.getBlockEntity(pPos) instanceof MenuBlockEntity kk) {
                 for (ItemStack drop : kk.drops()) {
@@ -60,7 +66,8 @@ public abstract class ModBaseEntityBlock<T extends BaseBlockEntity> extends Base
 
     @Nullable
     @Override
-    public <F extends BlockEntity> BlockEntityTicker<F> getTicker(Level pLevel, BlockState pState, BlockEntityType<F> pBlockEntityType) {
+    public <F extends BlockEntity> BlockEntityTicker<F> getTicker(
+            Level pLevel, BlockState pState, BlockEntityType<F> pBlockEntityType) {
         return createTickerHelper(pBlockEntityType, getBlockEntity(), BaseBlockEntity::tick);
     }
 }

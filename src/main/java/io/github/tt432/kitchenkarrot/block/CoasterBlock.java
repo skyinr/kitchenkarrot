@@ -1,9 +1,11 @@
 package io.github.tt432.kitchenkarrot.block;
 
 import com.mojang.serialization.MapCodec;
+
 import io.github.tt432.kitchenkarrot.blockentity.CoasterBlockEntity;
 import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
 import io.github.tt432.kitchenkarrot.util.ItemHandlerUtils;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -26,6 +28,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -60,7 +63,8 @@ public class CoasterBlock extends FacingEntityBlock<CoasterBlockEntity> {
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter level, BlockPos pos, CollisionContext pContext) {
+    public VoxelShape getShape(
+            BlockState pState, BlockGetter level, BlockPos pos, CollisionContext pContext) {
         return SHAPE;
     }
 
@@ -70,7 +74,14 @@ public class CoasterBlock extends FacingEntityBlock<CoasterBlockEntity> {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected ItemInteractionResult useItemOn(
+            ItemStack stack,
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            InteractionHand hand,
+            BlockHitResult hitResult) {
         if (level.isClientSide) {
             // The logic will be passing every single interaction, so sound always plays.
             // Well, it's still weird when you keep right-clicking with empty hand.
@@ -80,7 +91,8 @@ public class CoasterBlock extends FacingEntityBlock<CoasterBlockEntity> {
 
         AtomicBoolean success = new AtomicBoolean(false);
 
-        IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, hitResult.getDirection());
+        IItemHandler handler =
+                level.getCapability(Capabilities.ItemHandler.BLOCK, pos, hitResult.getDirection());
         if (handler != null) {
             if (handler.getStackInSlot(0).isEmpty() && !player.getItemInHand(hand).isEmpty()) {
                 ItemHandlerUtils.insertSingle(handler, 0, player, hand);
@@ -101,7 +113,8 @@ public class CoasterBlock extends FacingEntityBlock<CoasterBlockEntity> {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+        return this.defaultBlockState()
+                .setValue(FACING, pContext.getHorizontalDirection().getOpposite());
     }
 
     @Override

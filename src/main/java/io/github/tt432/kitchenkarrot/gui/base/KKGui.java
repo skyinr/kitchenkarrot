@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.gui.base;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -27,13 +28,12 @@ public abstract class KKGui<T extends AbstractContainerMenu> extends AbstractCon
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
-//    @Override
-//    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-//        this.renderBackground(pPoseStack);
-//        super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
-//        this.renderTooltip(pPoseStack, pMouseX, pMouseY);
-//    }
-
+    //    @Override
+    //    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    //        this.renderBackground(pPoseStack);
+    //        super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
+    //        this.renderTooltip(pPoseStack, pMouseX, pMouseY);
+    //    }
 
     @Override
     protected void renderBg(GuiGraphics p_283065_, float p_97788_, int p_97789_, int p_97790_) {
@@ -41,11 +41,12 @@ public abstract class KKGui<T extends AbstractContainerMenu> extends AbstractCon
         p_283065_.blit(GUI, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
 
-//    @Override
-//    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-//        RenderSystem.setShaderTexture(0, GUI);
-//        this.blit(matrixStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
-//    }
+    //    @Override
+    //    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY)
+    // {
+    //        RenderSystem.setShaderTexture(0, GUI);
+    //        this.blit(matrixStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
+    //    }
 
     protected <W extends AbstractWidget> W close(W widget) {
         widget.active = false;

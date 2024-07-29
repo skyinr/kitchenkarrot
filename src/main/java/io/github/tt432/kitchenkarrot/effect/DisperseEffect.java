@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.effect;
 
 import io.github.tt432.kitchenkarrot.registries.ModEffects;
+
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -15,10 +16,10 @@ public class DisperseEffect extends MobEffect {
     }
 
     private boolean disperse(LivingEntity entity) {
-        List<Holder<MobEffect>> effects = entity.getActiveEffectsMap().keySet()
-                .stream()
-                .filter(e -> e != ModEffects.DISPERSE.get())
-                .toList();
+        List<Holder<MobEffect>> effects =
+                entity.getActiveEffectsMap().keySet().stream()
+                        .filter(e -> e != ModEffects.DISPERSE.get())
+                        .toList();
         if (!effects.isEmpty()) {
             effects.forEach(entity::removeEffect);
             return true;
@@ -36,8 +37,10 @@ public class DisperseEffect extends MobEffect {
             Holder<MobEffect> disperse = ModEffects.DISPERSE;
             MobEffectInstance mobEffectInstance = pLivingEntity.getEffect(disperse);
             if (pAmplifier > 0 && mobEffectInstance.getDuration() > 5) {
-                pLivingEntity.forceAddEffect(new MobEffectInstance(disperse,
-                        mobEffectInstance.getDuration(), pAmplifier - 1), pLivingEntity);
+                pLivingEntity.forceAddEffect(
+                        new MobEffectInstance(
+                                disperse, mobEffectInstance.getDuration(), pAmplifier - 1),
+                        pLivingEntity);
             } else {
                 pLivingEntity.removeEffect(disperse);
             }

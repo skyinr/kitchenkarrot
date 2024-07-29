@@ -2,6 +2,7 @@ package io.github.tt432.kitchenkarrot.entity;
 
 import io.github.tt432.kitchenkarrot.config.ModCommonConfigs;
 import io.github.tt432.kitchenkarrot.registries.ModItems;
+
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -23,7 +24,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
-
 public class CanEntity extends Mob {
     //    private final Logger logger = LogManager.getLogger();
     private int MaxAge = ModCommonConfigs.CAN_ENTITY_LIFETIME.get() * 20;
@@ -32,7 +32,8 @@ public class CanEntity extends Mob {
         return MaxAge;
     }
 
-    private static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(CanEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> AGE =
+            SynchedEntityData.defineId(CanEntity.class, EntityDataSerializers.INT);
 
     public CanEntity(EntityType<? extends Mob> p_21368_, Level p_21369_) {
         super(p_21368_, p_21369_);
@@ -49,7 +50,8 @@ public class CanEntity extends Mob {
         if (pSource.getEntity() instanceof Player) {
             this.discard();
             if (level() instanceof ServerLevel serverLevel) {
-                serverLevel.sendParticles(ParticleTypes.CLOUD, getX(), getY(), getZ(), 30, 0, 0, 0, 0.1);
+                serverLevel.sendParticles(
+                        ParticleTypes.CLOUD, getX(), getY(), getZ(), 30, 0, 0, 0, 0.1);
             }
             return false;
         }
@@ -91,7 +93,8 @@ public class CanEntity extends Mob {
             this.entityData.set(AGE, this.entityData.get(AGE) + 1);
             if (entityData.get(AGE) >= getMaxAge()) {
                 if (level() instanceof ServerLevel serverLevel) {
-                    serverLevel.sendParticles(ParticleTypes.CLOUD, getX(), getY(), getZ(), 30, 0, 0, 0, 0.1);
+                    serverLevel.sendParticles(
+                            ParticleTypes.CLOUD, getX(), getY(), getZ(), 30, 0, 0, 0, 0.1);
                 }
                 this.remove(RemovalReason.DISCARDED);
             }
@@ -110,7 +113,13 @@ public class CanEntity extends Mob {
     }
 
     public void returnItem(Level level, Player player) {
-        level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), ModItems.EMPTY_CAN.get().getDefaultInstance()));
+        level.addFreshEntity(
+                new ItemEntity(
+                        level,
+                        player.getX(),
+                        player.getY(),
+                        player.getZ(),
+                        ModItems.EMPTY_CAN.get().getDefaultInstance()));
         this.remove(RemovalReason.KILLED);
     }
 }

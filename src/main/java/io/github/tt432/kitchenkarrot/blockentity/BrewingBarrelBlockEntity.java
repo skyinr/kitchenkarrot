@@ -12,6 +12,7 @@ import io.github.tt432.kitchenkarrot.recipes.recipe.BrewingBarrelRecipe;
 import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
 import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
 import io.github.tt432.kitchenkarrot.util.ItemHandlerUtils;
+
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -28,6 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -39,7 +41,8 @@ import java.util.Optional;
 public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     public static final int FLUID_CONSUMPTION = 500;
     public static final int FLUID_CAPACITY = 4000;
-    private final KKFluidTank tank = new KKFluidTank(FLUID_CAPACITY, fluidStack -> fluidStack.is(Fluids.WATER));
+    private final KKFluidTank tank =
+            new KKFluidTank(FLUID_CAPACITY, fluidStack -> fluidStack.is(Fluids.WATER));
     private final KKItemStackHandler input = new KKItemStackHandler(this, 6);
     private final KKItemStackHandler result = new KKItemStackHandler(this, 1);
     private IntSyncData progress;
@@ -54,7 +57,8 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
 
     @Override
     protected void syncDataInit(SyncDataManager manager) {
-//        manager.add(tank = new FluidTankSyncData("fluid", FLUID_CAPACITY, (f) -> f.getFluid() == Fluids.WATER, true));
+        //        manager.add(tank = new FluidTankSyncData("fluid", FLUID_CAPACITY, (f) ->
+        // f.getFluid() == Fluids.WATER, true));
         manager.add(progress = new IntSyncData("progress", 0, true));
         manager.add(maxProgress = new IntSyncData("maxProgress", 0, true));
         manager.add(recipe = new StringSyncData("recipe", "", true));
@@ -62,9 +66,13 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     }
 
     public RecipeHolder<BrewingBarrelRecipe> getRecipe() {
-        return currentRecipe == null && !this.recipe.isEmpty() ?
-                currentRecipe = (RecipeHolder<BrewingBarrelRecipe>) level.getRecipeManager()
-                        .byKey(ResourceLocation.parse(recipe.get())).get() : currentRecipe;
+        return currentRecipe == null && !this.recipe.isEmpty()
+                ? currentRecipe =
+                        (RecipeHolder<BrewingBarrelRecipe>)
+                                level.getRecipeManager()
+                                        .byKey(ResourceLocation.parse(recipe.get()))
+                                        .get()
+                : currentRecipe;
     }
 
     public KKItemStackHandler getInput() {
@@ -101,33 +109,41 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
 
     public Optional<RecipeHolder<BrewingBarrelRecipe>> findRecipe() {
         var inputList = ItemHandlerUtils.toList(input);
-        return level.getRecipeManager().getAllRecipesFor(RecipeTypes.BREWING_BARREL.get())
-                .stream().filter(r -> r.value().matches(inputList)).findFirst();
+        return level.getRecipeManager().getAllRecipesFor(RecipeTypes.BREWING_BARREL.get()).stream()
+                .filter(r -> r.value().matches(inputList))
+                .findFirst();
     }
 
     private void finishBrewing() {
         ItemStack resultStack = result.getStackInSlot(0);
-        if (resultStack.isEmpty() ||
-                (resultStack.is(getRecipe().value().getResultItem(RegistryAccess.EMPTY).getItem()) && resultStack.getCount() < resultStack.getMaxStackSize())) {
-//                (resultStack.is(getRecipe().getResultItem().getItem()) && resultStack.getCount() < resultStack.getMaxStackSize())) {
+        if (resultStack.isEmpty()
+                || (resultStack.is(
+                                getRecipe().value().getResultItem(RegistryAccess.EMPTY).getItem())
+                        && resultStack.getCount() < resultStack.getMaxStackSize())) {
+            //                (resultStack.is(getRecipe().getResultItem().getItem()) &&
+            // resultStack.getCount() < resultStack.getMaxStackSize())) {
             result.insertItem(0, getRecipe().value().getResultItem(RegistryAccess.EMPTY), false);
-//            result.insertItem(0, getRecipe().getResultItem(), false);
+            //            result.insertItem(0, getRecipe().getResultItem(), false);
             for (int i = 0; i < input.getSlots(); i++) {
                 Item item = input.getStackInSlot(i).getItem();
                 if (item.hasCraftingRemainingItem()) {
-                    Direction direction = getBlockState().getValue(BrewingBarrelBlock.FACING).getOpposite();
-                    level.addFreshEntity((new ItemEntity(level,
-                            getBlockPos().getX() + 0.5 + direction.getStepX() * 0.5,
-                            getBlockPos().getY() + 0.5,
-                            getBlockPos().getZ() + 0.5 + direction.getStepZ() * 0.5,
-                            new ItemStack(item.getCraftingRemainingItem()),
-                            direction.getStepX() * 0.2,
-                            0,
-                            direction.getStepZ() * 0.2)));
+                    Direction direction =
+                            getBlockState().getValue(BrewingBarrelBlock.FACING).getOpposite();
+                    level.addFreshEntity(
+                            (new ItemEntity(
+                                    level,
+                                    getBlockPos().getX() + 0.5 + direction.getStepX() * 0.5,
+                                    getBlockPos().getY() + 0.5,
+                                    getBlockPos().getZ() + 0.5 + direction.getStepZ() * 0.5,
+                                    new ItemStack(item.getCraftingRemainingItem()),
+                                    direction.getStepX() * 0.2,
+                                    0,
+                                    direction.getStepZ() * 0.2)));
                 }
                 input.extractItem(i, 1, false);
             }
-            tank.drain(getRecipe().value().getWaterConsumption(), IFluidHandler.FluidAction.EXECUTE);
+            tank.drain(
+                    getRecipe().value().getWaterConsumption(), IFluidHandler.FluidAction.EXECUTE);
             endProgress();
         }
     }
@@ -141,7 +157,8 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     }
 
     public boolean isRecipeSame() {
-        return this.getRecipe() != null && this.getRecipe().value().matches(ItemHandlerUtils.toList(input));
+        return this.getRecipe() != null
+                && this.getRecipe().value().matches(ItemHandlerUtils.toList(input));
     }
 
     public boolean isStarted() {
@@ -176,10 +193,12 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
 
     public void start() {
         var inputList = ItemHandlerUtils.toList(input);
-        level.getRecipeManager().getAllRecipesFor(RecipeTypes.BREWING_BARREL.get())
-                .stream().filter(r -> r.value().matches(inputList)).forEach(r -> {
-                    setRecipe(r);
-                });
+        level.getRecipeManager().getAllRecipesFor(RecipeTypes.BREWING_BARREL.get()).stream()
+                .filter(r -> r.value().matches(inputList))
+                .forEach(
+                        r -> {
+                            setRecipe(r);
+                        });
         started.set(true);
         resetProgress();
     }
@@ -191,7 +210,8 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
 
     @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int pContainerId, Inventory pInventory, Player pPlayer) {
+    public AbstractContainerMenu createMenu(
+            int pContainerId, Inventory pInventory, Player pPlayer) {
         return new BrewingBarrelMenu(pContainerId, pInventory, this);
     }
 
@@ -230,8 +250,14 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
         double d0 = (double) this.getBlockPos().getX() + 0.5D + (double) vec3i.getX() / 2.0D;
         double d1 = (double) this.getBlockPos().getY() + 0.5D + (double) vec3i.getY() / 2.0D;
         double d2 = (double) this.getBlockPos().getZ() + 0.5D + (double) vec3i.getZ() / 2.0D;
-        level.playSound((Player) null, d0, d1, d2, soundEvent, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+        level.playSound(
+                (Player) null,
+                d0,
+                d1,
+                d2,
+                soundEvent,
+                SoundSource.BLOCKS,
+                0.5F,
+                level.random.nextFloat() * 0.1F + 0.9F);
     }
-
-
 }

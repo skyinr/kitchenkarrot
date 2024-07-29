@@ -7,6 +7,7 @@ import io.github.tt432.kitchenkarrot.recipes.object.EffectStack;
 import io.github.tt432.kitchenkarrot.recipes.recipe.CocktailRecipe;
 import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -27,12 +28,13 @@ import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * @author DustW
@@ -40,10 +42,13 @@ import java.util.Optional;
 @ParametersAreNonnullByDefault
 public class CocktailItem extends Item {
 
-    public static final ResourceLocation UNKNOWN_COCKTAIL = ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "unknown");
+    public static final ResourceLocation UNKNOWN_COCKTAIL =
+            ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "unknown");
 
     public CocktailItem() {
-        super(ModItems.defaultProperties().food(new FoodProperties.Builder().alwaysEdible().build()));
+        super(
+                ModItems.defaultProperties()
+                        .food(new FoodProperties.Builder().alwaysEdible().build()));
     }
 
     public static ItemStack unknownCocktail() {
@@ -67,7 +72,8 @@ public class CocktailItem extends Item {
                         player.addEffect(effectStack.get());
                     }
                 } else if (cocktail.equals(UNKNOWN_COCKTAIL)) {
-                    player.addEffect(new MobEffectInstance(getUnknownCocktailEffect(pLevel), 100, 0));
+                    player.addEffect(
+                            new MobEffectInstance(getUnknownCocktailEffect(pLevel), 100, 0));
                     if (!player.getAbilities().instabuild) {
                         stack.shrink(1);
                     }
@@ -86,12 +92,15 @@ public class CocktailItem extends Item {
             } catch (Exception ignored) {
             }
         if (!ModCommonConfigs.WHITELIST_MODE.get()) {
-            List<Holder<MobEffect>> values = BuiltInRegistries.MOB_EFFECT.stream()
-                    .filter(mobEffect -> !effects.contains(mobEffect))
-                    .map(BuiltInRegistries.MOB_EFFECT::wrapAsHolder).toList();
+            List<Holder<MobEffect>> values =
+                    BuiltInRegistries.MOB_EFFECT.stream()
+                            .filter(mobEffect -> !effects.contains(mobEffect))
+                            .map(BuiltInRegistries.MOB_EFFECT::wrapAsHolder)
+                            .toList();
             return values.get(level.getRandom().nextInt(values.size()));
         }
-        return BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effects.get(level.getRandom().nextInt(effects.size())));
+        return BuiltInRegistries.MOB_EFFECT.wrapAsHolder(
+                effects.get(level.getRandom().nextInt(effects.size())));
     }
 
     @Override
@@ -112,20 +121,31 @@ public class CocktailItem extends Item {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    public void appendHoverText(
+            ItemStack stack,
+            TooltipContext context,
+            List<Component> tooltipComponents,
+            TooltipFlag tooltipFlag) {
         ResourceLocation name = getCocktail(stack);
         if (name != null) {
-            tooltipComponents.add(Component.translatable(name.toString().replace(":", ".") + ".tooltip"));
+            tooltipComponents.add(
+                    Component.translatable(name.toString().replace(":", ".") + ".tooltip"));
             if (Minecraft.getInstance().level != null) {
-                CocktailRecipe recipe = get(Minecraft.getInstance().level, Objects.requireNonNull(getCocktail(stack)));
+                CocktailRecipe recipe =
+                        get(
+                                Minecraft.getInstance().level,
+                                Objects.requireNonNull(getCocktail(stack)));
                 if (recipe != null) {
-                    tooltipComponents.add(Component.translatable("item.cocktail.author", recipe.author));
+                    tooltipComponents.add(
+                            Component.translatable("item.cocktail.author", recipe.author));
                     CocktailRecipe cocktailRecipe = get(Minecraft.getInstance().level, name);
                     if (cocktailRecipe != null) {
-                        List<MobEffectInstance> list = cocktailRecipe.getContent().effect().stream().map(EffectStack::get).toList();
+                        List<MobEffectInstance> list =
+                                cocktailRecipe.getContent().effect().stream()
+                                        .map(EffectStack::get)
+                                        .toList();
 
                         PotionContents.addPotionTooltip(list, Component::toFlatList, 1.0F, 1.0F);
-
                     }
                 }
             }
@@ -135,7 +155,8 @@ public class CocktailItem extends Item {
     @Nullable
     public static ResourceLocation getCocktail(ItemStack itemStack) {
         if (itemStack.getComponents().has(KKDataComponents.COCKTAIL.get())) {
-            return ResourceLocation.parse(Objects.requireNonNull(itemStack.get(KKDataComponents.COCKTAIL)));
+            return ResourceLocation.parse(
+                    Objects.requireNonNull(itemStack.get(KKDataComponents.COCKTAIL)));
         }
 
         return null;
@@ -155,5 +176,4 @@ public class CocktailItem extends Item {
 
         return null;
     }
-
 }

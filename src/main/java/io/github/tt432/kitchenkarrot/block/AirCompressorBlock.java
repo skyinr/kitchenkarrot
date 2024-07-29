@@ -1,10 +1,12 @@
 package io.github.tt432.kitchenkarrot.block;
 
 import com.mojang.serialization.MapCodec;
+
 import io.github.tt432.kitchenkarrot.blockentity.AirCompressorBlockEntity;
 import io.github.tt432.kitchenkarrot.blockentity.MenuBlockEntity;
 import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
 import io.github.tt432.kitchenkarrot.registries.ModItems;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -27,17 +29,17 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockEntity> {
-    public static final MapCodec<AirCompressorBlock> CODEC = simpleCodec((p) -> new AirCompressorBlock());
+    public static final MapCodec<AirCompressorBlock> CODEC =
+            simpleCodec((p) -> new AirCompressorBlock());
     public static final VoxelShape SHAPE = Block.box(2, 0, 2, 16 - 2, 15, 16 - 2);
 
     public AirCompressorBlock() {
-        super(BlockBehaviour.Properties.of()
-                .strength(2.0f, 2.0f)
-                .noOcclusion());
+        super(BlockBehaviour.Properties.of().strength(2.0f, 2.0f).noOcclusion());
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter level, BlockPos pos, CollisionContext pContext) {
+    public VoxelShape getShape(
+            BlockState pState, BlockGetter level, BlockPos pos, CollisionContext pContext) {
         return SHAPE;
     }
 
@@ -47,11 +49,19 @@ public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockE
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected ItemInteractionResult useItemOn(
+            ItemStack stack,
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            InteractionHand hand,
+            BlockHitResult hitResult) {
         if (level.isClientSide) {
             if (player.getItemInHand(hand).is(Items.WATER_BUCKET)) {
                 level.playSound(player, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1, 1);
-                level.playSound(player, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1, 1);
+                level.playSound(
+                        player, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1, 1);
             }
             return ItemInteractionResult.SUCCESS;
         } else {
@@ -64,18 +74,28 @@ public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockE
                     } else {
                         // Eject the bucket if it stacks more than 1
                         player.getItemInHand(hand).shrink(1);
-                        level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5,
-                                new ItemStack(Items.BUCKET),
-                                random.nextFloat() * 2 - 1,
-                                random.nextFloat(),
-                                random.nextFloat() * 2 - 1));
+                        level.addFreshEntity(
+                                new ItemEntity(
+                                        level,
+                                        pos.getX() + 0.5,
+                                        pos.getY() + 1,
+                                        pos.getZ() + 0.5,
+                                        new ItemStack(Items.BUCKET),
+                                        random.nextFloat() * 2 - 1,
+                                        random.nextFloat(),
+                                        random.nextFloat() * 2 - 1));
                     }
                 }
-                level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5,
-                        new ItemStack(ModItems.WATER.get(), 8),
-                        random.nextFloat() * 0.4 - 0.2,
-                        random.nextFloat() * 0.5,
-                        random.nextFloat() * 0.4 - 0.2));
+                level.addFreshEntity(
+                        new ItemEntity(
+                                level,
+                                pos.getX() + 0.5,
+                                pos.getY() + 1,
+                                pos.getZ() + 0.5,
+                                new ItemStack(ModItems.WATER.get(), 8),
+                                random.nextFloat() * 0.4 - 0.2,
+                                random.nextFloat() * 0.5,
+                                random.nextFloat() * 0.4 - 0.2));
                 return ItemInteractionResult.SUCCESS;
             }
             var be = level.getBlockEntity(pos);

@@ -2,6 +2,7 @@ package io.github.tt432.kitchenkarrot.client.renderer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -10,6 +11,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
+
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
@@ -41,7 +43,8 @@ public class FluidStackRenderer {
         RenderSystem.disableBlend();
     }
 
-    public void render(PoseStack stack, int xPosition, int yPosition, @Nullable FluidStack ingredient) {
+    public void render(
+            PoseStack stack, int xPosition, int yPosition, @Nullable FluidStack ingredient) {
         if (ingredient != null) {
             stack.pushPose();
             {
@@ -52,7 +55,8 @@ public class FluidStackRenderer {
         }
     }
 
-    private void drawFluid(PoseStack poseStack, final int width, final int height, FluidStack fluidStack) {
+    private void drawFluid(
+            PoseStack poseStack, final int width, final int height, FluidStack fluidStack) {
         Fluid fluid = fluidStack.getFluid();
         if (fluid == null) {
             return;
@@ -75,7 +79,13 @@ public class FluidStackRenderer {
         drawTiledSprite(poseStack, width, height, fluidColor, scaledAmount, fluidStillSprite);
     }
 
-    private static void drawTiledSprite(PoseStack poseStack, final int tiledWidth, final int tiledHeight, int color, int scaledAmount, TextureAtlasSprite sprite) {
+    private static void drawTiledSprite(
+            PoseStack poseStack,
+            final int tiledWidth,
+            final int tiledHeight,
+            int color,
+            int scaledAmount,
+            TextureAtlasSprite sprite) {
         RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
         Matrix4f matrix = poseStack.last().pose();
         setGLColorFromInt(color);
@@ -119,7 +129,14 @@ public class FluidStackRenderer {
         RenderSystem.setShaderColor(red, green, blue, alpha);
     }
 
-    private static void drawTextureWithMasking(Matrix4f matrix, float xCoord, float yCoord, TextureAtlasSprite textureSprite, int maskTop, int maskRight, float zLevel) {
+    private static void drawTextureWithMasking(
+            Matrix4f matrix,
+            float xCoord,
+            float yCoord,
+            TextureAtlasSprite textureSprite,
+            int maskTop,
+            int maskRight,
+            float zLevel) {
         float uMin = textureSprite.getU0();
         float uMax = textureSprite.getU1();
         float vMin = textureSprite.getV0();
@@ -130,10 +147,15 @@ public class FluidStackRenderer {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
         Tesselator tessellator = Tesselator.getInstance();
-        BufferBuilder bufferBuilder = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        BufferBuilder bufferBuilder =
+                tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
         bufferBuilder.addVertex(matrix, xCoord, yCoord + 16, zLevel).setUv(uMin, vMax);
-        bufferBuilder.addVertex(matrix, xCoord + 16 - maskRight, yCoord + 16, zLevel).setUv(uMax, vMax);
-        bufferBuilder.addVertex(matrix, xCoord + 16 - maskRight, yCoord + maskTop, zLevel).setUv(uMax, vMin);
+        bufferBuilder
+                .addVertex(matrix, xCoord + 16 - maskRight, yCoord + 16, zLevel)
+                .setUv(uMax, vMax);
+        bufferBuilder
+                .addVertex(matrix, xCoord + 16 - maskRight, yCoord + maskTop, zLevel)
+                .setUv(uMax, vMin);
         bufferBuilder.addVertex(matrix, xCoord, yCoord + maskTop, zLevel).setUv(uMin, vMin);
         tessellator.clear();
     }

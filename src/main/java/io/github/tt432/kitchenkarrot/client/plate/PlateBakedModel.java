@@ -3,6 +3,7 @@ package io.github.tt432.kitchenkarrot.client.plate;
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
 import io.github.tt432.kitchenkarrot.components.KKDataComponents;
 import io.github.tt432.kitchenkarrot.registries.ModBlocks;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -17,6 +18,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,7 +31,8 @@ import java.util.Objects;
  **/
 public class PlateBakedModel implements BakedModel {
     @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState p_119123_, @Nullable Direction p_119124_, RandomSource p_119125_) {
+    public List<BakedQuad> getQuads(
+            @Nullable BlockState p_119123_, @Nullable Direction p_119124_, RandomSource p_119125_) {
         return Collections.emptyList();
     }
 
@@ -55,7 +58,9 @@ public class PlateBakedModel implements BakedModel {
 
     @Override
     public TextureAtlasSprite getParticleIcon() {
-        return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(ModBlocks.PLATE.getId());
+        return Minecraft.getInstance()
+                .getTextureAtlas(TextureAtlas.LOCATION_BLOCKS)
+                .apply(ModBlocks.PLATE.getId());
     }
 
     @Override
@@ -64,21 +69,44 @@ public class PlateBakedModel implements BakedModel {
         return new ItemOverrides() {
             @Nullable
             @Override
-            public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel p_173467_, @Nullable LivingEntity p_173468_, int p_173469_) {
+            public BakedModel resolve(
+                    BakedModel model,
+                    ItemStack stack,
+                    @Nullable ClientLevel p_173467_,
+                    @Nullable LivingEntity p_173468_,
+                    int p_173469_) {
                 DataComponentMap components = stack.getComponents();
 
-                if (components.has(KKDataComponents.PLATE_TYPE.get()) &&
-                        Objects.requireNonNull(components.get(KKDataComponents.PLATE_TYPE.get())).contentEquals("minecraft:air") &&
-                        components.has(KKDataComponents.PLATE_AMOUNT.get())) {
-                    ResourceLocation plateType = ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID,
-                            ResourceLocation.parse(Objects.requireNonNull(components.get(KKDataComponents.PLATE_TYPE.get()))).getPath());
-                    ResourceLocation location = ResourceLocation.parse(plateType + "_" + components.get(KKDataComponents.PLATE_AMOUNT.get()));
+                if (components.has(KKDataComponents.PLATE_TYPE.get())
+                        && Objects.requireNonNull(components.get(KKDataComponents.PLATE_TYPE.get()))
+                                .contentEquals("minecraft:air")
+                        && components.has(KKDataComponents.PLATE_AMOUNT.get())) {
+                    ResourceLocation plateType =
+                            ResourceLocation.fromNamespaceAndPath(
+                                    Kitchenkarrot.MOD_ID,
+                                    ResourceLocation.parse(
+                                                    Objects.requireNonNull(
+                                                            components.get(
+                                                                    KKDataComponents.PLATE_TYPE
+                                                                            .get())))
+                                            .getPath());
+                    ResourceLocation location =
+                            ResourceLocation.parse(
+                                    plateType
+                                            + "_"
+                                            + components.get(KKDataComponents.PLATE_AMOUNT.get()));
 
-                    BakedModel model1 = Minecraft.getInstance().getModelManager().getModel(PlateModelRegistry.to(location));
+                    BakedModel model1 =
+                            Minecraft.getInstance()
+                                    .getModelManager()
+                                    .getModel(PlateModelRegistry.to(location));
                     return model1;
                 }
 
-                BakedModel model1 = Minecraft.getInstance().getModelManager().getModel(PlateModelRegistry.to(PlateModelRegistry.DEFAULT_NAME));
+                BakedModel model1 =
+                        Minecraft.getInstance()
+                                .getModelManager()
+                                .getModel(PlateModelRegistry.to(PlateModelRegistry.DEFAULT_NAME));
                 return model1;
             }
         };

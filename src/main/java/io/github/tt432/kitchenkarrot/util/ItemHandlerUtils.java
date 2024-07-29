@@ -24,20 +24,24 @@ public class ItemHandlerUtils {
         return result;
     }
 
-    public static void insertSingle(IItemHandler handler, int slot, Player player, InteractionHand hand) {
+    public static void insertSingle(
+            IItemHandler handler, int slot, Player player, InteractionHand hand) {
         insertSingle(handler, slot, player, player.getItemInHand(hand));
-    };
+    }
+    ;
 
-    public static void insertSingle(IItemHandler handler, int slot, Player player, ItemStack itemStack) {
+    public static void insertSingle(
+            IItemHandler handler, int slot, Player player, ItemStack itemStack) {
         ItemStack stack = player.getAbilities().instabuild ? itemStack.copy() : itemStack.split(1);
         handler.insertItem(slot, stack, false);
-    };
+    }
+    ;
 
     public static void extractSingle(IItemHandler handler, int slot, Player player) {
         ItemStack stack = handler.extractItem(slot, 1, false);
         if (!player.getAbilities().instabuild && !player.addItem(stack)) {
             player.drop(stack, true);
         }
-    };
-
+    }
+    ;
 }

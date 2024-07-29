@@ -8,6 +8,7 @@ import io.github.tt432.kitchenkarrot.recipes.RecipeManager;
 import io.github.tt432.kitchenkarrot.recipes.recipe.CocktailRecipe;
 import io.github.tt432.kitchenkarrot.registries.ModMenuTypes;
 import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
+
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -18,6 +19,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -61,7 +63,8 @@ public class ShakerMenu extends KKMenu {
      */
     private void finishRecipe(Player player) {
         if (ShakerItem.getFinish(itemStack)) {
-            IItemHandler handler = Capabilities.ItemHandler.ENTITY_AUTOMATION.getCapability(player, null);
+            IItemHandler handler =
+                    Capabilities.ItemHandler.ENTITY_AUTOMATION.getCapability(player, null);
 
             if (handler != null) {
                 if (player.level().isClientSide) {
@@ -69,7 +72,10 @@ public class ShakerMenu extends KKMenu {
                 }
 
                 List<ItemStack> inputs = getInputs(handler);
-                Optional<RecipeHolder<CocktailRecipe>> recipeHolder = RecipeManager.getCocktailRecipes(inventory.player.level()).stream().filter(holder -> holder.value().matches(inputs)).findFirst();
+                Optional<RecipeHolder<CocktailRecipe>> recipeHolder =
+                        RecipeManager.getCocktailRecipes(inventory.player.level()).stream()
+                                .filter(holder -> holder.value().matches(inputs))
+                                .findFirst();
 
                 ItemStack recipeResult = CocktailItem.unknownCocktail();
 
@@ -116,8 +122,10 @@ public class ShakerMenu extends KKMenu {
 
         var list = getInputs(handler);
 
-        var recipe = RecipeManager.getCocktailRecipes(inventory.player.level())
-                .stream().filter(r -> r.value().matches(list)).findFirst();
+        var recipe =
+                RecipeManager.getCocktailRecipes(inventory.player.level()).stream()
+                        .filter(r -> r.value().matches(list))
+                        .findFirst();
         if (recipe.isPresent()) {
             ShakerItem.setRecipeTime(itemStack, recipe.get().value().getContent().craftingTime());
         } else {
@@ -140,20 +148,23 @@ public class ShakerMenu extends KKMenu {
     // init
     @Override
     protected Slot addSlot(IItemHandler handler, int index, int x, int y) {
-        return addSlot(new SlotItemHandler(handler, index, x, y) {
-            @Override
-            public void setChanged() {
-                super.setChanged();
-                slotChanged(handler);
-            }
-        });
+        return addSlot(
+                new SlotItemHandler(handler, index, x, y) {
+                    @Override
+                    public void setChanged() {
+                        super.setChanged();
+                        slotChanged(handler);
+                    }
+                });
     }
 
     protected void sound() {
         var player = inventory.player;
 
         if (player.level().isClientSide) {
-            player.playSound(ModSoundEvents.SHAKER_COCKTAIL.get(), 0.5F,
+            player.playSound(
+                    ModSoundEvents.SHAKER_COCKTAIL.get(),
+                    0.5F,
                     player.getRandom().nextFloat() * 0.1F + 0.9F);
         }
     }
@@ -161,13 +172,14 @@ public class ShakerMenu extends KKMenu {
     // init
     @Override
     protected Slot addResultSlot(IItemHandler handler, int index, int x, int y) {
-        return addSlot(new KKResultSlot(handler, index, x, y) {
-            @Override
-            public void setChanged() {
-                super.setChanged();
-                slotChanged(handler);
-            }
-        });
+        return addSlot(
+                new KKResultSlot(handler, index, x, y) {
+                    @Override
+                    public void setChanged() {
+                        super.setChanged();
+                        slotChanged(handler);
+                    }
+                });
     }
 
     void addSlots() {
@@ -197,7 +209,9 @@ public class ShakerMenu extends KKMenu {
         sync();
 
         if (pPlayer.level().isClientSide) {
-            pPlayer.playSound(ModSoundEvents.SHAKER_CLOSE.get(), 0.5F,
+            pPlayer.playSound(
+                    ModSoundEvents.SHAKER_CLOSE.get(),
+                    0.5F,
                     pPlayer.getRandom().nextFloat() * 0.1F + 0.9F);
         }
     }

@@ -25,23 +25,26 @@ public class SyncDataManager {
         if (sync) {
             syncDataList.forEach(data -> data.load(provider, pTag));
         } else {
-            syncDataList.forEach(data -> {
-                if (data.needSave) {
-                    data.load(provider, pTag);
-                }
-            });
+            syncDataList.forEach(
+                    data -> {
+                        if (data.needSave) {
+                            data.load(provider, pTag);
+                        }
+                    });
         }
     }
 
-    public void save(HolderLookup.Provider provider, CompoundTag pTag, boolean sync, boolean force) {
+    public void save(
+            HolderLookup.Provider provider, CompoundTag pTag, boolean sync, boolean force) {
         if (sync) {
             syncDataList.forEach(data -> data.save(provider, pTag, force));
         } else {
-            syncDataList.forEach(data -> {
-                if (data.needSave) {
-                    data.save(provider, pTag, force);
-                }
-            });
+            syncDataList.forEach(
+                    data -> {
+                        if (data.needSave) {
+                            data.save(provider, pTag, force);
+                        }
+                    });
         }
     }
 }

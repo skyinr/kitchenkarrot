@@ -12,7 +12,8 @@ import net.minecraft.world.level.block.state.BlockState;
  **/
 public abstract class MenuBlockEntity extends BaseBlockEntity implements MenuProvider {
 
-    public MenuBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
+    public MenuBlockEntity(
+            BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
     }
 
@@ -24,6 +25,13 @@ public abstract class MenuBlockEntity extends BaseBlockEntity implements MenuPro
     String name;
 
     protected String defaultName() {
-        return name == null ? name = "container." + BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(getType()).toString().replace("/", ".") : name;
+        return name == null
+                ? name =
+                        "container."
+                                + BuiltInRegistries.BLOCK_ENTITY_TYPE
+                                        .getKey(getType())
+                                        .toString()
+                                        .replace("/", ".")
+                : name;
     }
 }

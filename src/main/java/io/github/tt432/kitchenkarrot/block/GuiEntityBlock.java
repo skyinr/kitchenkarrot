@@ -2,6 +2,7 @@ package io.github.tt432.kitchenkarrot.block;
 
 import io.github.tt432.kitchenkarrot.blockentity.BaseBlockEntity;
 import io.github.tt432.kitchenkarrot.blockentity.MenuBlockEntity;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -22,13 +23,20 @@ public abstract class GuiEntityBlock<T extends BaseBlockEntity> extends ModBaseE
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected ItemInteractionResult useItemOn(
+            ItemStack stack,
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            InteractionHand hand,
+            BlockHitResult hitResult) {
         if (level.isClientSide) {
             return ItemInteractionResult.SUCCESS;
-        }else {
+        } else {
             BlockEntity blockEntity = level.getBlockEntity(pos);
 
-            if (blockEntity instanceof MenuBlockEntity kk){
+            if (blockEntity instanceof MenuBlockEntity kk) {
                 player.openMenu(kk);
                 kk.forceOnce();
             }

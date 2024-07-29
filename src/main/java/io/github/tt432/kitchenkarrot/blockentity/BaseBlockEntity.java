@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.blockentity;
 
 import io.github.tt432.kitchenkarrot.blockentity.sync.SyncDataManager;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -22,7 +23,8 @@ public abstract class BaseBlockEntity extends BlockEntity {
 
     SyncDataManager syncDataManager = new SyncDataManager();
 
-    public BaseBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
+    public BaseBlockEntity(
+            BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
         syncDataInit(syncDataManager);
     }
@@ -30,9 +32,7 @@ public abstract class BaseBlockEntity extends BlockEntity {
     /**
      * place sync data here
      */
-    protected void syncDataInit(SyncDataManager manager) {
-
-    }
+    protected void syncDataInit(SyncDataManager manager) {}
 
     public void tick() {
         sync(level);
@@ -43,7 +43,6 @@ public abstract class BaseBlockEntity extends BlockEntity {
     protected boolean isSyncTag(CompoundTag tag) {
         return tag.contains(SYNC_KEY);
     }
-
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
@@ -71,7 +70,7 @@ public abstract class BaseBlockEntity extends BlockEntity {
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag result = new CompoundTag();
         result.putBoolean(SYNC_KEY, true);
-        //sync every tick by:skyinr
+        // sync every tick by:skyinr
         syncDataManager.save(registries, result, true, true);
 
         return result;
@@ -82,12 +81,16 @@ public abstract class BaseBlockEntity extends BlockEntity {
     public void sync(Level level) {
         if (!level.isClientSide) {
             ClientboundBlockEntityDataPacket p = ClientboundBlockEntityDataPacket.create(this);
-            ((ServerLevel) this.level).getChunkSource().chunkMap.getPlayers(new ChunkPos(getBlockPos()), false)
+            ((ServerLevel) this.level)
+                    .getChunkSource()
+                    .chunkMap
+                    .getPlayers(new ChunkPos(getBlockPos()), false)
                     .forEach(k -> k.connection.send(p));
         }
     }
 
-    public static <T extends BaseBlockEntity> void tick(Level level, BlockPos pos, BlockState state, T t) {
+    public static <T extends BaseBlockEntity> void tick(
+            Level level, BlockPos pos, BlockState state, T t) {
         t.tick();
     }
 }

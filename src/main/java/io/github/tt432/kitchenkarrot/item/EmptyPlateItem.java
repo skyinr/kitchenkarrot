@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.item;
 
 import io.github.tt432.kitchenkarrot.registries.ModBlocks;
+
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -26,13 +27,15 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.shapes.CollisionContext;
+
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class EmptyPlateItem extends ModFood {
@@ -44,9 +47,15 @@ public class EmptyPlateItem extends ModFood {
     @NotNull
     public InteractionResult useOn(UseOnContext context) {
         InteractionResult interactionResult = this.place(new BlockPlaceContext(context));
-        if (!interactionResult.consumesAction() && this.isComplex() && context.getPlayer() != null) {
-            InteractionResult interactionResult1 = this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
-            return interactionResult1 == InteractionResult.CONSUME ? InteractionResult.CONSUME_PARTIAL : interactionResult1;
+        if (!interactionResult.consumesAction()
+                && this.isComplex()
+                && context.getPlayer() != null) {
+            InteractionResult interactionResult1 =
+                    this.use(context.getLevel(), context.getPlayer(), context.getHand())
+                            .getResult();
+            return interactionResult1 == InteractionResult.CONSUME
+                    ? InteractionResult.CONSUME_PARTIAL
+                    : interactionResult1;
         } else {
             return interactionResult;
         }
@@ -72,19 +81,31 @@ public class EmptyPlateItem extends ModFood {
                     ItemStack itemStack = blockPlaceContext.getItemInHand();
                     BlockState blockState1 = level.getBlockState(blockPos);
                     if (blockState1.is(blockState.getBlock())) {
-                        blockState1 = this.updateBlockStateFromTag(blockPos, level, itemStack, blockState1);
+                        blockState1 =
+                                this.updateBlockStateFromTag(
+                                        blockPos, level, itemStack, blockState1);
                         this.updateCustomBlockEntityTag(blockPos, level, player, itemStack);
-                        blockState1.getBlock().setPlacedBy(level, blockPos, blockState1, player, itemStack);
+                        blockState1
+                                .getBlock()
+                                .setPlacedBy(level, blockPos, blockState1, player, itemStack);
                         if (player instanceof ServerPlayer) {
-                            CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) player, blockPos, itemStack);
+                            CriteriaTriggers.PLACED_BLOCK.trigger(
+                                    (ServerPlayer) player, blockPos, itemStack);
                         }
                     }
 
                     level.gameEvent(player, GameEvent.BLOCK_PLACE, blockPos);
-                    SoundType soundType = blockState1.getSoundType(level, blockPos, context.getPlayer());
+                    SoundType soundType =
+                            blockState1.getSoundType(level, blockPos, context.getPlayer());
                     float volume = (soundType.getVolume() + 1.0F) / 2.0F;
                     float pitch = soundType.getPitch() * 0.8F;
-                    level.playSound(player, blockPos, SoundEvents.STONE_PLACE, SoundSource.BLOCKS, volume, pitch);
+                    level.playSound(
+                            player,
+                            blockPos,
+                            SoundEvents.STONE_PLACE,
+                            SoundSource.BLOCKS,
+                            volume,
+                            pitch);
                     if (player == null || !player.getAbilities().instabuild) {
                         itemStack.shrink(1);
                     }
@@ -100,7 +121,8 @@ public class EmptyPlateItem extends ModFood {
         return context;
     }
 
-    protected void updateCustomBlockEntityTag(BlockPos pos, Level level, @Nullable Player player, ItemStack stack) {
+    protected void updateCustomBlockEntityTag(
+            BlockPos pos, Level level, @Nullable Player player, ItemStack stack) {
         updateCustomBlockEntityTag(level, player, pos, stack);
     }
 
@@ -110,11 +132,12 @@ public class EmptyPlateItem extends ModFood {
         return blockstate != null && this.canPlace(context, blockstate) ? blockstate : null;
     }
 
-    private BlockState updateBlockStateFromTag(BlockPos pos, Level level, ItemStack stack, BlockState state) {
+    private BlockState updateBlockStateFromTag(
+            BlockPos pos, Level level, ItemStack stack, BlockState state) {
         BlockState blockState = state;
 
-
-        Map<String, String> properties = stack.getComponents().get(DataComponents.BLOCK_STATE).properties();
+        Map<String, String> properties =
+                stack.getComponents().get(DataComponents.BLOCK_STATE).properties();
         StateDefinition<Block, BlockState> stateDefinition = state.getBlock().getStateDefinition();
         for (String s : properties.keySet()) {
             Property<?> property = stateDefinition.getProperty(s);
@@ -122,7 +145,6 @@ public class EmptyPlateItem extends ModFood {
                 String s1 = Objects.requireNonNull(properties.get(s));
                 blockState = updateState(blockState, property, s1);
             }
-
         }
 
         if (blockState != state) {
@@ -132,27 +154,36 @@ public class EmptyPlateItem extends ModFood {
         return blockState;
     }
 
-    private static <T extends Comparable<T>> BlockState updateState(BlockState state, Property<T> property, String valueIdentifier) {
-        return property.getValue(valueIdentifier).map((t) -> state.setValue(property, t)).orElse(state);
+    private static <T extends Comparable<T>> BlockState updateState(
+            BlockState state, Property<T> property, String valueIdentifier) {
+        return property.getValue(valueIdentifier)
+                .map((t) -> state.setValue(property, t))
+                .orElse(state);
     }
 
     protected boolean canPlace(BlockPlaceContext context, BlockState state) {
         Player player = context.getPlayer();
-        CollisionContext collisioncontext = player == null ? CollisionContext.empty() : CollisionContext.of(player);
-        return state.canSurvive(context.getLevel(), context.getClickedPos()) && context.getLevel().isUnobstructed(state, context.getClickedPos(), collisioncontext);
+        CollisionContext collisioncontext =
+                player == null ? CollisionContext.empty() : CollisionContext.of(player);
+        return state.canSurvive(context.getLevel(), context.getClickedPos())
+                && context.getLevel()
+                        .isUnobstructed(state, context.getClickedPos(), collisioncontext);
     }
 
     protected boolean placeBlock(BlockPlaceContext context, BlockState state) {
         return context.getLevel().setBlock(context.getClickedPos(), state, 11);
     }
 
-    public static void updateCustomBlockEntityTag(Level level, @Nullable Player player, BlockPos pos, ItemStack stack) {
+    public static void updateCustomBlockEntityTag(
+            Level level, @Nullable Player player, BlockPos pos, ItemStack stack) {
         MinecraftServer server = level.getServer();
         if (server != null) {
             CompoundTag compoundTag = Objects.requireNonNull(getBlockEntityData(stack)).copyTag();
             BlockEntity blockentity = level.getBlockEntity(pos);
             if (blockentity != null) {
-                if (!level.isClientSide && blockentity.onlyOpCanSetNbt() && (player == null || !player.canUseGameMasterBlocks())) {
+                if (!level.isClientSide
+                        && blockentity.onlyOpCanSetNbt()
+                        && (player == null || !player.canUseGameMasterBlocks())) {
                     return;
                 }
 
@@ -168,7 +199,11 @@ public class EmptyPlateItem extends ModFood {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    public void appendHoverText(
+            ItemStack stack,
+            TooltipContext context,
+            List<Component> tooltipComponents,
+            TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         tooltipComponents.add(Component.translatable("info.kitchenkarrot.text1"));
         tooltipComponents.add(Component.translatable("info.kitchenkarrot.text2"));

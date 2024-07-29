@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.effect;
 
 import io.github.tt432.kitchenkarrot.registries.ModEffects;
+
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;

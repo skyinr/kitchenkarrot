@@ -5,6 +5,7 @@ import io.github.tt432.kitchenkarrot.blockentity.AirCompressorBlockEntity;
 import io.github.tt432.kitchenkarrot.gui.base.KKGui;
 import io.github.tt432.kitchenkarrot.gui.widget.ProgressWidget;
 import io.github.tt432.kitchenkarrot.menu.AirCompressorMenu;
+
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +17,8 @@ import net.minecraft.world.entity.player.Inventory;
 public class AirCompressorGui extends KKGui<AirCompressorMenu> {
 
     private static final ResourceLocation GUI =
-            ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "textures/gui/air_compressor.png");
+            ResourceLocation.fromNamespaceAndPath(
+                    Kitchenkarrot.MOD_ID, "textures/gui/air_compressor.png");
 
     AirCompressorBlockEntity be;
 
@@ -29,12 +31,32 @@ public class AirCompressorGui extends KKGui<AirCompressorMenu> {
     protected void init() {
         super.init();
 
-        addRenderableWidget(new ProgressWidget(this, GUI,
-                leftPos + 105, topPos + 50, 184, 0, 20, 19, true,
-                () -> be.getMaxProgress() - be.getProgress(), be::getProgress));
-        addRenderableWidget(new ProgressWidget(this, GUI,
-                leftPos + 49, topPos + 8, 176, 0, 8, 60, true,
-                () -> 12, be::getAtomicEnergy));
+        addRenderableWidget(
+                new ProgressWidget(
+                        this,
+                        GUI,
+                        leftPos + 105,
+                        topPos + 50,
+                        184,
+                        0,
+                        20,
+                        19,
+                        true,
+                        () -> be.getMaxProgress() - be.getProgress(),
+                        be::getProgress));
+        addRenderableWidget(
+                new ProgressWidget(
+                        this,
+                        GUI,
+                        leftPos + 49,
+                        topPos + 8,
+                        176,
+                        0,
+                        8,
+                        60,
+                        true,
+                        () -> 12,
+                        be::getAtomicEnergy));
     }
 
     @Override
@@ -42,8 +64,8 @@ public class AirCompressorGui extends KKGui<AirCompressorMenu> {
         super.render(p_283479_, p_283661_, p_281248_, p_281886_);
     }
 
-//    @Override
-//    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-//        super.render(matrixStack, mouseX, mouseY, partialTicks);
-//    }
+    //    @Override
+    //    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    //        super.render(matrixStack, mouseX, mouseY, partialTicks);
+    //    }
 }
