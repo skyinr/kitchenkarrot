@@ -7,6 +7,7 @@ import io.github.tt432.kitchenkarrot.item.ModBlockItems;
 import io.github.tt432.kitchenkarrot.recipes.RecipeManager;
 import io.github.tt432.kitchenkarrot.registries.*;
 
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -57,6 +58,10 @@ public class Kitchenkarrot {
 
     public static Kitchenkarrot getInstance() {
         return INSTANCE;
+    }
+
+    public static ResourceLocation getModRL(String path) {
+        return ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, path);
     }
 
     //    public ModNetworking getNetworking() {

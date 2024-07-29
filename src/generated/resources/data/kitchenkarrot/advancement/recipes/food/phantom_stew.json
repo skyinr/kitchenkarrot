@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_TagKey[minecraft:item / forge:milk]": {
+    "has_TagKey[minecraft:item / c:milk]": {
       "conditions": {
         "items": [
           {
-            "items": "#forge:milk"
+            "items": "#c:milk"
           }
         ]
       },
@@ -41,7 +41,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_TagKey[minecraft:item / forge:milk]",
+      "has_TagKey[minecraft:item / c:milk]",
       "has_kitchenkarrot:carrot_spices",
       "has_minecraft:phantom_membrane"
     ]

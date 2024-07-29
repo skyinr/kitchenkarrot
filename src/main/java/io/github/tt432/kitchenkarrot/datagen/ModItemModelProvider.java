@@ -21,7 +21,12 @@ import net.neoforged.neoforge.registries.DeferredItem;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class ModItemModelProvider extends ItemModelProvider {
+    private final Set<Item> skipSet = new HashSet<>();
+
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, Kitchenkarrot.MOD_ID, existingFileHelper);
     }
@@ -31,6 +36,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        initSkip();
+
         for (var entry :
                 ModItems.ITEMS.getEntries().stream()
                         .filter(e -> !(e.get() instanceof BlockItem))
@@ -38,18 +45,37 @@ public class ModItemModelProvider extends ItemModelProvider {
             if (!IGNORES.contains(entry)) {
                 basicItem(entry.get());
             }
-            tool(ModItems.KNIFE);
-            genBlockItemModel(ModBlocks.ACORN_OIL);
-            genBlockItemModel(ModBlocks.CHORUS_OIL);
-            genBlockItemModel(ModBlocks.SUNFLOWER_OIL);
-            genBlockItemModel(ModBlocks.FINE_SALT);
-            genBlockItemModel(ModBlocks.ROCK_SALT);
-            genBlockItemModel(ModBlocks.SEA_SALT);
         }
+        tool(ModItems.KNIFE);
+
+        genBlockGenerated(ModBlocks.ACORN_OIL);
+        genBlockGenerated(ModBlocks.CHORUS_OIL);
+        genBlockGenerated(ModBlocks.SUNFLOWER_OIL);
+        genBlockGenerated(ModBlocks.FINE_SALT);
+        genBlockGenerated(ModBlocks.ROCK_SALT);
+        genBlockGenerated(ModBlocks.SEA_SALT);
+
+        ModBlocks.BLOCKS.getEntries().stream()
+                .map(holder -> (DeferredBlock<Block>) holder)
+                .filter(holder -> isSkip(holder.asItem()))
+                .forEach(this::genBlockItemModel);
+    }
+
+    protected Boolean isSkip(Item item) {
+        return !skipSet.contains(item);
+    }
+
+    protected void skip(Item item) {
+        skipSet.add(item);
+    }
+
+    protected void initSkip() {
+        skip(ModBlocks.PLATE.asItem());
     }
 
     @NotNull
     private ItemModelBuilder tool(@NotNull DeferredItem<Item> item) {
+        skip(item.get());
         ResourceLocation rl = item.getId();
         return getBuilder(rl.toString())
                 .parent(new ModelFile.UncheckedModelFile("item/handheld"))
@@ -59,7 +85,8 @@ public class ModItemModelProvider extends ItemModelProvider {
                                 Kitchenkarrot.MOD_ID, "item/" + rl.getPath()));
     }
 
-    private ItemModelBuilder genBlockItemModel(DeferredBlock<Block> block) {
+    protected ItemModelBuilder genBlockGenerated(DeferredBlock<Block> block) {
+        skip(block.asItem());
         return withExistingParent(
                         block.getId().getPath(),
                         ResourceLocation.withDefaultNamespace("item/generated"))
@@ -67,5 +94,10 @@ public class ModItemModelProvider extends ItemModelProvider {
                         "layer0",
                         ResourceLocation.fromNamespaceAndPath(
                                 Kitchenkarrot.MOD_ID, ITEM_FOLDER + "/" + block.getId().getPath()));
+    }
+
+    private ItemModelBuilder genBlockItemModel(DeferredBlock<Block> block) {
+        String id = block.getId().getPath();
+        return withExistingParent(id, Kitchenkarrot.getModRL("block/" + id));
     }
 }

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_TagKey[minecraft:item / forge:bread]": {
+    "has_TagKey[minecraft:item / c:bread]": {
       "conditions": {
         "items": [
           {
-            "items": "#forge:bread"
+            "items": "#c:bread"
           }
         ]
       },
@@ -71,7 +71,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_TagKey[minecraft:item / forge:bread]",
+      "has_TagKey[minecraft:item / c:bread]",
       "has_kitchenkarrot:sashimi",
       "has_kitchenkarrot:pickled_sea_pickles",
       "has_kitchenkarrot:cheese_slice",

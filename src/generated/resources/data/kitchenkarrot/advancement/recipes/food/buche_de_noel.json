@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_TagKey[minecraft:item / forge:ice_cubes]": {
+    "has_TagKey[minecraft:item / c:ice_cubes]": {
       "conditions": {
         "items": [
           {
-            "items": "#forge:ice_cubes"
+            "items": "#c:ice_cubes"
           }
         ]
       },
@@ -43,7 +43,7 @@
       "has_the_recipe",
       "has_minecraft:sweet_berries",
       "has_minecraft:cocoa_beans",
-      "has_TagKey[minecraft:item / forge:ice_cubes]"
+      "has_TagKey[minecraft:item / c:ice_cubes]"
     ]
   ],
   "rewards": {

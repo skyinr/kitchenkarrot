@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_TagKey[minecraft:item / forge:nuts/acorn]": {
+    "has_TagKey[minecraft:item / c:nuts/acorn]": {
       "conditions": {
         "items": [
           {
-            "items": "#forge:nuts/acorn"
+            "items": "#c:nuts/acorn"
           }
         ]
       },
@@ -41,7 +41,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_TagKey[minecraft:item / forge:nuts/acorn]",
+      "has_TagKey[minecraft:item / c:nuts/acorn]",
       "has_kitchenkarrot:birch_sap",
       "has_minecraft:wheat"
     ]
