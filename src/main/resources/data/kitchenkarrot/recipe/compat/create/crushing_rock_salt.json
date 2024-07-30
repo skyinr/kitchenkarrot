@@ -13,11 +13,11 @@
   ],
   "results": [
     {
-      "item": "kitchenkarrot:carrot_spices",
+      "id": "kitchenkarrot:carrot_spices",
       "count": 2
     },
     {
-      "item": "kitchenkarrot:carrot_spices",
+      "id": "kitchenkarrot:carrot_spices",
       "chance": 0.5
     }
   ],

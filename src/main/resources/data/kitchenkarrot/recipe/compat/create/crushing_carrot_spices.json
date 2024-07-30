@@ -13,15 +13,15 @@
   ],
   "results": [
     {
-      "item": "kitchenkarrot:rock_salt",
+      "id": "kitchenkarrot:rock_salt",
       "count": 1
     },
     {
-      "item": "kitchenkarrot:rock_salt",
+      "id": "kitchenkarrot:rock_salt",
       "chance": 0.5
     },
     {
-      "item": "minecraft:cobblestone",
+      "id": "minecraft:cobblestone",
       "chance": 0.2
     }
   ],

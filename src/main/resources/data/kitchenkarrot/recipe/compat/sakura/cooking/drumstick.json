@@ -24,7 +24,7 @@
         "amount": 125
       },
       "result": {
-        "item": "kitchenkarrot:drumstick"
+        "id": "kitchenkarrot:drumstick"
       },
       "recipeTime": 200
     }

@@ -41,7 +41,7 @@
           }
         },
         "result": {
-          "item": "kitchenkarrot:feast_pizza"
+          "id": "kitchenkarrot:feast_pizza"
         }
       }
     }

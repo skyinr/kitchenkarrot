@@ -24,7 +24,7 @@
         "amount": 125
       },
       "result": {
-        "item": "kitchenkarrot:fries"
+        "id": "kitchenkarrot:fries"
       },
       "recipeTime": 200
     }
