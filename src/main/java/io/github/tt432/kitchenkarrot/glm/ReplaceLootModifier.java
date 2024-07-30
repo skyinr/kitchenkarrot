@@ -46,7 +46,7 @@ public class ReplaceLootModifier extends LootModifier {
     private final int weight;
     private final int count;
 
-    protected ReplaceLootModifier(
+    public ReplaceLootModifier(
             LootItemCondition[] conditionsIn, ItemStack itemStack, int weight, int count) {
         super(conditionsIn);
         this.itemStack = itemStack;

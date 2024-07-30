@@ -1,6 +1,9 @@
 package io.github.tt432.kitchenkarrot.datagen;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.datagen.provider.MODGLMProvider;
+import io.github.tt432.kitchenkarrot.datagen.provider.ModItemModelProvider;
+import io.github.tt432.kitchenkarrot.datagen.provider.ModRecipeProvider;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -21,6 +24,7 @@ public class Datagen {
         ExistingFileHelper helper = e.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = e.getLookupProvider();
 
+        generator.addProvider(true, new MODGLMProvider(output, lookupProvider));
         generator.addProvider(true, new ModRecipeProvider(output, lookupProvider));
         generator.addProvider(true, new ModItemModelProvider(output, helper));
     }

@@ -30,7 +30,7 @@ public class AddItemModifier extends LootModifier {
                                                     .apply(inst, AddItemModifier::new)));
     private final ItemStack itemStack;
 
-    protected AddItemModifier(LootItemCondition[] conditionsIn, ItemStack itemStack) {
+    public AddItemModifier(LootItemCondition[] conditionsIn, ItemStack itemStack) {
         super(conditionsIn);
         this.itemStack = itemStack;
     }

@@ -1,4 +1,4 @@
-package io.github.tt432.kitchenkarrot.datagen;
+package io.github.tt432.kitchenkarrot.datagen.provider;
 
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
