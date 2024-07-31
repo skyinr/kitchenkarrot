@@ -1,0 +1,36 @@
+{
+  "type": "kitchenkarrot:cocktail",
+  "cocktail_property": {
+    "author": "kitchenkarrot",
+    "effect": [
+      {
+        "duration": 4800,
+        "id": "minecraft:strength",
+        "lvl": 2
+      }
+    ],
+    "id": "kitchenkarrot:shanghai_beach"
+  },
+  "content": {
+    "craftingtime": 100,
+    "hunger": 3,
+    "recipe": [
+      {
+        "item": "kitchenkarrot:vodka_base"
+      },
+      {
+        "item": "kitchenkarrot:vodka_base"
+      },
+      {
+        "item": "kitchenkarrot:vodka_base"
+      },
+      {
+        "tag": "c:ice_cubes"
+      },
+      {
+        "item": "kitchenkarrot:carrot_spices"
+      }
+    ],
+    "saturation": 0.5
+  }
+}

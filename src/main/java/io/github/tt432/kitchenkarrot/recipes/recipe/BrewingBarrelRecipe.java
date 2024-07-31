@@ -11,6 +11,7 @@ import io.netty.buffer.ByteBuf;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -105,7 +106,7 @@ public class BrewingBarrelRecipe extends BaseRecipe {
 
     @Override
     public String getId() {
-        return getResultItem(null).getDescriptionId();
+        return getResultItem(RegistryAccess.EMPTY).getDescriptionId();
     }
 
     @Override

@@ -1,0 +1,11 @@
+{
+  "author": "kitchenkarrot",
+  "effect": [
+    {
+      "duration": 12000,
+      "id": "minecraft:absorption",
+      "lvl": 2
+    }
+  ],
+  "id": "kitchenkarrot:sculked_garden"
+}

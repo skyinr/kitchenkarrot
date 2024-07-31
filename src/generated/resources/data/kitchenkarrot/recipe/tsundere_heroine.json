@@ -1,0 +1,36 @@
+{
+  "type": "kitchenkarrot:cocktail",
+  "cocktail_property": {
+    "author": "kitchenkarrot",
+    "effect": [
+      {
+        "duration": 1,
+        "id": "minecraft:instant_health",
+        "lvl": 3
+      }
+    ],
+    "id": "kitchenkarrot:tsundere_heroine"
+  },
+  "content": {
+    "craftingtime": 40,
+    "hunger": 1,
+    "recipe": [
+      {
+        "item": "kitchenkarrot:vodka_base"
+      },
+      {
+        "item": "kitchenkarrot:carrot_spices"
+      },
+      {
+        "item": "kitchenkarrot:carrot_spices"
+      },
+      {
+        "tag": "c:buckets/milk"
+      },
+      {
+        "item": "minecraft:sugar"
+      }
+    ],
+    "saturation": 2.0
+  }
+}

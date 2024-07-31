@@ -1,0 +1,30 @@
+{
+  "type": "kitchenkarrot:cocktail",
+  "cocktail_property": {
+    "author": "kitchenkarrot",
+    "effect": [],
+    "id": "kitchenkarrot:sweet_berry_martini"
+  },
+  "content": {
+    "craftingtime": 75,
+    "hunger": 7,
+    "recipe": [
+      {
+        "item": "kitchenkarrot:acorn_wine_base"
+      },
+      {
+        "item": "kitchenkarrot:acorn_wine_base"
+      },
+      {
+        "item": "kitchenkarrot:mead_base"
+      },
+      {
+        "item": "kitchenkarrot:mead_base"
+      },
+      {
+        "item": "minecraft:sweet_berries"
+      }
+    ],
+    "saturation": 0.3
+  }
+}

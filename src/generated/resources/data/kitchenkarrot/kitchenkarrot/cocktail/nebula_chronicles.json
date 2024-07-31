@@ -1,0 +1,11 @@
+{
+  "author": "kitchenkarrot",
+  "effect": [
+    {
+      "duration": 4800,
+      "id": "minecraft:resistance",
+      "lvl": 0
+    }
+  ],
+  "id": "kitchenkarrot:nebula_chronicles"
+}

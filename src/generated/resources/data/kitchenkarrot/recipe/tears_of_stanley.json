@@ -1,0 +1,41 @@
+{
+  "type": "kitchenkarrot:cocktail",
+  "cocktail_property": {
+    "author": "kitchenkarrot",
+    "effect": [
+      {
+        "duration": 120,
+        "id": "minecraft:levitation",
+        "lvl": 1
+      },
+      {
+        "duration": 4800,
+        "id": "minecraft:haste",
+        "lvl": 2
+      }
+    ],
+    "id": "kitchenkarrot:tears_of_stanley"
+  },
+  "content": {
+    "craftingtime": 100,
+    "hunger": 0,
+    "recipe": [
+      {
+        "item": "kitchenkarrot:rum_base"
+      },
+      {
+        "item": "kitchenkarrot:rum_base"
+      },
+      {
+        "item": "kitchenkarrot:acorn_wine_base"
+      },
+      {
+        "item": "minecraft:bone_meal"
+      },
+      {
+        "item": "minecraft:weeping_vines"
+      }
+    ],
+    "saturation": 0.0
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "type": "kitchenkarrot:cocktail",
+  "cocktail_property": {
+    "author": "kitchenkarrot",
+    "effect": [],
+    "id": "kitchenkarrot:mushy_sunset"
+  },
+  "content": {
+    "craftingtime": 50,
+    "hunger": 9,
+    "recipe": [
+      {
+        "item": "kitchenkarrot:vodka_base"
+      },
+      {
+        "item": "kitchenkarrot:mead_base"
+      },
+      {
+        "item": "kitchenkarrot:birch_sap"
+      },
+      {
+        "item": "minecraft:brown_mushroom"
+      },
+      {
+        "tag": "c:mushrooms"
+      }
+    ],
+    "saturation": 0.2
+  }
+}

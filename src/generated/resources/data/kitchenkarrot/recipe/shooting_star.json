@@ -1,0 +1,36 @@
+{
+  "type": "kitchenkarrot:cocktail",
+  "cocktail_property": {
+    "author": "kitchenkarrot",
+    "effect": [
+      {
+        "duration": 6000,
+        "id": "minecraft:night_vision",
+        "lvl": 0
+      }
+    ],
+    "id": "kitchenkarrot:shooting_star"
+  },
+  "content": {
+    "craftingtime": 100,
+    "hunger": 2,
+    "recipe": [
+      {
+        "item": "kitchenkarrot:vodka_base"
+      },
+      {
+        "item": "kitchenkarrot:vodka_base"
+      },
+      {
+        "tag": "c:ice_cubes"
+      },
+      {
+        "tag": "c:ice_cubes"
+      },
+      {
+        "item": "minecraft:glow_ink_sac"
+      }
+    ],
+    "saturation": 1.0
+  }
+}

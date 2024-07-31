@@ -1,0 +1,11 @@
+{
+  "author": "kitchenkarrot",
+  "effect": [
+    {
+      "duration": 4800,
+      "id": "minecraft:jump_boost",
+      "lvl": 8
+    }
+  ],
+  "id": "kitchenkarrot:slimy_ball"
+}

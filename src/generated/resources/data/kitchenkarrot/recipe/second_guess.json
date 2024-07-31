@@ -1,0 +1,36 @@
+{
+  "type": "kitchenkarrot:cocktail",
+  "cocktail_property": {
+    "author": "kitchenkarrot",
+    "effect": [
+      {
+        "duration": 3600,
+        "id": "minecraft:slow_falling",
+        "lvl": 0
+      }
+    ],
+    "id": "kitchenkarrot:second_guess"
+  },
+  "content": {
+    "craftingtime": 40,
+    "hunger": 4,
+    "recipe": [
+      {
+        "item": "kitchenkarrot:acorn_wine_base"
+      },
+      {
+        "item": "kitchenkarrot:carrot_spices"
+      },
+      {
+        "item": "kitchenkarrot:carrot_spices"
+      },
+      {
+        "item": "minecraft:chorus_fruit"
+      },
+      {
+        "item": "minecraft:chorus_fruit"
+      }
+    ],
+    "saturation": 0.0
+  }
+}

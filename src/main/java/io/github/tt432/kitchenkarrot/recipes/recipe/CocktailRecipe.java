@@ -4,9 +4,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import io.github.tt432.kitchenkarrot.cocktail.CocktailProperty;
 import io.github.tt432.kitchenkarrot.item.CocktailItem;
 import io.github.tt432.kitchenkarrot.recipes.base.BaseRecipe;
-import io.github.tt432.kitchenkarrot.recipes.object.EffectStack;
 import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.registries.RecipeSerializers;
 import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
@@ -15,7 +15,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -24,7 +23,6 @@ import net.neoforged.neoforge.common.util.RecipeMatcher;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,12 +33,9 @@ public class CocktailRecipe extends BaseRecipe {
             RecordCodecBuilder.mapCodec(
                     builder ->
                             builder.group(
-                                            ResourceLocation.CODEC
-                                                    .fieldOf("cocktail_id")
-                                                    .forGetter(recipe -> recipe.recipeId),
-                                            Codec.STRING
-                                                    .fieldOf("author")
-                                                    .forGetter(recipe -> recipe.author),
+                                            CocktailProperty.CODEC
+                                                    .fieldOf("cocktail_property")
+                                                    .forGetter(recipe -> recipe.cocktailProperty),
                                             Content.CODEC
                                                     .fieldOf("content")
                                                     .forGetter(recipe -> recipe.content))
@@ -48,16 +43,17 @@ public class CocktailRecipe extends BaseRecipe {
 
     public static final StreamCodec<RegistryFriendlyByteBuf, CocktailRecipe> STREAM_CODEC =
             StreamCodec.composite(
-                    ResourceLocation.STREAM_CODEC,
-                    recipe -> recipe.recipeId,
-                    ByteBufCodecs.STRING_UTF8,
-                    recipe -> recipe.author,
+                    ByteBufCodecs.fromCodec(CocktailProperty.CODEC),
+                    recipe -> recipe.cocktailProperty,
                     Content.STREAM_CODEC,
                     recipe -> recipe.content,
                     CocktailRecipe::new);
 
-    public CocktailRecipe(ResourceLocation recipeId, String author, Content content) {
-        this.author = author;
+    public Content content;
+    public CocktailProperty cocktailProperty;
+
+    public CocktailRecipe(CocktailProperty cocktailProperty, Content content) {
+        this.cocktailProperty = cocktailProperty;
         this.content = content;
     }
 
@@ -68,7 +64,7 @@ public class CocktailRecipe extends BaseRecipe {
 
     @Override
     public String getId() {
-        return recipeId.getPath();
+        return cocktailProperty.id().getPath();
     }
 
     ItemStack result;
@@ -77,7 +73,7 @@ public class CocktailRecipe extends BaseRecipe {
     public ItemStack getResultItem(HolderLookup.Provider provider) {
         if (result == null) {
             result = new ItemStack(ModItems.COCKTAIL.get());
-            CocktailItem.setCocktail(result, ResourceLocation.parse(getId()));
+            CocktailItem.setCocktail(result, cocktailProperty);
         }
         return result.copy();
     }
@@ -94,16 +90,7 @@ public class CocktailRecipe extends BaseRecipe {
         return RecipeTypes.COCKTAIL.get();
     }
 
-    public ResourceLocation recipeId;
-    public String author;
-    public Content content;
-
-    public record Content(
-            List<Ingredient> recipe,
-            int craftingTime,
-            int hunger,
-            int saturation,
-            List<EffectStack> effect) {
+    public record Content(List<Ingredient> recipe, int craftingTime, int hunger, float saturation) {
         public static final Codec<Content> CODEC =
                 RecordCodecBuilder.create(
                         builder ->
@@ -118,14 +105,9 @@ public class CocktailRecipe extends BaseRecipe {
                                                 Codec.INT
                                                         .fieldOf("hunger")
                                                         .forGetter(Content::hunger),
-                                                Codec.INT
+                                                Codec.FLOAT
                                                         .fieldOf("saturation")
-                                                        .forGetter(Content::saturation),
-                                                EffectStack.CODEC
-                                                        .listOf()
-                                                        .fieldOf("effect")
-                                                        .orElse(new ArrayList<>())
-                                                        .forGetter(Content::effect))
+                                                        .forGetter(Content::saturation))
                                         .apply(builder, Content::new));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, Content> STREAM_CODEC =
@@ -136,10 +118,8 @@ public class CocktailRecipe extends BaseRecipe {
                         Content::craftingTime,
                         ByteBufCodecs.INT,
                         Content::hunger,
-                        ByteBufCodecs.INT,
+                        ByteBufCodecs.FLOAT,
                         Content::saturation,
-                        ByteBufCodecs.fromCodec(EffectStack.CODEC.listOf()),
-                        Content::effect,
                         Content::new);
     }
 

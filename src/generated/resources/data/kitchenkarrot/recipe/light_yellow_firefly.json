@@ -1,0 +1,41 @@
+{
+  "type": "kitchenkarrot:cocktail",
+  "cocktail_property": {
+    "author": "kitchenkarrot",
+    "effect": [
+      {
+        "duration": 2400,
+        "id": "minecraft:invisibility",
+        "lvl": 0
+      },
+      {
+        "duration": 2400,
+        "id": "minecraft:glowing",
+        "lvl": 0
+      }
+    ],
+    "id": "kitchenkarrot:light_yellow_firefly"
+  },
+  "content": {
+    "craftingtime": 150,
+    "hunger": 6,
+    "recipe": [
+      {
+        "item": "kitchenkarrot:rum_base"
+      },
+      {
+        "item": "kitchenkarrot:rum_base"
+      },
+      {
+        "item": "kitchenkarrot:rum_base"
+      },
+      {
+        "item": "minecraft:egg"
+      },
+      {
+        "item": "minecraft:yellow_dye"
+      }
+    ],
+    "saturation": 0.1
+  }
+}

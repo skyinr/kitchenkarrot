@@ -1,0 +1,11 @@
+{
+  "author": "kitchenkarrot",
+  "effect": [
+    {
+      "duration": 6000,
+      "id": "minecraft:night_vision",
+      "lvl": 0
+    }
+  ],
+  "id": "kitchenkarrot:shooting_star"
+}

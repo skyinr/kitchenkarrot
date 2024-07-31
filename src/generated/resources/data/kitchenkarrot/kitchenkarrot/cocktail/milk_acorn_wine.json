@@ -1,0 +1,11 @@
+{
+  "author": "kitchenkarrot",
+  "effect": [
+    {
+      "duration": 2400,
+      "id": "minecraft:luck",
+      "lvl": 0
+    }
+  ],
+  "id": "kitchenkarrot:milk_acorn_wine"
+}

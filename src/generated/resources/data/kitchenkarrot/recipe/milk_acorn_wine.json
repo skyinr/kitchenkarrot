@@ -1,0 +1,36 @@
+{
+  "type": "kitchenkarrot:cocktail",
+  "cocktail_property": {
+    "author": "kitchenkarrot",
+    "effect": [
+      {
+        "duration": 2400,
+        "id": "minecraft:luck",
+        "lvl": 0
+      }
+    ],
+    "id": "kitchenkarrot:milk_acorn_wine"
+  },
+  "content": {
+    "craftingtime": 75,
+    "hunger": 5,
+    "recipe": [
+      {
+        "item": "kitchenkarrot:acorn_wine_base"
+      },
+      {
+        "item": "kitchenkarrot:acorn_wine_base"
+      },
+      {
+        "item": "kitchenkarrot:acorn_wine_base"
+      },
+      {
+        "item": "kitchenkarrot:carrot_spices"
+      },
+      {
+        "item": "kitchenkarrot:milk"
+      }
+    ],
+    "saturation": 0.7
+  }
+}

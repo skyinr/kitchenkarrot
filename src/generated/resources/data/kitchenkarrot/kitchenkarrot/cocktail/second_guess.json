@@ -1,0 +1,11 @@
+{
+  "author": "kitchenkarrot",
+  "effect": [
+    {
+      "duration": 3600,
+      "id": "minecraft:slow_falling",
+      "lvl": 0
+    }
+  ],
+  "id": "kitchenkarrot:second_guess"
+}

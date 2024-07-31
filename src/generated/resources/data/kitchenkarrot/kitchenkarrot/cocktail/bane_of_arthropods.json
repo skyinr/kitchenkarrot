@@ -1,0 +1,11 @@
+{
+  "author": "kitchenkarrot",
+  "effect": [
+    {
+      "duration": 600,
+      "id": "minecraft:nausea",
+      "lvl": 0
+    }
+  ],
+  "id": "kitchenkarrot:bane_of_arthropods"
+}

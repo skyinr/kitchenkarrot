@@ -1,0 +1,16 @@
+{
+  "author": "kitchenkarrot",
+  "effect": [
+    {
+      "duration": 2400,
+      "id": "minecraft:invisibility",
+      "lvl": 0
+    },
+    {
+      "duration": 2400,
+      "id": "minecraft:glowing",
+      "lvl": 0
+    }
+  ],
+  "id": "kitchenkarrot:light_yellow_firefly"
+}

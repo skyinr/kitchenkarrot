@@ -1,0 +1,36 @@
+{
+  "type": "kitchenkarrot:cocktail",
+  "cocktail_property": {
+    "author": "kitchenkarrot",
+    "effect": [
+      {
+        "duration": 4800,
+        "id": "minecraft:invisibility",
+        "lvl": 0
+      }
+    ],
+    "id": "kitchenkarrot:twilight_forest"
+  },
+  "content": {
+    "craftingtime": 110,
+    "hunger": 4,
+    "recipe": [
+      {
+        "item": "kitchenkarrot:rum_base"
+      },
+      {
+        "item": "kitchenkarrot:ice_cubes"
+      },
+      {
+        "tag": "c:ice_cubes"
+      },
+      {
+        "item": "kitchenkarrot:carrot_spices"
+      },
+      {
+        "tag": "minecraft:leaves"
+      }
+    ],
+    "saturation": 0.3
+  }
+}

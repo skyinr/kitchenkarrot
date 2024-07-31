@@ -1,0 +1,11 @@
+{
+  "author": "kitchenkarrot",
+  "effect": [
+    {
+      "duration": 6000,
+      "id": "minecraft:conduit_power",
+      "lvl": 0
+    }
+  ],
+  "id": "kitchenkarrot:jacks_story"
+}

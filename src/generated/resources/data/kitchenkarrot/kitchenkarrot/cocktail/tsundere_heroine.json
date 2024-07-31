@@ -1,0 +1,11 @@
+{
+  "author": "kitchenkarrot",
+  "effect": [
+    {
+      "duration": 1,
+      "id": "minecraft:instant_health",
+      "lvl": 3
+    }
+  ],
+  "id": "kitchenkarrot:tsundere_heroine"
+}

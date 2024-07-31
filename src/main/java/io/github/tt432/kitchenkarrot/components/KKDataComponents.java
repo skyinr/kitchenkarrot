@@ -3,6 +3,7 @@ package io.github.tt432.kitchenkarrot.components;
 import com.mojang.serialization.Codec;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.cocktail.CocktailProperty;
 
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -51,12 +52,14 @@ public class KKDataComponents {
                                             .networkSynchronized(ByteBufCodecs.INT)
                                             .build());
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> COCKTAIL =
-            DATA_COMPONENTS.register(
-                    "cocktail",
-                    () ->
-                            DataComponentType.<String>builder()
-                                    .persistent(Codec.STRING)
-                                    .networkSynchronized(ByteBufCodecs.STRING_UTF8)
-                                    .build());
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<CocktailProperty>>
+            COCKTAIL =
+                    DATA_COMPONENTS.register(
+                            "cocktail",
+                            () ->
+                                    DataComponentType.<CocktailProperty>builder()
+                                            .persistent(CocktailProperty.CODEC)
+                                            .networkSynchronized(
+                                                    ByteBufCodecs.fromCodec(CocktailProperty.CODEC))
+                                            .build());
 }

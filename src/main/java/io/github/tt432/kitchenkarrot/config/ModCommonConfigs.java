@@ -55,11 +55,11 @@ public class ModCommonConfigs {
                 BUILDER.comment("Will farmer villager buy gem carrot at level 3.")
                         .define("Farmer Buy Gem Carrot", true);
         BUILDER.pop();
-        BUILDER.push("Cocktail Settings");
+        BUILDER.push("CocktailProperty Settings");
         UNKNOWN_COCKTAIL_EFFECTS_BLACKLIST =
                 BUILDER.comment(
                                 "Unknown cocktail gives a random effect in the game except following.")
-                        .define("Unknown Cocktail Effects Blacklist", effects);
+                        .define("Unknown CocktailProperty Effects Blacklist", effects);
         WHITELIST_MODE =
                 BUILDER.comment(
                                 "Turn the blacklist above into a whitelist.Only the given effects will be applied.",

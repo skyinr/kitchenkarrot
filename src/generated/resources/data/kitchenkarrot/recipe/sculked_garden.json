@@ -1,0 +1,36 @@
+{
+  "type": "kitchenkarrot:cocktail",
+  "cocktail_property": {
+    "author": "kitchenkarrot",
+    "effect": [
+      {
+        "duration": 12000,
+        "id": "minecraft:absorption",
+        "lvl": 2
+      }
+    ],
+    "id": "kitchenkarrot:sculked_garden"
+  },
+  "content": {
+    "craftingtime": 140,
+    "hunger": 0,
+    "recipe": [
+      {
+        "item": "kitchenkarrot:rum_base"
+      },
+      {
+        "item": "kitchenkarrot:rum_base"
+      },
+      {
+        "item": "kitchenkarrot:carrot_spices"
+      },
+      {
+        "item": "minecraft:redstone"
+      },
+      {
+        "item": "minecraft:glowstone_dust"
+      }
+    ],
+    "saturation": 0.0
+  }
+}

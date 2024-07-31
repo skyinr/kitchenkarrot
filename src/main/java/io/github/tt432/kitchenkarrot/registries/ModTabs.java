@@ -2,12 +2,11 @@ package io.github.tt432.kitchenkarrot.registries;
 
 import static io.github.tt432.kitchenkarrot.Kitchenkarrot.MOD_ID;
 
-import io.github.tt432.kitchenkarrot.client.cocktail.CocktailList;
+import io.github.tt432.kitchenkarrot.cocktail.CocktailProperty;
 import io.github.tt432.kitchenkarrot.item.CocktailItem;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
@@ -50,9 +49,9 @@ public class ModTabs {
             event.accept(ModItems.MEAD_BASE);
             event.accept(ModItems.RUM_BASE);
             event.accept(ModItems.VODKA_BASE);
-            for (String cocktail : CocktailList.INSTANCE.cocktails) {
+            for (CocktailProperty cocktailProperty : ModCocktails.COCKTAIL_PROPERTIES.values()) {
                 ItemStack itemStack = new ItemStack(ModItems.COCKTAIL.get());
-                CocktailItem.setCocktail(itemStack, ResourceLocation.parse(cocktail));
+                CocktailItem.setCocktail(itemStack, cocktailProperty);
                 event.accept(itemStack);
             }
         }

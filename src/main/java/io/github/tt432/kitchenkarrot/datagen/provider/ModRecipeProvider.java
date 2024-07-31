@@ -1,11 +1,10 @@
 package io.github.tt432.kitchenkarrot.datagen.provider;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
-import io.github.tt432.kitchenkarrot.datagen.provider.recipe.AirCompressorRecipeBuilder;
-import io.github.tt432.kitchenkarrot.datagen.provider.recipe.BrewingBarrelRecipeBuilder;
-import io.github.tt432.kitchenkarrot.datagen.provider.recipe.ModShapelessRecipeBuilder;
-import io.github.tt432.kitchenkarrot.datagen.provider.recipe.PlateRecipeBuilder;
+import io.github.tt432.kitchenkarrot.cocktail.CocktailProperty;
+import io.github.tt432.kitchenkarrot.datagen.provider.recipe.*;
 import io.github.tt432.kitchenkarrot.recipes.recipe.BrewingBarrelRecipe;
+import io.github.tt432.kitchenkarrot.recipes.recipe.CocktailRecipe;
 import io.github.tt432.kitchenkarrot.registries.ModBlocks;
 import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
@@ -32,8 +31,10 @@ import net.neoforged.neoforge.common.conditions.NotCondition;
 import net.neoforged.neoforge.common.conditions.TagEmptyCondition;
 import net.neoforged.neoforge.registries.DeferredItem;
 
+import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import javax.annotation.Nullable;
@@ -46,10 +47,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
             has(ModItemTags.OIL);
     protected static final Criterion<InventoryChangeTrigger.TriggerInstance> HAS_SALT =
             has(ModItemTags.SALT);
+    private final CompletableFuture<HolderLookup.Provider> cocktailProvider;
 
     public ModRecipeProvider(
-            PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+            PackOutput output,
+            CompletableFuture<HolderLookup.Provider> registries,
+            CompletableFuture<HolderLookup.Provider> cocktailProvider) {
         super(output, registries);
+        this.cocktailProvider = cocktailProvider;
     }
 
     @Override
@@ -160,7 +165,305 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     //    }
 
     private void genCocktails(RecipeOutput recipeOutput) {
-        // TODO use Cocktails Registries
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("bane_of_arthropods"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.ACORN_WINE_BASE),
+                                Ingredient.of(ModItems.ACORN_WINE_BASE),
+                                Ingredient.of(ModItems.ACORN_WINE_BASE),
+                                Ingredient.of(ModItems.MEAD_BASE),
+                                Ingredient.of(Items.SPIDER_EYE)),
+                        60,
+                        6,
+                        0));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("birch_sap_vodka"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.VODKA_BASE),
+                                Ingredient.of(ModItems.VODKA_BASE),
+                                Ingredient.of(ModItems.BIRCH_SAP),
+                                Ingredient.of(Items.SUGAR),
+                                Ingredient.of(Items.SUGAR)),
+                        80,
+                        1,
+                        2));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("black_pearl"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(ModItems.ICE_CUBES),
+                                Ingredient.of(ModItemTags.ICE_CUBES),
+                                Ingredient.of(Items.BLACK_DYE),
+                                Ingredient.of(Items.GLOW_BERRIES)),
+                        90,
+                        1,
+                        1));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("jacks_story"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(ModItems.VODKA_BASE),
+                                Ingredient.of(Items.KELP)),
+                        70,
+                        0,
+                        0));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("july_21"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.MEAD_BASE),
+                                Ingredient.of(ModItems.MEAD_BASE),
+                                Ingredient.of(ModItems.MEAD_BASE),
+                                Ingredient.of(ModItemTags.ICE_CUBES),
+                                Ingredient.of(Items.SUGAR)),
+                        95,
+                        1,
+                        2));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("light_yellow_firefly"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(Items.EGG),
+                                Ingredient.of(Items.YELLOW_DYE)),
+                        150,
+                        6,
+                        0.1F));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("milk_acorn_wine"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.ACORN_WINE_BASE),
+                                Ingredient.of(ModItems.ACORN_WINE_BASE),
+                                Ingredient.of(ModItems.ACORN_WINE_BASE),
+                                Ingredient.of(ModItems.CARROT_SPICES),
+                                Ingredient.of(ModItems.MILK)),
+                        75,
+                        5,
+                        0.7F));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("mushy_sunset"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.VODKA_BASE),
+                                Ingredient.of(ModItems.MEAD_BASE),
+                                Ingredient.of(ModItems.BIRCH_SAP),
+                                Ingredient.of(Items.BROWN_MUSHROOM),
+                                Ingredient.of(Tags.Items.MUSHROOMS)),
+                        50,
+                        9,
+                        0.2F));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("nebula_chronicles"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.ACORN_WINE_BASE),
+                                Ingredient.of(ModItems.MEAD_BASE),
+                                Ingredient.of(ModItemTags.ICE_CUBES),
+                                Ingredient.of(Items.GOLD_NUGGET),
+                                Ingredient.of(Items.IRON_NUGGET)),
+                        140,
+                        4,
+                        0.3F));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("red_lizard"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(ModItems.ACORN_WINE_BASE),
+                                Ingredient.of(ModItems.ACORN_WINE_BASE),
+                                Ingredient.of(Items.POPPY)),
+                        95,
+                        0,
+                        0));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("sculked_garden"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(ModItems.CARROT_SPICES),
+                                Ingredient.of(Items.REDSTONE),
+                                Ingredient.of(Items.GLOWSTONE_DUST)),
+                        140,
+                        0,
+                        0));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("second_guess"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.ACORN_WINE_BASE),
+                                Ingredient.of(ModItems.CARROT_SPICES),
+                                Ingredient.of(ModItems.CARROT_SPICES),
+                                Ingredient.of(Items.CHORUS_FRUIT),
+                                Ingredient.of(Items.CHORUS_FRUIT)),
+                        40,
+                        4,
+                        0));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("shanghai_beach"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.VODKA_BASE),
+                                Ingredient.of(ModItems.VODKA_BASE),
+                                Ingredient.of(ModItems.VODKA_BASE),
+                                Ingredient.of(ModItemTags.ICE_CUBES),
+                                Ingredient.of(ModItems.CARROT_SPICES)),
+                        100,
+                        3,
+                        0.5F));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("shooting_star"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.VODKA_BASE),
+                                Ingredient.of(ModItems.VODKA_BASE),
+                                Ingredient.of(ModItemTags.ICE_CUBES),
+                                Ingredient.of(ModItemTags.ICE_CUBES),
+                                Ingredient.of(Items.GLOW_INK_SAC)),
+                        100,
+                        2,
+                        1));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("slimy_ball"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.MEAD_BASE),
+                                Ingredient.of(ModItems.MEAD_BASE),
+                                Ingredient.of(ModItemTags.ICE_CUBES),
+                                Ingredient.of(ModItemTags.ICE_CUBES),
+                                Ingredient.of(Tags.Items.SLIMEBALLS)),
+                        100,
+                        3,
+                        0));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("sweet_berry_martini"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.ACORN_WINE_BASE),
+                                Ingredient.of(ModItems.ACORN_WINE_BASE),
+                                Ingredient.of(ModItems.MEAD_BASE),
+                                Ingredient.of(ModItems.MEAD_BASE),
+                                Ingredient.of(Items.SWEET_BERRIES)),
+                        75,
+                        7,
+                        0.3F));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("tears_of_stanley"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(ModItems.ACORN_WINE_BASE),
+                                Ingredient.of(Items.BONE_MEAL),
+                                Ingredient.of(Items.WEEPING_VINES)),
+                        100,
+                        0,
+                        0));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("tsundere_heroine"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.VODKA_BASE),
+                                Ingredient.of(ModItems.CARROT_SPICES),
+                                Ingredient.of(ModItems.CARROT_SPICES),
+                                Ingredient.of(Tags.Items.BUCKETS_MILK),
+                                Ingredient.of(Items.SUGAR)),
+                        40,
+                        1,
+                        2));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("twilight_forest"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(ModItems.ICE_CUBES),
+                                Ingredient.of(ModItemTags.ICE_CUBES),
+                                Ingredient.of(ModItems.CARROT_SPICES),
+                                Ingredient.of(ItemTags.LEAVES)),
+                        110,
+                        4,
+                        0.3F));
+
+        CocktailRecipeBuilder.cocktail(
+                recipeOutput,
+                cocktailProvider,
+                RL("yura_punk"),
+                new CocktailRecipe.Content(
+                        List.of(
+                                Ingredient.of(ModItems.RUM_BASE),
+                                Ingredient.of(ModItems.VODKA_BASE),
+                                Ingredient.of(ModItems.ACORN_WINE_BASE),
+                                Ingredient.of(ModItems.MEAD_BASE),
+                                Ingredient.of(ModItemTags.ICE_CUBES)),
+                        120,
+                        1,
+                        1));
     }
 
     private void genBrewingBarrel(RecipeOutput recipeOutput) {
@@ -1263,6 +1566,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     public static String getPlateRecipeName(ItemLike itemLike) {
         return "plate_" + getSimpleRecipeName(itemLike);
+    }
+
+    public static String getCocktailName(CocktailProperty cocktailProperty) {
+        return cocktailProperty.id().getPath();
     }
 
     //    protected static void createIngotRecipes(Consumer<FinishedRecipe> c, RegistryObject<Item>

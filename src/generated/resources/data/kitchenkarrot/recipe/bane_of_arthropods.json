@@ -1,0 +1,36 @@
+{
+  "type": "kitchenkarrot:cocktail",
+  "cocktail_property": {
+    "author": "kitchenkarrot",
+    "effect": [
+      {
+        "duration": 600,
+        "id": "minecraft:nausea",
+        "lvl": 0
+      }
+    ],
+    "id": "kitchenkarrot:bane_of_arthropods"
+  },
+  "content": {
+    "craftingtime": 60,
+    "hunger": 6,
+    "recipe": [
+      {
+        "item": "kitchenkarrot:acorn_wine_base"
+      },
+      {
+        "item": "kitchenkarrot:acorn_wine_base"
+      },
+      {
+        "item": "kitchenkarrot:acorn_wine_base"
+      },
+      {
+        "item": "kitchenkarrot:mead_base"
+      },
+      {
+        "item": "minecraft:spider_eye"
+      }
+    ],
+    "saturation": 0.0
+  }
+}

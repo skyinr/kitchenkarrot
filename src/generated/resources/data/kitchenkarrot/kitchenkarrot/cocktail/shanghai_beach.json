@@ -1,0 +1,11 @@
+{
+  "author": "kitchenkarrot",
+  "effect": [
+    {
+      "duration": 4800,
+      "id": "minecraft:strength",
+      "lvl": 2
+    }
+  ],
+  "id": "kitchenkarrot:shanghai_beach"
+}

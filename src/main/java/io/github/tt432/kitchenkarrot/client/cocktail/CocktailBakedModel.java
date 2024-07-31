@@ -25,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author DustW
@@ -72,7 +73,8 @@ public class CocktailBakedModel implements BakedModel {
                     @Nullable ClientLevel p_173467_,
                     @Nullable LivingEntity p_173468_,
                     int p_173469_) {
-                ResourceLocation cocktail = CocktailItem.getCocktail(p_173466_);
+                ResourceLocation cocktail =
+                        Objects.requireNonNull(CocktailItem.getCocktail(p_173466_)).id();
                 BakedModel model;
                 ModelManager modelManager = Minecraft.getInstance().getModelManager();
                 if (cocktail != null

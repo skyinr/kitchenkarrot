@@ -1,0 +1,11 @@
+{
+  "author": "kitchenkarrot",
+  "effect": [
+    {
+      "duration": 3000,
+      "id": "minecraft:regeneration",
+      "lvl": 0
+    }
+  ],
+  "id": "kitchenkarrot:birch_sap_vodka"
+}

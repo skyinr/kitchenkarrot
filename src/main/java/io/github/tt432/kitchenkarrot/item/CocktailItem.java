@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.item;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.cocktail.CocktailProperty;
 import io.github.tt432.kitchenkarrot.components.KKDataComponents;
 import io.github.tt432.kitchenkarrot.config.ModCommonConfigs;
 import io.github.tt432.kitchenkarrot.recipes.object.EffectStack;
@@ -41,9 +42,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
  **/
 @ParametersAreNonnullByDefault
 public class CocktailItem extends Item {
-
     public static final ResourceLocation UNKNOWN_COCKTAIL =
             ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, "unknown");
+    public static final CocktailProperty UNKNOWN_COCKTAIL_PROPERTY =
+            new CocktailProperty(UNKNOWN_COCKTAIL, "", List.of());
 
     public CocktailItem() {
         super(
@@ -53,22 +55,23 @@ public class CocktailItem extends Item {
 
     public static ItemStack unknownCocktail() {
         var stack = new ItemStack(ModItems.COCKTAIL.get());
-        setCocktail(stack, UNKNOWN_COCKTAIL);
+        setCocktail(stack, UNKNOWN_COCKTAIL_PROPERTY);
         return stack;
     }
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level pLevel, LivingEntity livingEntity) {
         if (livingEntity instanceof ServerPlayer player) {
-            ResourceLocation cocktail = getCocktail(stack);
+            CocktailProperty cocktailProperty = getCocktail(stack);
+            ResourceLocation cocktail = cocktailProperty.id();
             if (cocktail != null) {
-                CocktailRecipe recipe = get(pLevel, cocktail);
+                CocktailRecipe recipe = get(pLevel, cocktailProperty);
                 if (recipe != null) {
                     player.getFoodData().eat(recipe.content.hunger(), recipe.content.saturation());
                     if (!player.getAbilities().instabuild) {
                         stack.shrink(1);
                     }
-                    for (EffectStack effectStack : recipe.content.effect()) {
+                    for (EffectStack effectStack : recipe.cocktailProperty.effectStack()) {
                         player.addEffect(effectStack.get());
                     }
                 } else if (cocktail.equals(UNKNOWN_COCKTAIL)) {
@@ -110,7 +113,7 @@ public class CocktailItem extends Item {
 
     @Override
     public String getDescriptionId(ItemStack stack) {
-        ResourceLocation name = getCocktail(stack);
+        CocktailProperty name = getCocktail(stack);
 
         if (name != null) {
             return name.toString().replace(":", ".");
@@ -126,7 +129,7 @@ public class CocktailItem extends Item {
             TooltipContext context,
             List<Component> tooltipComponents,
             TooltipFlag tooltipFlag) {
-        ResourceLocation name = getCocktail(stack);
+        ResourceLocation name = Objects.requireNonNull(getCocktail(stack)).id();
         if (name != null) {
             tooltipComponents.add(
                     Component.translatable(name.toString().replace(":", ".") + ".tooltip"));
@@ -137,11 +140,15 @@ public class CocktailItem extends Item {
                                 Objects.requireNonNull(getCocktail(stack)));
                 if (recipe != null) {
                     tooltipComponents.add(
-                            Component.translatable("item.cocktail.author", recipe.author));
-                    CocktailRecipe cocktailRecipe = get(Minecraft.getInstance().level, name);
+                            Component.translatable(
+                                    "item.cocktail.author", recipe.cocktailProperty.author()));
+                    CocktailRecipe cocktailRecipe =
+                            get(
+                                    Minecraft.getInstance().level,
+                                    Objects.requireNonNull(getCocktail(stack)));
                     if (cocktailRecipe != null) {
                         List<MobEffectInstance> list =
-                                cocktailRecipe.getContent().effect().stream()
+                                cocktailRecipe.cocktailProperty.effectStack().stream()
                                         .map(EffectStack::get)
                                         .toList();
 
@@ -153,22 +160,21 @@ public class CocktailItem extends Item {
     }
 
     @Nullable
-    public static ResourceLocation getCocktail(ItemStack itemStack) {
+    public static CocktailProperty getCocktail(ItemStack itemStack) {
         if (itemStack.getComponents().has(KKDataComponents.COCKTAIL.get())) {
-            return ResourceLocation.parse(
-                    Objects.requireNonNull(itemStack.get(KKDataComponents.COCKTAIL)));
+            return itemStack.get(KKDataComponents.COCKTAIL);
         }
 
         return null;
     }
 
-    public static void setCocktail(ItemStack itemStack, ResourceLocation name) {
-        itemStack.set(KKDataComponents.COCKTAIL, name.toString());
+    public static void setCocktail(ItemStack itemStack, CocktailProperty cocktailProperty) {
+        itemStack.set(KKDataComponents.COCKTAIL, cocktailProperty);
     }
 
     @Nullable
-    public static CocktailRecipe get(Level level, ResourceLocation resourceLocation) {
-        Optional<RecipeHolder<?>> result = level.getRecipeManager().byKey(resourceLocation);
+    public static CocktailRecipe get(Level level, CocktailProperty cocktailProperty) {
+        Optional<RecipeHolder<?>> result = level.getRecipeManager().byKey(cocktailProperty.id());
 
         if (result.isPresent() && result.get().value().getType() == RecipeTypes.COCKTAIL.get()) {
             return (CocktailRecipe) result.get().value();
