@@ -52,92 +52,72 @@ public record CocktailProperty(ResourceLocation id, String author, List<EffectSt
                 new CocktailProperty(
                         Kitchenkarrot.getModRL("black_pearl"),
                         DEFAULT_AUTHOR,
-                        List.of(new EffectStack("minecraft:glowing",10,10000))
-                )
-        );
+                        List.of(new EffectStack("minecraft:glowing", 10, 10000))));
 
         bootstrapContext.register(
                 getResourceKey(Kitchenkarrot.getModRL("jacks_story")),
                 new CocktailProperty(
                         Kitchenkarrot.getModRL("jacks_story"),
                         DEFAULT_AUTHOR,
-                        List.of(new EffectStack("minecraft:conduit_power",0,6000))
-                )
-        );
+                        List.of(new EffectStack("minecraft:conduit_power", 0, 6000))));
 
         bootstrapContext.register(
                 getResourceKey(Kitchenkarrot.getModRL("july_21")),
                 new CocktailProperty(
                         Kitchenkarrot.getModRL("july_21"),
                         DEFAULT_AUTHOR,
-                        List.of(new EffectStack("minecraft:regeneration",3,150))
-                )
-        );
+                        List.of(new EffectStack("minecraft:regeneration", 3, 150))));
 
         bootstrapContext.register(
                 getResourceKey(Kitchenkarrot.getModRL("light_yellow_firefly")),
                 new CocktailProperty(
                         Kitchenkarrot.getModRL("light_yellow_firefly"),
                         DEFAULT_AUTHOR,
-                        List.of(new EffectStack("minecraft:invisibility",0,2400),
-                                new EffectStack("minecraft:glowing",0,2400))
-                )
-        );
+                        List.of(
+                                new EffectStack("minecraft:invisibility", 0, 2400),
+                                new EffectStack("minecraft:glowing", 0, 2400))));
 
         bootstrapContext.register(
                 getResourceKey(Kitchenkarrot.getModRL("milk_acorn_wine")),
                 new CocktailProperty(
                         Kitchenkarrot.getModRL("milk_acorn_wine"),
                         DEFAULT_AUTHOR,
-                        List.of(new EffectStack("minecraft:luck",0,2400))
-                )
-        );
+                        List.of(new EffectStack("minecraft:luck", 0, 2400))));
 
         bootstrapContext.register(
                 getResourceKey(Kitchenkarrot.getModRL("mushy_sunset")),
                 new CocktailProperty(
-                        Kitchenkarrot.getModRL("mushy_sunset"),
-                        DEFAULT_AUTHOR,
-                        List.of()
-                )
-        );
+                        Kitchenkarrot.getModRL("mushy_sunset"), DEFAULT_AUTHOR, List.of()));
 
         bootstrapContext.register(
                 getResourceKey(Kitchenkarrot.getModRL("nebula_chronicles")),
                 new CocktailProperty(
                         Kitchenkarrot.getModRL("nebula_chronicles"),
                         DEFAULT_AUTHOR,
-                        List.of(new EffectStack("minecraft:resistance",0,4800))
-                )
-        );
+                        List.of(new EffectStack("minecraft:resistance", 0, 4800))));
 
         bootstrapContext.register(
                 getResourceKey(Kitchenkarrot.getModRL("red_lizard")),
                 new CocktailProperty(
                         Kitchenkarrot.getModRL("red_lizard"),
                         DEFAULT_AUTHOR,
-                        List.of(new EffectStack("minecraft:strength",0,12000),
-                                new EffectStack("minecraft:blindness",0,100))
-                )
-        );
+                        List.of(
+                                new EffectStack("minecraft:strength", 0, 12000),
+                                new EffectStack("minecraft:blindness", 0, 100))));
 
         bootstrapContext.register(
                 getResourceKey(Kitchenkarrot.getModRL("sculked_garden")),
                 new CocktailProperty(
                         Kitchenkarrot.getModRL("sculked_garden"),
                         DEFAULT_AUTHOR,
-                        List.of(new EffectStack("minecraft:absorption",2,12000))
-                )
-        );
+                        List.of(new EffectStack("minecraft:absorption", 2, 12000))));
 
         bootstrapContext.register(
                 getResourceKey(Kitchenkarrot.getModRL("second_guess")),
                 new CocktailProperty(
                         Kitchenkarrot.getModRL("second_guess"),
                         DEFAULT_AUTHOR,
-                        List.of(new EffectStack("minecraft:slow_falling",0,3600))
-                )
-        );
+                        List.of(new EffectStack("minecraft:slow_falling", 0, 3600))));
 
         bootstrapContext.register(
                 getResourceKey(Kitchenkarrot.getModRL("shanghai_beach")),
