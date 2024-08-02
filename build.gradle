@@ -103,8 +103,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 // a dependency that will be present for runtime testing but that is
 // "optional", meaning it will not be pulled by dependents of this mod.
 configurations {
-    integrationtestImplementation.extendsFrom implementation
-    integrationtestRuntimeOnly.extendsFrom localRuntime
+    runtimeClasspath.extendsFrom localRuntime
 }
 
 repositories {

@@ -81,7 +81,7 @@ public class CocktailBakedModel implements BakedModel {
                         && modelManager.getMissingModel() != modelManager.getModel(to(cocktail))) {
                     model = modelManager.getModel(to(cocktail));
                 } else {
-                    Kitchenkarrot.LOGGER.warn("Miss cocktail texture for {}", p_173466_.getItem());
+                    Kitchenkarrot.LOGGER.warn("Miss cocktail texture {} for {}",cocktail, p_173466_.getItem());
                     model =
                             modelManager.getModel(
                                     ModelResourceLocation.standalone(

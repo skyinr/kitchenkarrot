@@ -164,7 +164,6 @@ public class CocktailItem extends Item {
         if (itemStack.getComponents().has(KKDataComponents.COCKTAIL.get())) {
             return itemStack.get(KKDataComponents.COCKTAIL);
         }
-
         return null;
     }
 

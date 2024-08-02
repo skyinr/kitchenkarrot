@@ -39,8 +39,8 @@ public class CocktailModelRegistry {
     @SuppressWarnings("unused")
     public static void register(ModelEvent.RegisterAdditional e) {
         for (CocktailProperty cocktailProperty : ModCocktails.COCKTAIL_PROPERTIES.values()) {
-            Kitchenkarrot.LOGGER.info("Register cocktailProperty model: {}", cocktailProperty);
-            e.register(to(ResourceLocation.parse(cocktailProperty.id().getPath())));
+            Kitchenkarrot.LOGGER.info("Register cocktailProperty model: {}", cocktailProperty.id());
+            e.register(to(cocktailProperty.id()));
         }
     }
 }
