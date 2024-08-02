@@ -55,7 +55,7 @@ public abstract class ModBaseEntityBlock<T extends BaseBlockEntity> extends Base
             BlockState pNewState,
             boolean pIsMoving) {
         if (!pState.is(pNewState.getBlock())) {
-            if (pLevel.getBlockEntity(pPos) instanceof MenuBlockEntity kk) {
+            if (pLevel.getBlockEntity(pPos) instanceof BaseBlockEntity kk) {
                 for (ItemStack drop : kk.drops()) {
                     Containers.dropItemStack(pLevel, pPos.getX(), pPos.getY(), pPos.getZ(), drop);
                 }
