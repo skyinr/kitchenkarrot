@@ -23,7 +23,9 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: |
+            17
+            21
           distribution: 'temurin'
           cache: gradle
 
@@ -37,12 +39,3 @@ jobs:
         uses: googleapis/release-please-action@v4
         with:
           target-branch: ${{ github.ref_name }}
-
-      - name: Execute Gradle build
-        run: gradle --build-cache --info --stacktrace assemble
-
-      - name: Upload Release
-        if: ${{ steps.release.outputs.releases_created }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ steps.release.outputs.tag_name }} ./build/libs/*.jar
