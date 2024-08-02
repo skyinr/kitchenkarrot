@@ -6,9 +6,10 @@ import io.github.tt432.kitchenkarrot.blockentity.sync.StringSyncData;
 import io.github.tt432.kitchenkarrot.blockentity.sync.SyncDataManager;
 import io.github.tt432.kitchenkarrot.capability.KKItemStackHandler;
 import io.github.tt432.kitchenkarrot.menu.AirCompressorMenu;
-import io.github.tt432.kitchenkarrot.recipes.recipe.AirCompressorRecipe;
 import io.github.tt432.kitchenkarrot.recipes.RecipeManager;
+import io.github.tt432.kitchenkarrot.recipes.recipe.AirCompressorRecipe;
 import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import io.github.tt432.kitchenkarrot.util.ItemHandlerUtils;
 import net.minecraft.core.BlockPos;
@@ -23,7 +24,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
@@ -148,6 +148,8 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
 
     private void finish() {
         for (int i = 0; i < input1.getSlots(); i++) {
+            if (input1.getStackInSlot(i).is(ModItems.EMPTY_CAN.get()))
+                continue;
             input1.extractItem(i, 1, false);
         }
         energy.reduce(10, 0);
