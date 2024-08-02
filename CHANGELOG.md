@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.6.0](https://github.com/skyinr/kitchenkarrot/compare/v0.5.6...v1.0.0) (2024-08-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* 修改Cocktail的数据结构
+
+### Features
+
+* 修改Cocktail的数据结构 ([a4a1713](https://github.com/skyinr/kitchenkarrot/commit/a4a17133120d24a32ab45166bb2b7cebb6d42e10))
+
+
+### Bug Fixes
+
+* **recipe:** 尝试修复跨mod配方 ([b491666](https://github.com/skyinr/kitchenkarrot/commit/b49166692cab55a31ebd25c5839c3eddef330dec))
+
 ## [0.5.6](https://github.com/skyinr/kitchenkarrot/compare/v0.5.5...v0.5.6) (2024-07-21)
 
 
