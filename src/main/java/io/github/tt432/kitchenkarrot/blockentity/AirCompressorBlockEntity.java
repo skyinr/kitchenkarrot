@@ -9,6 +9,7 @@ import io.github.tt432.kitchenkarrot.menu.AirCompressorMenu;
 import io.github.tt432.kitchenkarrot.recipes.RecipeManager;
 import io.github.tt432.kitchenkarrot.recipes.recipe.AirCompressorRecipe;
 import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import io.github.tt432.kitchenkarrot.util.ItemHandlerUtils;
 
@@ -161,6 +162,7 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
 
     private void finish() {
         for (int i = 0; i < input1.getSlots(); i++) {
+            if (input1.getStackInSlot(i).is(ModItems.EMPTY_CAN.get())) continue;
             input1.extractItem(i, 1, false);
         }
         energy.reduce(10, 0);
