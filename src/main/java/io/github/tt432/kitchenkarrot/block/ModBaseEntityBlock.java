@@ -1,7 +1,6 @@
 package io.github.tt432.kitchenkarrot.block;
 
 import io.github.tt432.kitchenkarrot.blockentity.BaseBlockEntity;
-import io.github.tt432.kitchenkarrot.blockentity.MenuBlockEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
