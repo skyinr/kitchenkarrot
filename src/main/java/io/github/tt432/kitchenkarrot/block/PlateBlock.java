@@ -140,6 +140,7 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
                                         TooltipFlag.NORMAL);
                     }
                     player.setItemInHand(hand, stack);
+                    handler.extractItem(0,64,false);
                     level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
                 }
             } else {
