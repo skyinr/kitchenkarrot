@@ -105,6 +105,7 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
                                 stack.setHoverName((Component.translatable("info.kitchenkarrot.dished", inputName)).setStyle(Style.EMPTY.withItalic(false)));
                             }
                             player.setItemInHand(hand, stack);
+                            handler.extractItem(0,64,false);
                             level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
                         }
                     } else {
