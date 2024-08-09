@@ -4,38 +4,43 @@
     "author": "kitchenkarrot",
     "effect": [
       {
-        "duration": 120,
-        "id": "minecraft:levitation",
+        "duration": 600,
+        "id": "minecraft:nausea",
         "lvl": 1
       },
       {
         "duration": 4800,
-        "id": "minecraft:haste",
+        "id": "minecraft:speed",
+        "lvl": 2
+      },
+      {
+        "duration": 4800,
+        "id": "minecraft:jump_boost",
         "lvl": 2
       }
     ],
-    "id": "kitchenkarrot:tears_of_stanley"
+    "id": "kitchenkarrot:cocktails/yura_punk"
   },
   "content": {
-    "craftingtime": 100,
-    "hunger": 0,
+    "craftingtime": 120,
+    "hunger": 1,
     "recipe": [
       {
         "item": "kitchenkarrot:rum_base"
       },
       {
-        "item": "kitchenkarrot:rum_base"
+        "item": "kitchenkarrot:vodka_base"
       },
       {
         "item": "kitchenkarrot:acorn_wine_base"
       },
       {
-        "item": "minecraft:bone_meal"
+        "item": "kitchenkarrot:mead_base"
       },
       {
-        "item": "minecraft:weeping_vines"
+        "tag": "c:ice_cubes"
       }
     ],
-    "saturation": 0.0
+    "saturation": 1.0
   }
 }

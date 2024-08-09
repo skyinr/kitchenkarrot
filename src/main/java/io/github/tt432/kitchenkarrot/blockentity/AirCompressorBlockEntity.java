@@ -193,7 +193,7 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
     protected void setRecipe(RecipeHolder<AirCompressorRecipe> recipe) {
         this.recipe = recipe;
         if (recipe != null) {
-            this.recipeId.set(recipe.value().getId().toString());
+            this.recipeId.set(recipe.value().getId());
         } else {
             this.recipeId.set("");
         }

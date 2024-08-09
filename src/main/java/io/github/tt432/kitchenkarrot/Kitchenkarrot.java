@@ -1,5 +1,7 @@
 package io.github.tt432.kitchenkarrot;
 
+import com.google.gson.GsonBuilder;
+import io.github.tt432.kitchenkarrot.client.cocktail.CocktailModelRegistry;
 import io.github.tt432.kitchenkarrot.components.KKDataComponents;
 import io.github.tt432.kitchenkarrot.config.ModCommonConfigs;
 import io.github.tt432.kitchenkarrot.glm.ModGlobalLootModifiers;
@@ -7,14 +9,18 @@ import io.github.tt432.kitchenkarrot.item.ModBlockItems;
 import io.github.tt432.kitchenkarrot.recipes.RecipeManager;
 import io.github.tt432.kitchenkarrot.registries.*;
 
+import io.github.tt432.kitchenkarrot.util.CocktailManager;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.common.NeoForge;
 
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -54,9 +60,11 @@ public class Kitchenkarrot {
 
         RecipeManager.register(bus);
 
-        NeoForge.EVENT_BUS.addListener(ModCocktails::datapackReload);
-
         //        networking = new ModNetworking();
+    }
+
+    public static void reloadDatapack(AddReloadListenerEvent event){
+        event.addListener(new CocktailManager());
     }
 
     public static Kitchenkarrot getInstance() {

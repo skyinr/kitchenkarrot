@@ -1,8 +1,8 @@
 package io.github.tt432.kitchenkarrot.datagen.provider.recipe;
 
+import io.github.tt432.kitchenkarrot.client.cocktail.CocktailModelRegistry;
 import io.github.tt432.kitchenkarrot.cocktail.CocktailProperty;
 import io.github.tt432.kitchenkarrot.recipes.recipe.CocktailRecipe;
-import io.github.tt432.kitchenkarrot.registries.ModCocktails;
 
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
@@ -35,7 +35,9 @@ public class CocktailRecipeBuilder implements RecipeBuilder {
             CocktailRecipe.Content content) {
         try {
             HolderLookup.RegistryLookup<CocktailProperty> cocktails =
-                    cocktailProvider.get().lookupOrThrow(ModCocktails.COCKTAIL_REGISTRY_KEY);
+                    cocktailProvider
+                            .get()
+                            .lookupOrThrow(CocktailModelRegistry.COCKTAIL_REGISTRY_KEY);
             CocktailProperty cocktailProperty =
                     cocktails.getOrThrow(CocktailProperty.getResourceKey(cocktailKey)).value();
             new CocktailRecipeBuilder(cocktailProperty, content)

@@ -4,15 +4,20 @@
     "author": "kitchenkarrot",
     "effect": [
       {
-        "duration": 6000,
-        "id": "minecraft:conduit_power",
-        "lvl": 0
+        "duration": 120,
+        "id": "minecraft:levitation",
+        "lvl": 1
+      },
+      {
+        "duration": 4800,
+        "id": "minecraft:haste",
+        "lvl": 2
       }
     ],
-    "id": "kitchenkarrot:jacks_story"
+    "id": "kitchenkarrot:cocktails/tears_of_stanley"
   },
   "content": {
-    "craftingtime": 70,
+    "craftingtime": 100,
     "hunger": 0,
     "recipe": [
       {
@@ -22,13 +27,13 @@
         "item": "kitchenkarrot:rum_base"
       },
       {
-        "item": "kitchenkarrot:rum_base"
+        "item": "kitchenkarrot:acorn_wine_base"
       },
       {
-        "item": "kitchenkarrot:vodka_base"
+        "item": "minecraft:bone_meal"
       },
       {
-        "item": "minecraft:kelp"
+        "item": "minecraft:weeping_vines"
       }
     ],
     "saturation": 0.0

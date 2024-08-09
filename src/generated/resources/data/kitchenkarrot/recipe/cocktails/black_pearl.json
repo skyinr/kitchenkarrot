@@ -4,16 +4,16 @@
     "author": "kitchenkarrot",
     "effect": [
       {
-        "duration": 4800,
-        "id": "minecraft:invisibility",
-        "lvl": 0
+        "duration": 10000,
+        "id": "minecraft:glowing",
+        "lvl": 10
       }
     ],
-    "id": "kitchenkarrot:twilight_forest"
+    "id": "kitchenkarrot:cocktails/black_pearl"
   },
   "content": {
-    "craftingtime": 110,
-    "hunger": 4,
+    "craftingtime": 90,
+    "hunger": 1,
     "recipe": [
       {
         "item": "kitchenkarrot:rum_base"
@@ -25,12 +25,12 @@
         "tag": "c:ice_cubes"
       },
       {
-        "item": "kitchenkarrot:carrot_spices"
+        "item": "minecraft:black_dye"
       },
       {
-        "tag": "minecraft:leaves"
+        "item": "minecraft:glow_berries"
       }
     ],
-    "saturation": 0.3
+    "saturation": 1.0
   }
 }

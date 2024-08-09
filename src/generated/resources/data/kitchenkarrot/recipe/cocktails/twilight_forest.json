@@ -5,30 +5,30 @@
     "effect": [
       {
         "duration": 4800,
-        "id": "minecraft:resistance",
+        "id": "minecraft:invisibility",
         "lvl": 0
       }
     ],
-    "id": "kitchenkarrot:nebula_chronicles"
+    "id": "kitchenkarrot:cocktails/twilight_forest"
   },
   "content": {
-    "craftingtime": 140,
+    "craftingtime": 110,
     "hunger": 4,
     "recipe": [
       {
-        "item": "kitchenkarrot:acorn_wine_base"
+        "item": "kitchenkarrot:rum_base"
       },
       {
-        "item": "kitchenkarrot:mead_base"
+        "item": "kitchenkarrot:ice_cubes"
       },
       {
         "tag": "c:ice_cubes"
       },
       {
-        "item": "minecraft:gold_nugget"
+        "item": "kitchenkarrot:carrot_spices"
       },
       {
-        "item": "minecraft:iron_nugget"
+        "tag": "minecraft:leaves"
       }
     ],
     "saturation": 0.3

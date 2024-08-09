@@ -4,20 +4,15 @@
     "author": "kitchenkarrot",
     "effect": [
       {
-        "duration": 12000,
-        "id": "minecraft:strength",
-        "lvl": 0
-      },
-      {
-        "duration": 100,
-        "id": "minecraft:blindness",
+        "duration": 6000,
+        "id": "minecraft:conduit_power",
         "lvl": 0
       }
     ],
-    "id": "kitchenkarrot:red_lizard"
+    "id": "kitchenkarrot:cocktails/jacks_story"
   },
   "content": {
-    "craftingtime": 95,
+    "craftingtime": 70,
     "hunger": 0,
     "recipe": [
       {
@@ -27,13 +22,13 @@
         "item": "kitchenkarrot:rum_base"
       },
       {
-        "item": "kitchenkarrot:acorn_wine_base"
+        "item": "kitchenkarrot:rum_base"
       },
       {
-        "item": "kitchenkarrot:acorn_wine_base"
+        "item": "kitchenkarrot:vodka_base"
       },
       {
-        "item": "minecraft:poppy"
+        "item": "minecraft:kelp"
       }
     ],
     "saturation": 0.0

@@ -4,28 +4,28 @@
     "author": "kitchenkarrot",
     "effect": [
       {
-        "duration": 3000,
-        "id": "minecraft:regeneration",
-        "lvl": 0
+        "duration": 1,
+        "id": "minecraft:instant_health",
+        "lvl": 3
       }
     ],
-    "id": "kitchenkarrot:birch_sap_vodka"
+    "id": "kitchenkarrot:cocktails/tsundere_heroine"
   },
   "content": {
-    "craftingtime": 80,
+    "craftingtime": 40,
     "hunger": 1,
     "recipe": [
       {
         "item": "kitchenkarrot:vodka_base"
       },
       {
-        "item": "kitchenkarrot:vodka_base"
+        "item": "kitchenkarrot:carrot_spices"
       },
       {
-        "item": "kitchenkarrot:birch_sap"
+        "item": "kitchenkarrot:carrot_spices"
       },
       {
-        "item": "minecraft:sugar"
+        "tag": "c:buckets/milk"
       },
       {
         "item": "minecraft:sugar"

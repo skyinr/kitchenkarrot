@@ -1,0 +1,41 @@
+{
+  "type": "kitchenkarrot:cocktail",
+  "cocktail_property": {
+    "author": "kitchenkarrot",
+    "effect": [
+      {
+        "duration": 12000,
+        "id": "minecraft:strength",
+        "lvl": 0
+      },
+      {
+        "duration": 100,
+        "id": "minecraft:blindness",
+        "lvl": 0
+      }
+    ],
+    "id": "kitchenkarrot:cocktails/red_lizard"
+  },
+  "content": {
+    "craftingtime": 95,
+    "hunger": 0,
+    "recipe": [
+      {
+        "item": "kitchenkarrot:rum_base"
+      },
+      {
+        "item": "kitchenkarrot:rum_base"
+      },
+      {
+        "item": "kitchenkarrot:acorn_wine_base"
+      },
+      {
+        "item": "kitchenkarrot:acorn_wine_base"
+      },
+      {
+        "item": "minecraft:poppy"
+      }
+    ],
+    "saturation": 0.0
+  }
+}
