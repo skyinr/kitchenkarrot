@@ -2,7 +2,6 @@ package io.github.tt432.kitchenkarrot.client.cocktail;
 
 import static io.github.tt432.kitchenkarrot.client.cocktail.CocktailModelRegistry.to;
 
-import io.github.tt432.kitchenkarrot.Kitchenkarrot;
 import io.github.tt432.kitchenkarrot.item.CocktailItem;
 
 import net.minecraft.client.Minecraft;
@@ -62,6 +61,7 @@ public class CocktailBakedModel implements BakedModel {
         return CocktailTextureManager.INSTANCE.getSprite(CocktailItem.UNKNOWN_COCKTAIL);
     }
 
+    // spotless:off
     @Override
     public ItemOverrides getOverrides() {
         return new ItemOverrides() {
@@ -73,29 +73,19 @@ public class CocktailBakedModel implements BakedModel {
                     @Nullable ClientLevel p_173467_,
                     @Nullable LivingEntity p_173468_,
                     int p_173469_) {
-                ResourceLocation cocktail =
-                        Objects.requireNonNull(CocktailItem.getCocktail(p_173466_)).id();
+
+                ResourceLocation cocktail = Objects.requireNonNull(CocktailItem.getCocktail(p_173466_)).id();
                 BakedModel model;
                 ModelManager modelManager = Minecraft.getInstance().getModelManager();
                 if (cocktail != null
                         && modelManager.getMissingModel() != modelManager.getModel(to(cocktail))) {
                     model = modelManager.getModel(to(cocktail));
                 } else {
-                    if (cocktail != null) {
-                        Kitchenkarrot.LOGGER.warn(
-                                "Miss cocktail texture {} for {}",
-                                to(cocktail),
-                                p_173466_.getItem());
-                    } else {
-                        Kitchenkarrot.LOGGER.warn("Miss cocktailProperty");
-                    }
-                    model =
-                            modelManager.getModel(
-                                    ModelResourceLocation.standalone(
-                                            CocktailItem.UNKNOWN_COCKTAIL));
+                    model = modelManager.getModel(ModelResourceLocation.standalone(CocktailItem.UNKNOWN_COCKTAIL));
                 }
                 return model;
             }
         };
     }
+    // spotless:on
 }

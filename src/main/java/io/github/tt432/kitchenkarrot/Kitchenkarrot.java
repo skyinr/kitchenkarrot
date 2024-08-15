@@ -1,7 +1,6 @@
 package io.github.tt432.kitchenkarrot;
 
-import com.google.gson.GsonBuilder;
-import io.github.tt432.kitchenkarrot.client.cocktail.CocktailModelRegistry;
+import io.github.tt432.kitchenkarrot.cocktail.CocktailManager;
 import io.github.tt432.kitchenkarrot.components.KKDataComponents;
 import io.github.tt432.kitchenkarrot.config.ModCommonConfigs;
 import io.github.tt432.kitchenkarrot.glm.ModGlobalLootModifiers;
@@ -9,18 +8,18 @@ import io.github.tt432.kitchenkarrot.item.ModBlockItems;
 import io.github.tt432.kitchenkarrot.recipes.RecipeManager;
 import io.github.tt432.kitchenkarrot.registries.*;
 
-import io.github.tt432.kitchenkarrot.util.CocktailManager;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-
+import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,12 +37,14 @@ public class Kitchenkarrot {
     public static final String VERSION = "1.21-0.5.0";
 
     private static Kitchenkarrot INSTANCE;
+    private static final CocktailManager cocktailManager = new CocktailManager();
 
     //    private final ModNetworking networking;
 
     public Kitchenkarrot(IEventBus bus, Dist dist, ModContainer container) {
         INSTANCE = this;
 
+        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
         container.registerConfig(
                 ModConfig.Type.COMMON, ModCommonConfigs.COMMON, "kitchenkarrot-common.toml");
         ModBlocks.BLOCKS.register(bus);
@@ -60,11 +61,12 @@ public class Kitchenkarrot {
 
         RecipeManager.register(bus);
 
+        NeoForge.EVENT_BUS.addListener(this::reloadDataPack);
         //        networking = new ModNetworking();
     }
 
-    public static void reloadDatapack(AddReloadListenerEvent event){
-        event.addListener(new CocktailManager());
+    public void reloadDataPack(AddReloadListenerEvent event) {
+        event.addListener(cocktailManager);
     }
 
     public static Kitchenkarrot getInstance() {
@@ -73,6 +75,10 @@ public class Kitchenkarrot {
 
     public static ResourceLocation getModRL(String path) {
         return ResourceLocation.fromNamespaceAndPath(Kitchenkarrot.MOD_ID, path);
+    }
+
+    public static CocktailManager getCocktailManager() {
+        return cocktailManager;
     }
 
     //    public ModNetworking getNetworking() {
