@@ -8,6 +8,8 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class DisperseEffect extends MobEffect {
@@ -32,11 +34,13 @@ public class DisperseEffect extends MobEffect {
     if the level is 1 already or the duration is less than 5 ticks, remove the effect
      */
     @Override
-    public boolean applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
+    public boolean applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
         if (disperse(pLivingEntity)) {
             Holder<MobEffect> disperse = ModEffects.DISPERSE;
             MobEffectInstance mobEffectInstance = pLivingEntity.getEffect(disperse);
-            if (pAmplifier > 0 && mobEffectInstance.getDuration() > 5) {
+            if (pAmplifier > 0
+                    && mobEffectInstance != null
+                    && mobEffectInstance.getDuration() > 5) {
                 pLivingEntity.forceAddEffect(
                         new MobEffectInstance(
                                 disperse, mobEffectInstance.getDuration(), pAmplifier - 1),
