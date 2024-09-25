@@ -22,6 +22,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
 /**
@@ -56,7 +58,7 @@ public class AirCompressorRecipeCategory extends BaseRecipeCategory<AirCompresso
         builder.addSlot(RecipeIngredientRole.INPUT, 49, 32).addIngredients(ingredient.get(1));
         builder.addSlot(RecipeIngredientRole.INPUT, 28, 53).addIngredients(ingredient.get(2));
         builder.addSlot(RecipeIngredientRole.INPUT, 49, 53).addIngredients(ingredient.get(3));
-        builder.addSlot(RecipeIngredientRole.INPUT, 28, 9)
+        builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 28, 9)
                 .addIngredients(Ingredient.of(Items.REDSTONE));
 
         var container = Objects.requireNonNullElse(recipe.getContainer(), Ingredient.EMPTY);
@@ -68,9 +70,9 @@ public class AirCompressorRecipeCategory extends BaseRecipeCategory<AirCompresso
 
     @Override
     public void draw(
-            AirCompressorRecipe recipe,
-            IRecipeSlotsView recipeSlotsView,
-            GuiGraphics guiGraphics,
+            @NotNull AirCompressorRecipe recipe,
+            @NotNull IRecipeSlotsView recipeSlotsView,
+            @NotNull GuiGraphics guiGraphics,
             double mouseX,
             double mouseY) {
         arrow.draw(guiGraphics, 70, 52);
